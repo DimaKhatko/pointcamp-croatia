@@ -84,6 +84,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:locale", content: "uk_UA" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#4A316D" },
+      { title: "Lovable App" },
+      { property: "og:title", content: "Lovable App" },
+      { name: "twitter:title", content: "Lovable App" },
+      { name: "description", content: "A modern, high-converting landing page for an English-language summer camp in Croatia." },
+      { property: "og:description", content: "A modern, high-converting landing page for an English-language summer camp in Croatia." },
+      { name: "twitter:description", content: "A modern, high-converting landing page for an English-language summer camp in Croatia." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/13fa6140-f5fc-4891-987d-ac7fcc4b5f1f/id-preview-b2392086--72d0a94c-8649-408b-a02e-007dffd9615e.lovable.app-1780434288231.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/13fa6140-f5fc-4891-987d-ac7fcc4b5f1f/id-preview-b2392086--72d0a94c-8649-408b-a02e-007dffd9615e.lovable.app-1780434288231.png" },
     ],
     links: [
       {
