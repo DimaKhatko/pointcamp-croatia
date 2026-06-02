@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://croatia.pointcamp.com.ua/sitemap.xml
