@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { sendToTelegram } from "@/lib/sendToTelegram";
 
 const schema = z.object({
   name: z
@@ -34,10 +35,8 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-async function submitApplication(_data: FormValues) {
-  // TODO: connect to backend (Lovable Cloud edge function / CRM webhook).
-  await new Promise((r) => setTimeout(r, 700));
-  return { ok: true as const };
+async function submitApplication(data: FormValues) {
+  return sendToTelegram(data);
 }
 
 export function ApplicationForm() {
@@ -169,7 +168,7 @@ export function ApplicationForm() {
                   id="email"
                   type="email"
                   autoComplete="email"
-                  placeholder="ви@приклад.ua"
+                  placeholder="ilovemykids@gmail.com"
                   aria-invalid={!!form.formState.errors.email}
                   {...form.register("email")}
                 />
