@@ -74,6 +74,41 @@ export const ACTIVITIES = [
   "Скелелазіння",
 ] as const;
 
+/**
+ * Mixed activity grid items. `photo: true` renders a placeholder image card
+ * (later swap for a real <img>); the rest are text chips.
+ */
+export const ACTIVITY_ITEMS: ReadonlyArray<{
+  label: string;
+  photo?: boolean;
+  tone?: "sea" | "sun" | "mint" | "sand" | "mix" | "primary";
+}> = [
+  { label: "Каякінг", photo: true, tone: "sea" },
+  { label: "Англійська з носіями" },
+  { label: "Йога на світанку", photo: true, tone: "mint" },
+  { label: "Тімбілдинги" },
+  { label: "Пляжний волейбол", photo: true, tone: "sun" },
+  { label: "Мотузковий парк" },
+  { label: "Стрільба з лука" },
+  { label: "Віндсерфінг", photo: true, tone: "sea" },
+  { label: "Театр" },
+  { label: "Танці", photo: true, tone: "sun" },
+  { label: "Фото & відео мейкінг" },
+  { label: "Вечірні шоу" },
+  { label: "Фестиваль кольорів", photo: true, tone: "mix" },
+  { label: "Малювання світлом" },
+  { label: "Ватра" },
+  { label: "Арт & крафт" },
+  { label: "Soft skills" },
+  { label: "Педдлбординг" },
+  { label: "Водний парк" },
+  { label: "Міні-яхтинг" },
+  { label: "Скелелазіння" },
+  { label: "Екскурсії" },
+  { label: "Футбол" },
+  { label: "Вечір казино" },
+];
+
 export const SCHEDULE = [
   { time: "8:00", title: "Good morning", body: "М'який підйом, зарядка біля моря." },
   { time: "9:00", title: "Сніданок", body: "Середземноморська кухня, all-inclusive." },
