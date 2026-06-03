@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { StickyHeader } from "@/components/landing/StickyHeader";
 import { Hero } from "@/components/landing/Hero";
 import { EmotionalIntro } from "@/components/landing/EmotionalIntro";
+import { MomentsGallery } from "@/components/landing/MomentsGallery";
 import { WhyPointCamp } from "@/components/landing/WhyPointCamp";
 import { ForWhom } from "@/components/landing/ForWhom";
 import { ThreePillars } from "@/components/landing/ThreePillars";
@@ -106,6 +107,7 @@ function LandingPage() {
       <main>
         <Hero />
         <EmotionalIntro />
+        <MomentsGallery />
         <WhyPointCamp />
         <ForWhom />
         <ThreePillars />
