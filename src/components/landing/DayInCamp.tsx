@@ -1,15 +1,27 @@
 import { SCHEDULE } from "./data";
+import { PhotoSlot } from "./PhotoSlot";
+import { WavePattern } from "./decor/WavePattern";
+import { AccentDot } from "./decor/AccentDot";
+
+/** Indexes in SCHEDULE after which we drop an atmospheric photo band. */
+const PHOTO_AFTER: Record<number, { alt: string; label: string; tone: "sea" | "sun" | "primary" }> = {
+  1: { alt: "Ранкове море і пляж", label: "Ранок", tone: "sea" },
+  5: { alt: "Денний відпочинок у тіні сосон", label: "Полудень", tone: "sun" },
+  9: { alt: "Вечір біля моря та ватра", label: "Вечір", tone: "primary" },
+};
 
 export function DayInCamp() {
   return (
     <section
       id="day"
       aria-labelledby="day-heading"
-      className="scroll-mt-24 bg-secondary/40 py-24 md:py-32"
+      className="relative scroll-mt-24 overflow-hidden bg-secondary/40 py-24 md:py-32"
     >
+      <WavePattern color="var(--primary)" opacity={0.05} />
       <div className="mx-auto max-w-5xl px-4 md:px-6">
         <div className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-widest text-primary/70">
+          <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-primary/70">
+            <AccentDot color="var(--mint)" size={10} />
             День у кемпі
           </p>
           <h2
@@ -27,30 +39,48 @@ export function DayInCamp() {
           />
           {SCHEDULE.map((item, i) => {
             const isLeft = i % 2 === 0;
+            const photo = PHOTO_AFTER[i];
             return (
-              <li
-                key={item.time}
-                className={`relative mb-8 md:mb-12 md:grid md:grid-cols-2 md:gap-10 ${
-                  isLeft ? "" : "md:[&>*:first-child]:order-2"
-                }`}
-              >
-                {/* timeline dot */}
-                <span
-                  aria-hidden
-                  className="absolute -left-[31px] top-2 h-3.5 w-3.5 rounded-full bg-primary ring-4 ring-background md:left-1/2 md:-translate-x-1/2"
-                />
-                <div className={`${isLeft ? "md:text-right md:pr-10" : "md:pl-10"}`}>
-                  <div className="inline-block rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
-                    {item.time}
+              <>
+                <li
+                  key={item.time}
+                  className={`relative mb-8 md:mb-12 md:grid md:grid-cols-2 md:gap-10 ${
+                    isLeft ? "" : "md:[&>*:first-child]:order-2"
+                  }`}
+                >
+                  {/* timeline dot */}
+                  <span
+                    aria-hidden
+                    className="absolute -left-[31px] top-2 h-3.5 w-3.5 rounded-full bg-primary ring-4 ring-background md:left-1/2 md:-translate-x-1/2"
+                  />
+                  <div className={`${isLeft ? "md:text-right md:pr-10" : "md:pl-10"}`}>
+                    <div className="inline-block rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
+                      {item.time}
+                    </div>
                   </div>
-                </div>
-                <div className={`${isLeft ? "md:pl-10" : "md:pr-10 md:text-right"}`}>
-                  <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
-                  <p className="mt-1 text-base leading-relaxed text-muted-foreground">
-                    {item.body}
-                  </p>
-                </div>
-              </li>
+                  <div className={`${isLeft ? "md:pl-10" : "md:pr-10 md:text-right"}`}>
+                    <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
+                    <p className="mt-1 text-base leading-relaxed text-muted-foreground">
+                      {item.body}
+                    </p>
+                  </div>
+                </li>
+                {photo && (
+                  <li
+                    key={`${item.time}-photo`}
+                    aria-hidden={false}
+                    className="relative mb-10 md:mb-14"
+                  >
+                    <PhotoSlot
+                      alt={photo.alt}
+                      label={photo.label}
+                      tone={photo.tone}
+                      aspect="21/9"
+                      className="shadow-md"
+                    />
+                  </li>
+                )}
+              </>
             );
           })}
         </ol>
