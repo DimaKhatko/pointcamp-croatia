@@ -1,4 +1,7 @@
 import { MapPin, Utensils, Trees, Bath } from "lucide-react";
+import { PhotoSlot } from "./PhotoSlot";
+import { DotGrid } from "./decor/DotGrid";
+import { AccentDot } from "./decor/AccentDot";
 
 const FEATURES = [
   { icon: Trees, title: "Затишні бунгало", body: "Прохолодний сосновий ліс просто над морем." },
@@ -7,13 +10,17 @@ const FEATURES = [
   { icon: MapPin, title: "Pakoštane, Далмація", body: "Між Адріатикою і озером Врана, 4 нацпарки поруч." },
 ];
 
-const GALLERY_LABELS = [
-  "Бунгало серед сосон",
-  "Пляж Pine Beach",
-  "Зона активностей",
-  "Вечір біля моря",
-  "Озеро Врана",
-  "Стара Хорватія",
+const GALLERY: { label: string; alt: string; tone: "sea" | "sun" | "mint" | "sand" | "primary" | "mix" }[] = [
+  { label: "Бунгало серед сосон", alt: "Бунгало у сосновому лісі Pine Beach", tone: "mint" },
+  { label: "Пляж Pine Beach", alt: "Пляж Pine Beach з бірюзовою водою", tone: "sea" },
+  { label: "Зона активностей", alt: "Спортивна зона на території кемпу", tone: "sun" },
+  { label: "Вечір біля моря", alt: "Захід сонця над Адріатикою", tone: "primary" },
+  { label: "Озеро Врана", alt: "Озеро Врана поруч із кемпом", tone: "mint" },
+  { label: "Стара Хорватія", alt: "Стародавнє хорватське містечко поруч", tone: "sand" },
+  { label: "Сосновий ліс", alt: "Прохолодний сосновий ліс над морем", tone: "mint" },
+  { label: "Каякі на березі", alt: "Каякі на пляжі готові до виходу", tone: "sea" },
+  { label: "Ранкова зарядка", alt: "Ранкова зарядка біля моря", tone: "sun" },
+  { label: "Спільні вечори", alt: "Спільні вечори на території", tone: "primary" },
 ];
 
 export function PineBeachResort() {
@@ -21,12 +28,14 @@ export function PineBeachResort() {
     <section
       id="resort"
       aria-labelledby="resort-heading"
-      className="scroll-mt-24 bg-background py-24 md:py-32"
+      className="relative scroll-mt-24 overflow-hidden bg-background py-24 md:py-32"
     >
+      <DotGrid color="var(--primary)" opacity={0.06} />
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="grid gap-12 md:grid-cols-2 md:items-center">
           <div>
-            <p className="text-sm font-medium uppercase tracking-widest text-primary/70">
+            <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-primary/70">
+              <AccentDot color="var(--sea)" size={10} />
               Pine Beach Resort
             </p>
             <h2
@@ -57,27 +66,19 @@ export function PineBeachResort() {
             </dl>
           </div>
 
-          <div className="grid grid-cols-3 gap-3" aria-label="Галерея кемпу (фото додаються)">
-            {GALLERY_LABELS.map((label, i) => (
-              <div
-                key={label}
-                className={`relative overflow-hidden rounded-2xl border border-border ${
-                  i === 0 ? "col-span-2 row-span-2 aspect-[4/5]" : "aspect-square"
-                }`}
-                style={{
-                  background: `linear-gradient(135deg, color-mix(in oklab, var(--sea) ${
-                    35 + i * 8
-                  }%, transparent), color-mix(in oklab, var(--sun) ${
-                    20 + i * 6
-                  }%, transparent))`,
-                }}
-              >
-                <div className="absolute inset-0 grid place-items-end p-3">
-                  <span className="rounded-full bg-background/80 px-2.5 py-1 text-[11px] font-medium text-foreground backdrop-blur">
-                    {label}
-                  </span>
-                </div>
-              </div>
+          <div
+            className="grid grid-cols-3 gap-3"
+            aria-label="Галерея кемпу (фото додаються)"
+          >
+            {GALLERY.map((g, i) => (
+              <PhotoSlot
+                key={g.label}
+                alt={g.alt}
+                label={g.label}
+                tone={g.tone}
+                aspect={i === 0 ? "4/5" : "1/1"}
+                className={i === 0 ? "col-span-2 row-span-2" : ""}
+              />
             ))}
           </div>
         </div>
