@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { SCHEDULE } from "./data";
 import { PhotoSlot } from "./PhotoSlot";
 import { WavePattern } from "./decor/WavePattern";
@@ -41,9 +42,8 @@ export function DayInCamp() {
             const isLeft = i % 2 === 0;
             const photo = PHOTO_AFTER[i];
             return (
-              <>
+              <Fragment key={item.time}>
                 <li
-                  key={item.time}
                   className={`relative mb-8 md:mb-12 md:grid md:grid-cols-2 md:gap-10 ${
                     isLeft ? "" : "md:[&>*:first-child]:order-2"
                   }`}
@@ -67,7 +67,6 @@ export function DayInCamp() {
                 </li>
                 {photo && (
                   <li
-                    key={`${item.time}-photo`}
                     aria-hidden={false}
                     className="relative mb-10 md:mb-14"
                   >
@@ -80,7 +79,7 @@ export function DayInCamp() {
                     />
                   </li>
                 )}
-              </>
+              </Fragment>
             );
           })}
         </ol>
