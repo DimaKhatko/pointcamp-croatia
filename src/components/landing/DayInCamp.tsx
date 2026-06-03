@@ -59,7 +59,7 @@ export function DayInCamp() {
                     </div>
                   </div>
                   <div className={`${isLeft ? "md:pl-10" : "md:pr-10 md:text-right"}`}>
-                    <p className="text-xl font-bold text-foreground">{item.title}</p>
+                    <p className="text-xl font-bold tracking-[-0.02em] text-foreground">{item.title}</p>
                     <p className="mt-1 text-base leading-relaxed text-muted-foreground">
                       {item.body}
                     </p>
