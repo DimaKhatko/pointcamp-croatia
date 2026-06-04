@@ -1,8 +1,19 @@
 import { PhotoSlot } from "./PhotoSlot";
 import { Blob } from "./decor/Blob";
 import { AccentDot } from "./decor/AccentDot";
+import m1 from "@/assets/photos/moments-m1-sunset-girls.webp";
+import m2 from "@/assets/photos/moments-m2-sea-joy.webp";
+import m3 from "@/assets/photos/moments-m3-mentor-hug.webp";
+import m4 from "@/assets/photos/moments-m4-kayak-group.webp";
+import m5 from "@/assets/photos/moments-m5-team-huddle.webp";
+import m6 from "@/assets/photos/moments-m6-ducks.webp";
+import m7 from "@/assets/photos/moments-m7-duck-selfie.webp";
+import m8 from "@/assets/photos/moments-m8-dinner-selfie.webp";
 
 type Tile = {
+  src: string;
+  width: number;
+  height: number;
   alt: string;
   label: string;
   tone: "sea" | "sun" | "mint" | "sand" | "primary" | "mix";
@@ -12,14 +23,14 @@ type Tile = {
 };
 
 const TILES: Tile[] = [
-  { alt: "Ранок на пляжі — діти йдуть до моря", label: "Ранкове море", tone: "sea", aspect: "4/5", rotate: "motion-safe:-rotate-2", span: "row-span-2" },
-  { alt: "Спільна гра на піску", label: "Команда", tone: "sun", aspect: "1/1", rotate: "motion-safe:rotate-1" },
-  { alt: "Каякінг на Адріатиці", label: "Каякінг", tone: "mint", aspect: "1/1" },
-  { alt: "Сміх біля води", label: "Друзі", tone: "sand", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
-  { alt: "Вечірня ватра", label: "Ватра", tone: "primary", aspect: "1/1", rotate: "motion-safe:rotate-2" },
-  { alt: "Танці на заході сонця", label: "Захід", tone: "sun", aspect: "1/1" },
-  { alt: "Сосновий ліс і бунгало", label: "Сосни", tone: "mint", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
-  { alt: "Усмішки після квесту", label: "Перемога", tone: "sea", aspect: "1/1", rotate: "motion-safe:rotate-1" },
+  { src: m1, width: 560, height: 700, alt: "Підлітки сміються на заході сонця біля Адріатики — табір Point Camp", label: "Ранкове море", tone: "sea", aspect: "4/5", rotate: "motion-safe:-rotate-2", span: "row-span-2" },
+  { src: m2, width: 560, height: 560, alt: "Діти радіють у бірюзовій воді Адріатики", label: "Команда", tone: "sun", aspect: "1/1", rotate: "motion-safe:rotate-1" },
+  { src: m3, width: 560, height: 560, alt: "Вожатий-ментор обіймає підлітка — підтримка в Point Camp", label: "Каякінг", tone: "mint", aspect: "1/1" },
+  { src: m4, width: 1100, height: 825, alt: "Підлітки на каяках біля берега під драматичним небом Адріатики", label: "Друзі", tone: "sand", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
+  { src: m5, width: 560, height: 560, alt: "Командна гра підлітків у таборі Point Camp", label: "Ватра", tone: "primary", aspect: "1/1", rotate: "motion-safe:rotate-2" },
+  { src: m6, width: 560, height: 560, alt: "Хлопці жартують із табірними каченятами", label: "Захід", tone: "sun", aspect: "1/1" },
+  { src: m7, width: 1100, height: 825, alt: "Селфі друзів із каченям на тлі моря", label: "Сосни", tone: "mint", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
+  { src: m8, width: 560, height: 560, alt: "Друзі роблять спільне селфі за вечерею", label: "Перемога", tone: "sea", aspect: "1/1", rotate: "motion-safe:rotate-1" },
 ];
 
 export function MomentsGallery() {
@@ -57,6 +68,9 @@ export function MomentsGallery() {
           {TILES.map((t) => (
             <PhotoSlot
               key={t.label}
+              src={t.src}
+              width={t.width}
+              height={t.height}
               alt={t.alt}
               label={t.label}
               tone={t.tone}

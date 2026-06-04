@@ -75,38 +75,36 @@ export const ACTIVITIES = [
 ] as const;
 
 /**
- * Mixed activity grid items. `photo: true` renders a placeholder image card
- * (later swap for a real <img>); the rest are text chips.
+ * Mixed activity grid items. `photo: true` items render an image card (with
+ * `alt`); the rest are text chips rendered below the photo row.
  */
 export const ACTIVITY_ITEMS: ReadonlyArray<{
   label: string;
   photo?: boolean;
   tone?: "sea" | "sun" | "mint" | "sand" | "mix" | "primary";
+  alt?: string;
 }> = [
-  { label: "Каякінг", photo: true, tone: "sea" },
+  { label: "Каякінг", photo: true, tone: "sea", alt: "Молодші учасниці веслують на каяках у рятувальних жилетах" },
+  { label: "Рефлексія", photo: true, tone: "primary", alt: "Вечірнє коло рефлексії — підлітки тримаються за руки" },
+  { label: "Стрільба з лука", photo: true, tone: "sun", alt: "Дівчина стріляє з лука на занятті в таборі" },
+  { label: "Педдлбординг", photo: true, tone: "sea", alt: "Підлітки із сап-веслами на причалі біля моря" },
   { label: "Англійська з носіями" },
-  { label: "Йога на світанку", photo: true, tone: "mint" },
   { label: "Тімбілдинги" },
-  { label: "Пляжний волейбол", photo: true, tone: "sun" },
   { label: "Мотузковий парк" },
-  { label: "Стрільба з лука" },
-  { label: "Віндсерфінг", photo: true, tone: "sea" },
   { label: "Театр" },
-  { label: "Танці", photo: true, tone: "sun" },
-  { label: "Фото & відео мейкінг" },
+  { label: "Фото&відео" },
   { label: "Вечірні шоу" },
-  { label: "Фестиваль кольорів", photo: true, tone: "mix" },
   { label: "Малювання світлом" },
-  { label: "Ватра" },
-  { label: "Арт & крафт" },
+  { label: "Арт&крафт" },
   { label: "Soft skills" },
-  { label: "Педдлбординг" },
   { label: "Водний парк" },
-  { label: "Міні-яхтинг" },
   { label: "Скелелазіння" },
-  { label: "Екскурсії" },
   { label: "Футбол" },
   { label: "Вечір казино" },
+  { label: "Йога" },
+  { label: "Волейбол" },
+  { label: "Танці" },
+  { label: "Фестиваль кольорів" },
 ];
 
 export const SCHEDULE = [

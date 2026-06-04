@@ -3,12 +3,18 @@ import { SCHEDULE } from "./data";
 import { PhotoSlot } from "./PhotoSlot";
 import { WavePattern } from "./decor/WavePattern";
 import { AccentDot } from "./decor/AccentDot";
+import dayMorning from "@/assets/photos/day-morning-sea.webp";
+import dayNoon from "@/assets/photos/day-noon-beach.webp";
+import dayEvening from "@/assets/photos/day-evening-gathering.webp";
 
 /** Indexes in SCHEDULE after which we drop an atmospheric photo band. */
-const PHOTO_AFTER: Record<number, { alt: string; label: string; tone: "sea" | "sun" | "primary" }> = {
-  1: { alt: "Ранкове море і пляж", label: "Ранок", tone: "sea" },
-  5: { alt: "Денний відпочинок у тіні сосон", label: "Полудень", tone: "sun" },
-  9: { alt: "Вечір біля моря та ватра", label: "Вечір", tone: "primary" },
+const PHOTO_AFTER: Record<
+  number,
+  { src: string; width: number; height: number; alt: string; label: string; tone: "sea" | "sun" | "primary" }
+> = {
+  1: { src: dayMorning, width: 2000, height: 857, alt: "Ранок біля моря в таборі Point Camp, Хорватія", label: "Ранок", tone: "sea" },
+  5: { src: dayNoon, width: 2000, height: 857, alt: "Денний відпочинок на пляжі Адріатики в таборі", label: "Полудень", tone: "sun" },
+  9: { src: dayEvening, width: 2000, height: 857, alt: "Вечірнє зібрання табору біля моря на заході сонця", label: "Вечір", tone: "primary" },
 };
 
 export function DayInCamp() {
@@ -71,6 +77,9 @@ export function DayInCamp() {
                     className="relative mb-10 md:mb-14"
                   >
                     <PhotoSlot
+                      src={photo.src}
+                      width={photo.width}
+                      height={photo.height}
                       alt={photo.alt}
                       label={photo.label}
                       tone={photo.tone}

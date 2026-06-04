@@ -2,6 +2,16 @@ import { PILLARS } from "./data";
 import { PhotoSlot } from "./PhotoSlot";
 import { Blob } from "./decor/Blob";
 import { AccentDot } from "./decor/AccentDot";
+import pillarSea from "@/assets/photos/pillar-sea.webp";
+import pillarActivities from "@/assets/photos/pillar-activities.webp";
+import pillarFun from "@/assets/photos/pillar-fun.webp";
+
+/** Aligned by index with PILLARS: Море, Активності, Розваги. */
+const PILLAR_IMG = [
+  { src: pillarSea, alt: "Подруги біля бірюзової води, позаду водний парк — море в таборі" },
+  { src: pillarActivities, alt: "Група з веслами та сапами на пляжі — активності табору" },
+  { src: pillarFun, alt: "Діти з гігантським м'ячем і вожатим — розваги в таборі" },
+];
 
 const TONE = { sea: "sea", mint: "mint", sun: "sun" } as const;
 const BADGE_BG: Record<"sea" | "mint" | "sun", string> = {
@@ -41,7 +51,10 @@ export function ThreePillars() {
               className="group overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
             >
               <PhotoSlot
-                alt={`Фото розділу «${p.title}» — кемп Point Camp у Хорватії`}
+                src={PILLAR_IMG[i].src}
+                width={720}
+                height={540}
+                alt={PILLAR_IMG[i].alt}
                 tone={TONE[p.accent]}
                 aspect="4/3"
                 rounded=""

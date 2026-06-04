@@ -1,4 +1,5 @@
 import { HeartPulse, ShieldCheck, Users, Sparkles } from "lucide-react";
+import safetyTeam from "@/assets/photos/safety-team-alt.webp";
 
 const ITEMS = [
   { icon: HeartPulse, title: "Лікар 24/7", body: "Кваліфікований медик постійно в кемпі." },
@@ -28,6 +29,18 @@ export function Safety() {
             Десятиліття практики, чіткі протоколи і людська увага — у кожному дні
             заїзду.
           </p>
+        </div>
+
+        <div className="mt-12 overflow-hidden rounded-3xl border border-white/15">
+          <img
+            src={safetyTeam}
+            alt="Вожата з бейджем «team» проводить заняття з молодшими дітьми — догляд і присмотр у таборі"
+            width={1200}
+            height={800}
+            loading="lazy"
+            decoding="async"
+            className="aspect-[3/2] w-full object-cover"
+          />
         </div>
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

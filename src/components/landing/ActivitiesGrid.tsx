@@ -1,6 +1,21 @@
 import { ACTIVITY_ITEMS } from "./data";
 import { PhotoSlot } from "./PhotoSlot";
 import { AccentDot } from "./decor/AccentDot";
+import actKayak from "@/assets/photos/act-kayak-kids.webp";
+import actReflection from "@/assets/photos/act-reflection.webp";
+import actArchery from "@/assets/photos/act-archery.webp";
+import actPaddleboard from "@/assets/photos/act-paddleboard.webp";
+
+/** Photo source per labelled activity (all exported at 560×560). */
+const PHOTO_SRC: Record<string, string> = {
+  "Каякінг": actKayak,
+  "Рефлексія": actReflection,
+  "Стрільба з лука": actArchery,
+  "Педдлбординг": actPaddleboard,
+};
+
+const photoItems = ACTIVITY_ITEMS.filter((item) => item.photo);
+const chipItems = ACTIVITY_ITEMS.filter((item) => !item.photo);
 
 export function ActivitiesGrid() {
   return (
@@ -29,33 +44,35 @@ export function ActivitiesGrid() {
           </p>
         </div>
 
-        <ul className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-          {ACTIVITY_ITEMS.map((item) => {
-            if (item.photo) {
-              return (
-                <li key={item.label} className="group">
-                  <PhotoSlot
-                    alt={`Активність у кемпі: ${item.label}`}
-                    tone={item.tone ?? "mix"}
-                    aspect="1/1"
-                    className="shadow-sm transition-transform group-hover:-translate-y-0.5"
-                  />
-                  <p className="mt-2 px-1 text-sm font-medium text-foreground">
-                    {item.label}
-                  </p>
-                </li>
-              );
-            }
-            return (
-              <li
-                key={item.label}
-                className="flex items-center rounded-2xl border border-border bg-card px-4 py-4 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-secondary"
-              >
-                <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-sun" />
+        <ul className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {photoItems.map((item) => (
+            <li key={item.label} className="group">
+              <PhotoSlot
+                src={PHOTO_SRC[item.label]}
+                width={560}
+                height={560}
+                alt={item.alt ?? `Активність у кемпі: ${item.label}`}
+                tone={item.tone ?? "mix"}
+                aspect="1/1"
+                className="shadow-sm transition-transform group-hover:-translate-y-0.5"
+              />
+              <p className="mt-2 px-1 text-sm font-medium text-foreground">
                 {item.label}
-              </li>
-            );
-          })}
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        <ul className="mt-4 flex flex-wrap gap-3">
+          {chipItems.map((item) => (
+            <li
+              key={item.label}
+              className="flex items-center rounded-2xl border border-border bg-card px-4 py-4 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-secondary"
+            >
+              <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-sun" />
+              {item.label}
+            </li>
+          ))}
         </ul>
       </div>
     </section>
