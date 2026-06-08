@@ -57,7 +57,7 @@ export function ApplicationForm() {
         if (typeof window !== "undefined") {
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({
-            event: "generate_lead",
+            event: "lead_submit",
             form: "croatia_application",
           });
         }
