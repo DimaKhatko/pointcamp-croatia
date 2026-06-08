@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "pointcamp-a1a24"
+  },
+  "targets": {
+    "pointcamp-a1a24": {
+      "hosting": {
+        "croatia": [
+          "pointcamp-croatia-2026"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
