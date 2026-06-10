@@ -38,9 +38,8 @@ const SLIDES: {
   tone: "sea" | "sun" | "mint" | "sand" | "primary" | "mix";
   imgClass?: string;
 }[] = [
-  // Horizontal ~3:2 shot; the bungalow sits on the RIGHT — bias the crop right
-  // so the whole roof-to-base subject stays in frame (try 70%_40% if it clips).
-  { src: pineFeatured, width: 1000, height: 750, alt: "Бунгало Pine Beach серед сосен біля Адріатичного моря", tone: "mint", imgClass: "[&_img]:object-[68%_center]" },
+  // Native 3:2 (1536×1024) — matches the slide ratio, so default centering is fine.
+  { src: pineFeatured, width: 1536, height: 1024, alt: "Бунгало Pine Beach серед сосен біля Адріатичного моря", tone: "mint" },
   { src: pine03, width: 1000, height: 750, alt: "Очеретяне бунгало у золотому світлі серед сосон", tone: "sun" },
   { src: pine04, width: 1000, height: 750, alt: "Зовнішній вигляд бунгало табору Pine Beach у Хорватії", tone: "sand" },
   { src: pineHut, width: 1000, height: 750, alt: "Брендований будиночок Pine Beach серед сосон", tone: "primary" },
@@ -143,7 +142,7 @@ function ResortCarousel() {
               height={s.height}
               alt={s.alt}
               tone={s.tone}
-              aspect="4/3"
+              aspect="3/2"
               className={`shrink-0 grow-0 basis-[82%] snap-start md:basis-[38%] ${SOFT_SHADOW} ${s.imgClass ?? ""}`}
             />
           ))}
