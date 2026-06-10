@@ -42,7 +42,7 @@ export function StickyHeader() {
               key={item.href}
               href={item.href}
               {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
+              className="relative inline-block py-1 text-sm font-medium text-foreground/80 transition-colors hover:text-primary after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-primary after:transition-transform after:duration-300 hover:after:scale-x-100"
             >
               {item.label}
             </a>
