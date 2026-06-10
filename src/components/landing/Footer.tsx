@@ -7,7 +7,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <img src={logo} alt="PointCamp" className="h-12 w-auto" />
+            <img src={logo} alt="PointCamp" className="h-14 w-auto" />
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               Англомовний літній кемп у Хорватії для дітей і підлітків 8–17 років.
               16 років турботи, тепла й справжнього літа.
