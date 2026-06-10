@@ -27,14 +27,19 @@ const FEATURES = [
 ];
 
 // Resort-only imagery, grouped: exterior/sea → interiors → facilities → dining → aerial.
+// `imgClass` lets a single photo tune its crop without affecting the others —
+// e.g. shift object-position so the important part stays in frame. Keep these
+// as full static classes so Tailwind's scanner emits them (nudge the % by eye).
 const SLIDES: {
   src: string;
   width: number;
   height: number;
   alt: string;
   tone: "sea" | "sun" | "mint" | "sand" | "primary" | "mix";
+  imgClass?: string;
 }[] = [
-  { src: pineFeatured, width: 1000, height: 750, alt: "Бунгало Pine Beach серед сосен біля Адріатичного моря", tone: "mint" },
+  // Tall/vertical shot: favour the lower frame (sea + bungalow body, not roof).
+  { src: pineFeatured, width: 1000, height: 750, alt: "Бунгало Pine Beach серед сосен біля Адріатичного моря", tone: "mint", imgClass: "[&_img]:object-[center_65%]" },
   { src: pine03, width: 1000, height: 750, alt: "Очеретяне бунгало у золотому світлі серед сосон", tone: "sun" },
   { src: pine04, width: 1000, height: 750, alt: "Зовнішній вигляд бунгало табору Pine Beach у Хорватії", tone: "sand" },
   { src: pineHut, width: 1000, height: 750, alt: "Брендований будиночок Pine Beach серед сосон", tone: "primary" },
@@ -138,7 +143,7 @@ function ResortCarousel() {
               alt={s.alt}
               tone={s.tone}
               aspect="4/3"
-              className={`shrink-0 grow-0 basis-[82%] snap-start md:basis-[38%] ${SOFT_SHADOW}`}
+              className={`shrink-0 grow-0 basis-[82%] snap-start md:basis-[38%] ${SOFT_SHADOW} ${s.imgClass ?? ""}`}
             />
           ))}
         </div>
