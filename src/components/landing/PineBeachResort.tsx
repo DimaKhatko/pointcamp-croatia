@@ -15,6 +15,7 @@ import pine08 from "@/assets/photos/pine-08-dining.webp";
 import pine09 from "@/assets/photos/pine-09-aerial-bay.webp";
 import pineHut from "@/assets/photos/spare-branded-hut.webp";
 import pineCourts from "@/assets/photos/spare-aerial-courts.webp";
+import traveler from "@/assets/traveler.svg";
 
 // Rich warm "glow + shadow" — purple base + amber glow so photos/cards lift
 // off the beige #FFE8C7. Arbitrary box-shadow property (not the `shadow-*`
@@ -183,23 +184,33 @@ export function PineBeachResort() {
     >
       <DotGrid color="#452B70" opacity={0.06} />
       <div className="relative mx-auto max-w-6xl px-4 md:px-6">
-        {/* Heading — full width */}
-        <div className="max-w-3xl">
-          <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-[#452B70]/70">
-            <AccentDot color="var(--sea)" size={10} />
-            Pine Beach Resort
-          </p>
-          <h2
-            id="resort-heading"
-            className="mt-3 text-balance text-3xl font-extrabold text-[#452B70] md:text-5xl"
-          >
-            Сосни. Море. Тиша. Дім на десять днів.
-          </h2>
-          <p className="mt-5 text-lg leading-relaxed text-[#452B70]/80">
-            Camp розташований у курорті Pine Beach — на самому березі Адріатики,
-            у Pakoštane. Між морем і озером Врана, у годині від чотирьох
-            національних парків Хорватії.
-          </p>
+        {/* Heading — full width, with the traveler decoration in the right gutter */}
+        <div className="relative">
+          <div className="max-w-3xl">
+            <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-[#452B70]/70">
+              <AccentDot color="var(--sea)" size={10} />
+              Pine Beach Resort
+            </p>
+            <h2
+              id="resort-heading"
+              className="mt-3 text-balance text-3xl font-extrabold text-[#452B70] md:text-5xl"
+            >
+              Сосни. Море. Тиша. Дім на десять днів.
+            </h2>
+            <p className="mt-5 text-lg leading-relaxed text-[#452B70]/80">
+              Camp розташований у курорті Pine Beach — на самому березі Адріатики,
+              у Pakoštane. Між морем і озером Врана, у годині від чотирьох
+              національних парків Хорватії.
+            </p>
+          </div>
+          {/* Decorative traveler — bottom-anchored to the heading block (never
+              reaches the fact cards), tucked into the right gutter. */}
+          <img
+            src={traveler}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute bottom-0 right-0 hidden h-[320px] w-auto lg:block motion-safe:animate-[pc-float_6s_ease-in-out_infinite_alternate]"
+          />
         </div>
 
         {/* Fact cards — full-width row, equal height */}

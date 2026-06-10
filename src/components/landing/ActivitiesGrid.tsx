@@ -5,6 +5,7 @@ import actKayak from "@/assets/photos/act-kayak-kids.webp";
 import actReflection from "@/assets/photos/act-reflection.webp";
 import actArchery from "@/assets/photos/act-archery.webp";
 import actPaddleboard from "@/assets/photos/act-paddleboard.webp";
+import actually from "@/assets/actually.svg";
 
 /** Photo source per labelled activity (all exported at 560×560). */
 const PHOTO_SRC: Record<string, string> = {
@@ -24,20 +25,31 @@ export function ActivitiesGrid() {
       className="relative scroll-mt-24 bg-[#FFE8C7] py-24 md:py-32"
     >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <div className="max-w-2xl">
-          <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-[#452B70]/70">
-            <AccentDot color="var(--sun)" size={10} />
-            Активності
-          </p>
-          <h2
-            id="activities-heading"
-            className="mt-3 text-balance text-3xl font-extrabold text-[#452B70] md:text-5xl"
-          >
-            Більше, ніж може здатися з першого погляду.
-          </h2>
-          <p className="mt-4 text-lg text-[#452B70]/80">
-            Кожен день — нова грань: спорт, творчість, англійська, дослідження себе.
-          </p>
+        {/* Heading — full width, with the "actually" decoration in the right gutter */}
+        <div className="relative">
+          <div className="max-w-2xl">
+            <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-[#452B70]/70">
+              <AccentDot color="var(--sun)" size={10} />
+              Активності
+            </p>
+            <h2
+              id="activities-heading"
+              className="mt-3 text-balance text-3xl font-extrabold text-[#452B70] md:text-5xl"
+            >
+              Більше, ніж може здатися з першого погляду.
+            </h2>
+            <p className="mt-4 text-lg text-[#452B70]/80">
+              Кожен день — нова грань: спорт, творчість, англійська, дослідження себе.
+            </p>
+          </div>
+          {/* Decorative character — bottom-anchored to the heading block (never
+              reaches the activity cards), tucked into the right gutter. */}
+          <img
+            src={actually}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute bottom-0 right-0 hidden h-[350px] w-auto lg:block motion-safe:animate-[pc-float_7s_ease-in-out_infinite_alternate] [animation-delay:-2s]"
+          />
         </div>
 
         <ul className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4">

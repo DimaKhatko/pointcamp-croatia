@@ -204,6 +204,15 @@
   }
 }
 
+/* Gentle vertical drift for decorative brand illustrations (CSS-only).
+   Applied via `motion-safe:animate-[pc-float_…]`; reduced-motion users get
+   no animation because the class is gated behind motion-safe (and the global
+   reduced-motion rule also neutralises any animation). */
+@keyframes pc-float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-9px); }
+}
+
 @utility chip-3d {
   display: inline-flex;
   align-items: center;

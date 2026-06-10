@@ -10,6 +10,8 @@ import m6 from "@/assets/photos/moments-m6-ducks.webp";
 import m7 from "@/assets/photos/moments-m7-duck-selfie.webp";
 import m8 from "@/assets/photos/moments-m8-dinner-selfie.webp";
 import m9 from "@/assets/photos/spare-sup-group.webp";
+import roofPurple from "@/assets/Group.svg";
+import roofAmber from "@/assets/Group-1.svg";
 
 type Tile = {
   src: string;
@@ -66,20 +68,37 @@ export function MomentsGallery() {
           на роки.
         </p>
 
-        <div className="mt-12 grid grid-flow-dense grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
-          {TILES.map((t) => (
-            <PhotoSlot
-              key={t.label}
-              src={t.src}
-              width={t.width}
-              height={t.height}
-              alt={t.alt}
-              label={t.label}
-              tone={t.tone}
-              aspect={t.aspect}
-              className={`${t.rotate ?? ""} ${t.span ?? ""} shadow-md transition-transform hover:rotate-0`}
-            />
-          ))}
+        <div className="relative mt-12">
+          {/* Roof-pattern texture behind the grid — visible only through the
+              gaps between the opaque photos (which sit at z-10). */}
+          <img
+            src={roofPurple}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute -left-10 -top-8 z-0 w-[440px] max-w-none md:w-[580px] motion-safe:animate-[pc-float_8s_ease-in-out_infinite_alternate] [animation-delay:-1s]"
+          />
+          <img
+            src={roofAmber}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute -bottom-10 -right-10 z-0 w-[420px] max-w-none md:w-[560px] motion-safe:animate-[pc-float_9s_ease-in-out_infinite_alternate] [animation-delay:-3s]"
+          />
+
+          <div className="relative z-10 grid grid-flow-dense grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+            {TILES.map((t) => (
+              <PhotoSlot
+                key={t.label}
+                src={t.src}
+                width={t.width}
+                height={t.height}
+                alt={t.alt}
+                label={t.label}
+                tone={t.tone}
+                aspect={t.aspect}
+                className={`${t.rotate ?? ""} ${t.span ?? ""} shadow-md transition-transform hover:rotate-0`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
