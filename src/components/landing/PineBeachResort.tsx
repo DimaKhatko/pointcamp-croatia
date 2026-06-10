@@ -209,7 +209,7 @@ export function PineBeachResort() {
             src={traveler}
             alt=""
             aria-hidden
-            className="pointer-events-none absolute bottom-0 right-0 hidden h-[320px] w-auto lg:block motion-safe:animate-[pc-float_6s_ease-in-out_infinite_alternate]"
+            className="pointer-events-none absolute bottom-0 right-0 hidden h-[160px] w-auto lg:block motion-safe:animate-[pc-float_6s_ease-in-out_infinite_alternate]"
           />
         </div>
 

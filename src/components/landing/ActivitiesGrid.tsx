@@ -48,7 +48,7 @@ export function ActivitiesGrid() {
             src={actually}
             alt=""
             aria-hidden
-            className="pointer-events-none absolute bottom-0 right-0 hidden h-[350px] w-auto lg:block motion-safe:animate-[pc-float_7s_ease-in-out_infinite_alternate] [animation-delay:-2s]"
+            className="pointer-events-none absolute bottom-0 right-0 hidden h-[175px] w-auto lg:block motion-safe:animate-[pc-float_7s_ease-in-out_infinite_alternate] [animation-delay:-2s]"
           />
         </div>
 

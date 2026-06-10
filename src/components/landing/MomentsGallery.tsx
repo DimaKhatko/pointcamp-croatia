@@ -75,7 +75,7 @@ export function MomentsGallery() {
             src={roofPurple}
             alt=""
             aria-hidden
-            className="pointer-events-none absolute -left-10 -top-8 z-0 w-[440px] max-w-none md:w-[580px] motion-safe:animate-[pc-float_8s_ease-in-out_infinite_alternate] [animation-delay:-1s]"
+            className="pointer-events-none absolute -left-10 top-1/3 z-0 w-[440px] max-w-none md:w-[580px] motion-safe:animate-[pc-float_8s_ease-in-out_infinite_alternate] [animation-delay:-1s]"
           />
           <img
             src={roofAmber}
