@@ -1,16 +1,22 @@
-import { MapPin, Utensils, Trees, Bath } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { MapPin, Utensils, Trees, Bath, ChevronLeft, ChevronRight } from "lucide-react";
 import { PhotoSlot } from "./PhotoSlot";
 import { DotGrid } from "./decor/DotGrid";
 import { AccentDot } from "./decor/AccentDot";
 import pineFeatured from "@/assets/photos/pine-featured-bungalow-sea.webp";
 import pine01 from "@/assets/photos/pine-01-bungalow-interior.webp";
+import pine02 from "@/assets/photos/pine-02-bungalow-interior.webp";
 import pine03 from "@/assets/photos/pine-03-bungalow-exterior.webp";
+import pine04 from "@/assets/photos/pine-04-bungalow-exterior.webp";
 import pine05 from "@/assets/photos/pine-05-sanitary.webp";
 import pine06 from "@/assets/photos/pine-06-sanitary-kids.webp";
 import pine07 from "@/assets/photos/pine-07-food.webp";
+import pine08 from "@/assets/photos/pine-08-dining.webp";
 import pine09 from "@/assets/photos/pine-09-aerial-bay.webp";
+import pineHut from "@/assets/photos/spare-branded-hut.webp";
+import pineCourts from "@/assets/photos/spare-aerial-courts.webp";
 
-// Warm, brand-tinted soft shadow — shared by photos and fact cards.
+// Warm, brand-tinted soft shadow — shared by photos, cards and arrows.
 const SOFT_SHADOW = "shadow-[0_14px_30px_-16px_rgba(69,43,112,0.45)]";
 
 const FEATURES = [
@@ -20,30 +26,142 @@ const FEATURES = [
   { icon: MapPin, title: "Pakoštane, Далмація", body: "Між Адріатикою і озером Врана, 4 нацпарки поруч." },
 ];
 
-const HERO = {
-  src: pineFeatured,
-  width: 900,
-  height: 1200,
-  alt: "Бунгало Pine Beach Pakoštane серед сосон біля Адріатичного моря",
-  tone: "mint" as const,
-};
-
-// Six diverse, equal-size tiles. Similar shots (two sanitary frames) are spread
-// apart; the duplicate buffet/dining pair is reduced to a single food frame.
-const TILES: {
+// Resort-only imagery, grouped: exterior/sea → interiors → facilities → dining → aerial.
+const SLIDES: {
   src: string;
   width: number;
   height: number;
   alt: string;
   tone: "sea" | "sun" | "mint" | "sand" | "primary" | "mix";
 }[] = [
-  { src: pine01, width: 400, height: 400, alt: "Інтер'єр бунгало в Pine Beach — спальні місця для учасників табору", tone: "sea" },
-  { src: pine05, width: 400, height: 400, alt: "Сучасний санвузол у таборі Pine Beach", tone: "sand" },
-  { src: pine03, width: 400, height: 400, alt: "Бунгало серед сосен у кемпі Pine Beach", tone: "primary" },
-  { src: pine07, width: 400, height: 400, alt: "Харчування в таборі — страви на шведському столі", tone: "sun" },
-  { src: pine06, width: 400, height: 400, alt: "Діти біля сучасного санітарного блоку Pine Beach", tone: "mint" },
-  { src: pine09, width: 400, height: 400, alt: "Бухта Pine Beach з висоти — місце проведення табору", tone: "sea" },
+  { src: pineFeatured, width: 1000, height: 750, alt: "Бунгало Pine Beach серед сосен біля Адріатичного моря", tone: "mint" },
+  { src: pine03, width: 1000, height: 750, alt: "Очеретяне бунгало у золотому світлі серед сосон", tone: "sun" },
+  { src: pine04, width: 1000, height: 750, alt: "Зовнішній вигляд бунгало табору Pine Beach у Хорватії", tone: "sand" },
+  { src: pineHut, width: 1000, height: 750, alt: "Брендований будиночок Pine Beach серед сосон", tone: "primary" },
+  { src: pine01, width: 1000, height: 750, alt: "Інтер'єр бунгало — спальні місця з москітною сіткою", tone: "sea" },
+  { src: pine02, width: 1000, height: 750, alt: "Інтер'єр бунгало зі шафами та полицями для речей", tone: "mint" },
+  { src: pine05, width: 1000, height: 750, alt: "Сучасний санітарний блок просто неба в Pine Beach", tone: "sand" },
+  { src: pine06, width: 1000, height: 750, alt: "Чистий санвузол із кольоровою плиткою, зручний для дітей", tone: "sea" },
+  { src: pine07, width: 1000, height: 750, alt: "Шведський стіл — свіжі салати та страви середземноморської кухні", tone: "sun" },
+  { src: pine08, width: 1000, height: 750, alt: "Простора їдальня табору під навісом серед дерев", tone: "primary" },
+  { src: pineCourts, width: 1000, height: 750, alt: "Вигляд з висоти: спортивні корти й бухта резорту Pine Beach", tone: "sea" },
+  { src: pine09, width: 1000, height: 750, alt: "Бухта Pine Beach з висоти — місце проведення табору", tone: "mint" },
 ];
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function ResortCarousel() {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  // Track the slide nearest the viewport centre to drive the dots.
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const slides = Array.from(el.children) as HTMLElement[];
+        const center = el.scrollLeft + el.clientWidth / 2;
+        let best = 0;
+        let bestDist = Infinity;
+        slides.forEach((slide, i) => {
+          const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+          const dist = Math.abs(slideCenter - center);
+          if (dist < bestDist) {
+            bestDist = dist;
+            best = i;
+          }
+        });
+        setActive(best);
+      });
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  const behavior: ScrollBehavior = prefersReducedMotion() ? "auto" : "smooth";
+
+  const step = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const first = el.firstElementChild as HTMLElement | null;
+    const amount = first ? first.offsetWidth + 16 /* gap-4 */ : el.clientWidth * 0.8;
+    el.scrollBy({ left: dir * amount, behavior });
+  };
+
+  const goTo = (i: number) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const slide = el.children[i] as HTMLElement | undefined;
+    if (slide) el.scrollTo({ left: slide.offsetLeft, behavior });
+  };
+
+  return (
+    <div className="mt-12">
+      <div className="relative">
+        {/* Prev / next — desktop only, just outside the band edges */}
+        <button
+          type="button"
+          onClick={() => step(-1)}
+          aria-label="Попереднє фото"
+          className={`absolute top-1/2 -left-3 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white text-[#452B70] ring-1 ring-[#452B70]/10 transition hover:bg-[#452B70] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#452B70] md:grid md:-left-5 ${SOFT_SHADOW}`}
+        >
+          <ChevronLeft className="h-5 w-5" aria-hidden />
+        </button>
+        <button
+          type="button"
+          onClick={() => step(1)}
+          aria-label="Наступне фото"
+          className={`absolute top-1/2 -right-3 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white text-[#452B70] ring-1 ring-[#452B70]/10 transition hover:bg-[#452B70] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#452B70] md:grid md:-right-5 ${SOFT_SHADOW}`}
+        >
+          <ChevronRight className="h-5 w-5" aria-hidden />
+        </button>
+
+        <div
+          ref={scrollerRef}
+          aria-label="Галерея кемпу Pine Beach"
+          className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {SLIDES.map((s) => (
+            <PhotoSlot
+              key={s.src}
+              src={s.src}
+              width={s.width}
+              height={s.height}
+              alt={s.alt}
+              tone={s.tone}
+              aspect="4/3"
+              className={`shrink-0 grow-0 basis-[82%] snap-start md:basis-[38%] ${SOFT_SHADOW}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Dot indicators */}
+      <div className="mt-5 flex justify-center gap-2">
+        {SLIDES.map((s, i) => (
+          <button
+            key={s.src}
+            type="button"
+            onClick={() => goTo(i)}
+            aria-label={`Перейти до фото ${i + 1}`}
+            aria-current={i === active}
+            className={`h-2 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#452B70] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFE8C7] ${
+              i === active ? "w-6 bg-[#452B70]" : "w-2 bg-[#452B70]/30 hover:bg-[#452B70]/50"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function PineBeachResort() {
   return (
@@ -53,73 +171,44 @@ export function PineBeachResort() {
       className="relative scroll-mt-24 overflow-hidden bg-[#FFE8C7] py-24 md:py-32"
     >
       <DotGrid color="#452B70" opacity={0.06} />
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <div className="grid gap-10 md:grid-cols-2 md:items-stretch lg:gap-12">
-          {/* Left column — copy + 2×2 facts */}
-          <div className="flex flex-col">
-            <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-[#452B70]/70">
-              <AccentDot color="var(--sea)" size={10} />
-              Pine Beach Resort
-            </p>
-            <h2
-              id="resort-heading"
-              className="mt-3 text-balance text-3xl font-extrabold text-[#452B70] md:text-5xl"
-            >
-              Сосни. Море. Тиша. Дім на десять днів.
-            </h2>
-            <p className="mt-5 text-lg leading-relaxed text-[#452B70]/80">
-              Camp розташований у курорті Pine Beach — на самому березі Адріатики,
-              у Pakoštane. Між морем і озером Врана, у годині від чотирьох
-              національних парків Хорватії.
-            </p>
-
-            <dl className="mt-8 grid gap-4 sm:auto-rows-fr sm:grid-cols-2">
-              {FEATURES.map(({ icon: Icon, title, body }) => (
-                <div
-                  key={title}
-                  className={`flex h-full gap-3 rounded-2xl border border-[#452B70]/15 bg-card p-4 ${SOFT_SHADOW}`}
-                >
-                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#452B70]" aria-hidden />
-                  <div>
-                    <dt className="font-semibold text-[#452B70]">{title}</dt>
-                    <dd className="mt-0.5 text-sm text-[#452B70]/75">{body}</dd>
-                  </div>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          {/* Right column — vertical hero + even tile grid.
-              On md+ the grid fills the left column's height (items-stretch),
-              so both columns close on the same line. Tile heights come from
-              the grid tracks, keeping every preview the exact same size. */}
-          <div
-            className="grid grid-cols-2 gap-3 md:h-full md:grid-cols-[1.35fr_1fr_1fr] md:grid-rows-3"
-            aria-label="Галерея кемпу Pine Beach"
+      <div className="relative mx-auto max-w-6xl px-4 md:px-6">
+        {/* Heading — full width */}
+        <div className="max-w-3xl">
+          <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-[#452B70]/70">
+            <AccentDot color="var(--sea)" size={10} />
+            Pine Beach Resort
+          </p>
+          <h2
+            id="resort-heading"
+            className="mt-3 text-balance text-3xl font-extrabold text-[#452B70] md:text-5xl"
           >
-            <PhotoSlot
-              src={HERO.src}
-              width={HERO.width}
-              height={HERO.height}
-              alt={HERO.alt}
-              tone={HERO.tone}
-              aspect="4/3"
-              className={`col-span-2 md:col-span-1 md:row-span-3 md:!aspect-auto md:h-full ${SOFT_SHADOW}`}
-            />
-            {TILES.map((t) => (
-              <PhotoSlot
-                key={t.src}
-                src={t.src}
-                width={t.width}
-                height={t.height}
-                alt={t.alt}
-                tone={t.tone}
-                aspect="1/1"
-                className={`md:!aspect-auto md:h-full ${SOFT_SHADOW}`}
-              />
-            ))}
-          </div>
+            Сосни. Море. Тиша. Дім на десять днів.
+          </h2>
+          <p className="mt-5 text-lg leading-relaxed text-[#452B70]/80">
+            Camp розташований у курорті Pine Beach — на самому березі Адріатики,
+            у Pakoštane. Між морем і озером Врана, у годині від чотирьох
+            національних парків Хорватії.
+          </p>
         </div>
+
+        {/* Fact cards — full-width row, equal height */}
+        <dl className="mt-10 grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {FEATURES.map(({ icon: Icon, title, body }) => (
+            <div
+              key={title}
+              className={`flex h-full gap-3 rounded-2xl border border-[#452B70]/15 bg-card p-4 ${SOFT_SHADOW}`}
+            >
+              <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#452B70]" aria-hidden />
+              <div>
+                <dt className="font-semibold text-[#452B70]">{title}</dt>
+                <dd className="mt-0.5 text-sm text-[#452B70]/75">{body}</dd>
+              </div>
+            </div>
+          ))}
+        </dl>
+
+        {/* Photo carousel */}
+        <ResortCarousel />
       </div>
     </section>
   );
