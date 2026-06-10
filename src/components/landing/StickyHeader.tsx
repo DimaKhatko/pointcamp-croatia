@@ -33,7 +33,7 @@ export function StickyHeader() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
         <a href="#top" className="flex items-center" aria-label="PointCamp — на початок">
-          <img src={logo} alt="PointCamp" className="h-8 w-auto" />
+          <img src={logo} alt="PointCamp" className="h-10 w-auto" />
         </a>
 
         <nav className="hidden items-center gap-7 md:flex" aria-label="Розділи сторінки">

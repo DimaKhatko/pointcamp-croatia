@@ -149,7 +149,7 @@ function ResortCarousel() {
               alt={s.alt}
               tone={s.tone}
               aspect="3/2"
-              className={`shrink-0 grow-0 basis-[82%] snap-start md:basis-[38%] ${RICH_SHADOW} ${s.imgClass ?? ""}`}
+              className={`shrink-0 grow-0 basis-[82%] snap-start md:basis-[38%] ${s.imgClass ?? ""}`}
             />
           ))}
         </div>
