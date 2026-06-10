@@ -34,3 +34,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.firebase/
+*.report.html
+package-lock.json
+.claude/
+CLAUDE.md
