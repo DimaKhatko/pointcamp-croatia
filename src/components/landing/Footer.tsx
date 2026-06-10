@@ -1,4 +1,5 @@
 import { Mail, Phone, MessageCircle, Send, Facebook, Instagram } from "lucide-react";
+import logo from "@/assets/logo-pointcamp.svg";
 
 export function Footer() {
   return (
@@ -6,14 +7,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
-                <span className="h-2.5 w-2.5 rounded-full bg-sun" />
-              </span>
-              <span className="text-base font-bold tracking-tight text-foreground">
-                Point Camp
-              </span>
-            </div>
+            <img src={logo} alt="PointCamp" className="h-9 w-auto" />
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               Англомовний літній кемп у Хорватії для дітей і підлітків 8–17 років.
               16 років турботи, тепла й справжнього літа.

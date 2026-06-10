@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo-pointcamp.svg";
 
 const NAV = [
   { href: "#program", label: "Програма" },
@@ -31,13 +32,8 @@ export function StickyHeader() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
-        <a href="#top" className="flex items-center gap-2" aria-label="Point Camp — на початок">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
-            <span className="h-2.5 w-2.5 rounded-full bg-sun" />
-          </span>
-          <span className="text-base font-bold tracking-tight text-foreground">
-            Point Camp
-          </span>
+        <a href="#top" className="flex items-center" aria-label="PointCamp — на початок">
+          <img src={logo} alt="PointCamp" className="h-8 w-auto" />
         </a>
 
         <nav className="hidden items-center gap-7 md:flex" aria-label="Розділи сторінки">
