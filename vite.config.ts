@@ -9,7 +9,7 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // SPA build for Firebase Hosting: disable Cloudflare worker output and enable
 // TanStack Start's SPA mode so the build produces static client assets only.
 export default defineConfig({
-  cloudflare: false,
+  nitro: false,
   tanstackStart: {
     server: { entry: "server" },
     spa: {
