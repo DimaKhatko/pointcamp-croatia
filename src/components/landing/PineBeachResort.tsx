@@ -16,8 +16,14 @@ import pine09 from "@/assets/photos/pine-09-aerial-bay.webp";
 import pineHut from "@/assets/photos/spare-branded-hut.webp";
 import pineCourts from "@/assets/photos/spare-aerial-courts.webp";
 
-// Warm, brand-tinted soft shadow — shared by photos, cards and arrows.
-const SOFT_SHADOW = "shadow-[0_14px_30px_-16px_rgba(69,43,112,0.45)]";
+// Rich warm "glow + shadow" — purple base + amber glow so photos/cards lift
+// off the beige #FFE8C7. Arbitrary box-shadow property (not the `shadow-*`
+// utility) to keep all three layers intact. Defined once, reused.
+const RICH_SHADOW =
+  "[box-shadow:0_2px_6px_rgba(69,43,112,0.10),0_18px_40px_-10px_rgba(180,120,40,0.28),0_30px_60px_-16px_rgba(69,43,112,0.20)]";
+
+// Lighter shadow for the small round arrow buttons.
+const ARROW_SHADOW = "shadow-[0_8px_20px_-10px_rgba(69,43,112,0.45)]";
 
 const FEATURES = [
   { icon: Trees, title: "Затишні бунгало", body: "Прохолодний сосновий ліс просто над морем." },
@@ -116,7 +122,7 @@ function ResortCarousel() {
           type="button"
           onClick={() => step(-1)}
           aria-label="Попереднє фото"
-          className={`absolute top-1/2 -left-3 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white text-[#452B70] ring-1 ring-[#452B70]/10 transition hover:bg-[#452B70] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#452B70] md:grid md:-left-5 ${SOFT_SHADOW}`}
+          className={`absolute top-1/2 -left-3 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white text-[#452B70] ring-1 ring-[#452B70]/10 transition hover:bg-[#452B70] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#452B70] md:grid md:-left-5 ${ARROW_SHADOW}`}
         >
           <ChevronLeft className="h-5 w-5" aria-hidden />
         </button>
@@ -124,7 +130,7 @@ function ResortCarousel() {
           type="button"
           onClick={() => step(1)}
           aria-label="Наступне фото"
-          className={`absolute top-1/2 -right-3 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white text-[#452B70] ring-1 ring-[#452B70]/10 transition hover:bg-[#452B70] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#452B70] md:grid md:-right-5 ${SOFT_SHADOW}`}
+          className={`absolute top-1/2 -right-3 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white text-[#452B70] ring-1 ring-[#452B70]/10 transition hover:bg-[#452B70] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#452B70] md:grid md:-right-5 ${ARROW_SHADOW}`}
         >
           <ChevronRight className="h-5 w-5" aria-hidden />
         </button>
@@ -143,7 +149,7 @@ function ResortCarousel() {
               alt={s.alt}
               tone={s.tone}
               aspect="3/2"
-              className={`shrink-0 grow-0 basis-[82%] snap-start md:basis-[38%] ${SOFT_SHADOW} ${s.imgClass ?? ""}`}
+              className={`shrink-0 grow-0 basis-[82%] snap-start md:basis-[38%] ${RICH_SHADOW} ${s.imgClass ?? ""}`}
             />
           ))}
         </div>
@@ -201,7 +207,7 @@ export function PineBeachResort() {
           {FEATURES.map(({ icon: Icon, title, body }) => (
             <div
               key={title}
-              className={`flex h-full gap-3 rounded-2xl border border-[#452B70]/15 bg-card p-4 ${SOFT_SHADOW}`}
+              className={`flex h-full gap-3 rounded-2xl border border-[#452B70]/15 bg-card p-4 ${RICH_SHADOW}`}
             >
               <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#452B70]" aria-hidden />
               <div>
