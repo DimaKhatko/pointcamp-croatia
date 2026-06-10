@@ -5,12 +5,13 @@ import { AccentDot } from "./decor/AccentDot";
 import pineFeatured from "@/assets/photos/pine-featured-bungalow-sea.webp";
 import pine01 from "@/assets/photos/pine-01-bungalow-interior.webp";
 import pine03 from "@/assets/photos/pine-03-bungalow-exterior.webp";
-import pine04 from "@/assets/photos/pine-04-bungalow-exterior.webp";
 import pine05 from "@/assets/photos/pine-05-sanitary.webp";
 import pine06 from "@/assets/photos/pine-06-sanitary-kids.webp";
 import pine07 from "@/assets/photos/pine-07-food.webp";
-import pine08 from "@/assets/photos/pine-08-dining.webp";
 import pine09 from "@/assets/photos/pine-09-aerial-bay.webp";
+
+// Warm, brand-tinted soft shadow — shared by photos and fact cards.
+const SOFT_SHADOW = "shadow-[0_14px_30px_-16px_rgba(69,43,112,0.45)]";
 
 const FEATURES = [
   { icon: Trees, title: "Затишні бунгало", body: "Прохолодний сосновий ліс просто над морем." },
@@ -19,22 +20,29 @@ const FEATURES = [
   { icon: MapPin, title: "Pakoštane, Далмація", body: "Між Адріатикою і озером Врана, 4 нацпарки поруч." },
 ];
 
-const GALLERY: {
+const HERO = {
+  src: pineFeatured,
+  width: 900,
+  height: 1200,
+  alt: "Бунгало Pine Beach Pakoštane серед сосон біля Адріатичного моря",
+  tone: "mint" as const,
+};
+
+// Six diverse, equal-size tiles. Similar shots (two sanitary frames) are spread
+// apart; the duplicate buffet/dining pair is reduced to a single food frame.
+const TILES: {
   src: string;
   width: number;
   height: number;
   alt: string;
   tone: "sea" | "sun" | "mint" | "sand" | "primary" | "mix";
 }[] = [
-  { src: pineFeatured, width: 900, height: 900, alt: "Бунгало Pine Beach Pakoštane біля Адріатичного моря", tone: "mint" },
   { src: pine01, width: 400, height: 400, alt: "Інтер'єр бунгало в Pine Beach — спальні місця для учасників табору", tone: "sea" },
-  { src: pine03, width: 400, height: 400, alt: "Бунгало серед сосен у кемпі Pine Beach", tone: "primary" },
-  { src: pine04, width: 400, height: 400, alt: "Зовнішній вигляд бунгало табору в Хорватії", tone: "mint" },
   { src: pine05, width: 400, height: 400, alt: "Сучасний санвузол у таборі Pine Beach", tone: "sand" },
-  { src: pine06, width: 400, height: 400, alt: "Дитячий санітарний блок у кемпі Pine Beach", tone: "mint" },
-  { src: pine07, width: 400, height: 400, alt: "Харчування в таборі — страви на шведському столі", tone: "sea" },
-  { src: pine08, width: 400, height: 400, alt: "Їдальня табору Pine Beach Pakoštane", tone: "sun" },
-  { src: pine09, width: 400, height: 400, alt: "Бухта Pine Beach з висоти — місце проведення табору", tone: "primary" },
+  { src: pine03, width: 400, height: 400, alt: "Бунгало серед сосен у кемпі Pine Beach", tone: "primary" },
+  { src: pine07, width: 400, height: 400, alt: "Харчування в таборі — страви на шведському столі", tone: "sun" },
+  { src: pine06, width: 400, height: 400, alt: "Діти біля сучасного санітарного блоку Pine Beach", tone: "mint" },
+  { src: pine09, width: 400, height: 400, alt: "Бухта Pine Beach з висоти — місце проведення табору", tone: "sea" },
 ];
 
 export function PineBeachResort() {
@@ -46,8 +54,9 @@ export function PineBeachResort() {
     >
       <DotGrid color="#452B70" opacity={0.06} />
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <div className="grid gap-12 md:grid-cols-2 md:items-center">
-          <div>
+        <div className="grid gap-10 md:grid-cols-2 md:items-stretch lg:gap-12">
+          {/* Left column — copy + 2×2 facts */}
+          <div className="flex flex-col">
             <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-[#452B70]/70">
               <AccentDot color="var(--sea)" size={10} />
               Pine Beach Resort
@@ -64,11 +73,11 @@ export function PineBeachResort() {
               національних парків Хорватії.
             </p>
 
-            <dl className="mt-8 grid gap-4 sm:grid-cols-2">
+            <dl className="mt-8 grid gap-4 sm:auto-rows-fr sm:grid-cols-2">
               {FEATURES.map(({ icon: Icon, title, body }) => (
                 <div
                   key={title}
-                  className="flex gap-3 rounded-2xl border border-[#452B70]/15 bg-card p-4"
+                  className={`flex h-full gap-3 rounded-2xl border border-[#452B70]/15 bg-card p-4 ${SOFT_SHADOW}`}
                 >
                   <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#452B70]" aria-hidden />
                   <div>
@@ -80,20 +89,33 @@ export function PineBeachResort() {
             </dl>
           </div>
 
+          {/* Right column — vertical hero + even tile grid.
+              On md+ the grid fills the left column's height (items-stretch),
+              so both columns close on the same line. Tile heights come from
+              the grid tracks, keeping every preview the exact same size. */}
           <div
-            className="grid grid-flow-dense grid-cols-2 gap-3 md:grid-cols-3"
+            className="grid grid-cols-2 gap-3 md:h-full md:grid-cols-[1.35fr_1fr_1fr] md:grid-rows-3"
             aria-label="Галерея кемпу Pine Beach"
           >
-            {GALLERY.map((g, i) => (
+            <PhotoSlot
+              src={HERO.src}
+              width={HERO.width}
+              height={HERO.height}
+              alt={HERO.alt}
+              tone={HERO.tone}
+              aspect="4/3"
+              className={`col-span-2 md:col-span-1 md:row-span-3 md:!aspect-auto md:h-full ${SOFT_SHADOW}`}
+            />
+            {TILES.map((t) => (
               <PhotoSlot
-                key={g.src}
-                src={g.src}
-                width={g.width}
-                height={g.height}
-                alt={g.alt}
-                tone={g.tone}
+                key={t.src}
+                src={t.src}
+                width={t.width}
+                height={t.height}
+                alt={t.alt}
+                tone={t.tone}
                 aspect="1/1"
-                className={i === 0 ? "col-span-2 row-span-2 shadow-md" : "shadow-sm"}
+                className={`md:!aspect-auto md:h-full ${SOFT_SHADOW}`}
               />
             ))}
           </div>
