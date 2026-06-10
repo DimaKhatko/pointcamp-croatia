@@ -38,8 +38,9 @@ const SLIDES: {
   tone: "sea" | "sun" | "mint" | "sand" | "primary" | "mix";
   imgClass?: string;
 }[] = [
-  // Tall/vertical shot: favour the lower frame (sea + bungalow body, not roof).
-  { src: pineFeatured, width: 1000, height: 750, alt: "Бунгало Pine Beach серед сосен біля Адріатичного моря", tone: "mint", imgClass: "[&_img]:object-[center_65%]" },
+  // Horizontal ~3:2 shot; the bungalow sits on the RIGHT — bias the crop right
+  // so the whole roof-to-base subject stays in frame (try 70%_40% if it clips).
+  { src: pineFeatured, width: 1000, height: 750, alt: "Бунгало Pine Beach серед сосен біля Адріатичного моря", tone: "mint", imgClass: "[&_img]:object-[68%_center]" },
   { src: pine03, width: 1000, height: 750, alt: "Очеретяне бунгало у золотому світлі серед сосон", tone: "sun" },
   { src: pine04, width: 1000, height: 750, alt: "Зовнішній вигляд бунгало табору Pine Beach у Хорватії", tone: "sand" },
   { src: pineHut, width: 1000, height: 750, alt: "Брендований будиночок Pine Beach серед сосон", tone: "primary" },
