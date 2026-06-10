@@ -21,25 +21,21 @@ export function ActivitiesGrid() {
   return (
     <section
       aria-labelledby="activities-heading"
-      className="relative scroll-mt-24 py-24 md:py-32"
-      style={{
-        background:
-          "linear-gradient(180deg, var(--background), color-mix(in oklab, var(--sand) 18%, var(--background)))",
-      }}
+      className="relative scroll-mt-24 bg-[#FFE8C7] py-24 md:py-32"
     >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="max-w-2xl">
-          <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-primary/70">
+          <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-[#452B70]/70">
             <AccentDot color="var(--sun)" size={10} />
             Активності
           </p>
           <h2
             id="activities-heading"
-            className="mt-3 text-balance text-3xl font-extrabold text-foreground md:text-5xl"
+            className="mt-3 text-balance text-3xl font-extrabold text-[#452B70] md:text-5xl"
           >
             Більше, ніж може здатися з першого погляду.
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-4 text-lg text-[#452B70]/80">
             Кожен день — нова грань: спорт, творчість, англійська, дослідження себе.
           </p>
         </div>
@@ -56,7 +52,7 @@ export function ActivitiesGrid() {
                 aspect="1/1"
                 className="shadow-sm transition-transform group-hover:-translate-y-0.5"
               />
-              <p className="mt-2 px-1 text-sm font-medium text-foreground">
+              <p className="mt-2 px-1 text-sm font-medium text-[#452B70]">
                 {item.label}
               </p>
             </li>
@@ -67,7 +63,7 @@ export function ActivitiesGrid() {
           {chipItems.map((item) => (
             <li
               key={item.label}
-              className="flex items-center rounded-2xl border border-border bg-card px-4 py-4 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-secondary"
+              className="flex items-center rounded-2xl border border-[#452B70]/15 bg-card px-4 py-4 text-sm font-medium text-[#452B70] transition-colors hover:border-[#452B70]/40 hover:bg-[#452B70]/5"
             >
               <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-sun" />
               {item.label}

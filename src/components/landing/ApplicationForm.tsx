@@ -78,20 +78,20 @@ export function ApplicationForm() {
     <section
       id="apply"
       aria-labelledby="apply-heading"
-      className="scroll-mt-24 bg-background py-24 md:py-32"
+      className="scroll-mt-24 bg-[#FFE8C7] py-24 md:py-32"
     >
       <div className="mx-auto max-w-3xl px-4 md:px-6">
         <div className="text-center">
-          <p className="text-sm font-medium uppercase tracking-widest text-primary/70">
+          <p className="text-sm font-medium uppercase tracking-widest text-[#452B70]/70">
             Заявка
           </p>
           <h2
             id="apply-heading"
-            className="mt-3 text-balance text-3xl font-extrabold text-foreground md:text-5xl"
+            className="mt-3 text-balance text-3xl font-extrabold text-[#452B70] md:text-5xl"
           >
             Забронюйте місце для дитини.
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-4 text-lg text-[#452B70]/80">
             Залиште контакти — менеджер передзвонить, відповість на питання
             й забронює місце.
           </p>

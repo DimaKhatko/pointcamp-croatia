@@ -9,6 +9,7 @@ import m5 from "@/assets/photos/moments-m5-team-huddle.webp";
 import m6 from "@/assets/photos/moments-m6-ducks.webp";
 import m7 from "@/assets/photos/moments-m7-duck-selfie.webp";
 import m8 from "@/assets/photos/moments-m8-dinner-selfie.webp";
+import m9 from "@/assets/photos/spare-sup-group.webp";
 
 type Tile = {
   src: string;
@@ -31,6 +32,7 @@ const TILES: Tile[] = [
   { src: m6, width: 560, height: 560, alt: "Хлопці жартують із табірними каченятами", label: "Захід", tone: "sun", aspect: "1/1" },
   { src: m7, width: 1100, height: 825, alt: "Селфі друзів із каченям на тлі моря", label: "Сосни", tone: "mint", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
   { src: m8, width: 560, height: 560, alt: "Друзі роблять спільне селфі за вечерею", label: "Перемога", tone: "sea", aspect: "1/1", rotate: "motion-safe:rotate-1" },
+  { src: m9, width: 720, height: 900, alt: "Група учасників із сап-бордами на березі Адріатики", label: "Сап-борди", tone: "sea", aspect: "1/1", rotate: "motion-safe:-rotate-1" },
 ];
 
 export function MomentsGallery() {
@@ -64,7 +66,7 @@ export function MomentsGallery() {
           на роки.
         </p>
 
-        <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+        <div className="mt-12 grid grid-flow-dense grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
           {TILES.map((t) => (
             <PhotoSlot
               key={t.label}

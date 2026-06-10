@@ -8,6 +8,7 @@ const NAV = [
   { href: "#resort", label: "Резорт" },
   { href: "#dates", label: "Дати" },
   { href: "#faq", label: "FAQ" },
+  { href: "https://japan.pointcamp.com.ua/", label: "Japan'26", external: true },
 ];
 
 export function StickyHeader() {
@@ -44,6 +45,7 @@ export function StickyHeader() {
             <a
               key={item.href}
               href={item.href}
+              {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
             >
               {item.label}
@@ -52,7 +54,7 @@ export function StickyHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button asChild size="sm" className="hidden md:inline-flex">
+          <Button asChild size="default" className="hidden md:inline-flex">
             <a href="#apply">Залишити заявку</a>
           </Button>
           <button
@@ -74,6 +76,7 @@ export function StickyHeader() {
               <a
                 key={item.href}
                 href={item.href}
+                {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 onClick={() => setOpen(false)}
                 className="rounded-lg px-3 py-3 text-base font-medium text-foreground hover:bg-secondary"
               >
