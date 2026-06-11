@@ -25,7 +25,7 @@ export function WhyPointCamp() {
             id="why-heading"
             className="mt-3 text-balance text-3xl font-extrabold text-foreground md:text-5xl"
           >
-            Шістнадцять років довіри батьків — у нашій ДНК.
+            15 років довіри батьків — у нашій ДНК.
           </h2>
         </div>
 

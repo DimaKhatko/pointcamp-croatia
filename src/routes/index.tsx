@@ -20,7 +20,7 @@ const SITE_URL = "https://croatia.pointcamp.com.ua/";
 const OG_IMAGE = "https://croatia.pointcamp.com.ua/og-image.jpg";
 const TITLE = "Англомовний літній кемп у Хорватії для дітей 8–17 | Point Camp";
 const DESCRIPTION =
-  "Літній кемп Point Camp у Хорватії 31.07–09.08.2026: Адріатика, англійська щодня, безпека 24/7, 16 років досвіду. Лише 55 місць. Залиште заявку.";
+  "Англомовний кемп на Адріатиці 31.07–09.08.2026. Англійська щодня, безпека 24/7, 15 років досвіду. Діти щасливі, батьки спокійні. Лише 55 місць.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

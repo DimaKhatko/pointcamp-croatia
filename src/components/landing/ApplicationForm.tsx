@@ -63,7 +63,7 @@ export function ApplicationForm() {
         }
         setSuccess(true);
         toast.success("Заявку прийнято!", {
-          description: "Зв'яжемось упродовж робочого дня.",
+          description: "Зв'яжемося впродовж робочого дня.",
         });
         form.reset();
       }
@@ -92,8 +92,8 @@ export function ApplicationForm() {
             Забронюйте місце для дитини.
           </h2>
           <p className="mt-4 text-lg text-[#452B70]/80">
-            Залиште контакти — менеджер передзвонить, відповість на питання
-            й забронює місце.
+            Будь ласка, залиште контактні дані — зв'яжемося з вами впродовж
+            робочого дня, щоб відповісти на питання й уточнити деталі.
           </p>
         </div>
 
@@ -105,10 +105,10 @@ export function ApplicationForm() {
           >
             <CheckCircle2 className="mx-auto h-12 w-12 text-primary" aria-hidden />
             <h3 className="mt-5 text-2xl font-bold text-foreground">
-              Дякуємо! Заявку отримано.
+              Готово! Заявку отримали.
             </h3>
             <p className="mt-3 text-base text-foreground/80">
-              Ми зв'яжемось із Вами впродовж робочого дня, щоб підтвердити деталі.
+              Зв'яжемося з вами впродовж робочого дня, щоб уточнити деталі.
             </p>
             <Button
               variant="outline"

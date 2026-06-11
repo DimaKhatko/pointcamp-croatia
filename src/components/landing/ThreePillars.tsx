@@ -40,7 +40,7 @@ export function ThreePillars() {
             id="pillars-heading"
             className="mt-3 text-balance text-3xl font-extrabold text-foreground md:text-5xl"
           >
-            Три кити нашого літа.
+            Три причини, чому звідси не хочеться додому.
           </h2>
         </div>
 

@@ -10,7 +10,7 @@ export function Footer() {
             <img src={logo} alt="PointCamp" className="h-14 w-auto" />
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               Англомовний літній кемп у Хорватії для дітей і підлітків 8–17 років.
-              16 років турботи, тепла й справжнього літа.
+              15 років турботи, тепла й справжнього літа.
             </p>
           </div>
 
@@ -29,7 +29,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://t.me/pointcamp"
+                  href="https://t.me/point_camp"
                   className="inline-flex items-center gap-2 text-foreground hover:text-primary"
                   rel="noopener"
                 >
@@ -69,7 +69,7 @@ export function Footer() {
                 <Facebook className="h-4 w-4" />
               </a>
               <a
-                href="https://instagram.com/pointcamp"
+                href="https://www.instagram.com/point_camp"
                 aria-label="Instagram"
                 rel="noopener"
                 className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-card text-foreground transition-colors hover:border-primary/40 hover:text-primary"

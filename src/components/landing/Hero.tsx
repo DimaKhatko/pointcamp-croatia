@@ -37,12 +37,12 @@ export function Hero() {
           </span>
 
           <h1 className="mt-5 text-balance text-4xl font-extrabold leading-[1.05] text-white drop-shadow-sm sm:text-5xl md:text-6xl lg:text-7xl">
-            Англомовний літній кемп у&nbsp;<Underline color="sun">Хорватії</Underline>
+            Десять днів, які ваша дитина пам'ятатиме&nbsp;<Underline color="sun">все життя</Underline>
           </h1>
 
           <p className="mt-6 max-w-2xl text-balance text-lg text-white/90 md:text-xl">
-            Літо, у якому Ваша дитина знов чує себе. Море, сосновий ліс і живі друзі —
-            замість стрічки на екрані.
+            Адріатичне море, сосновий ліс і команда, що стає сім'єю. Англомовний
+            кемп у Хорватії для дітей 8–17 — без скролінгу, з живою англійською щодня.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">

@@ -26,15 +26,15 @@ type Tile = {
 };
 
 const TILES: Tile[] = [
-  { src: m1, width: 560, height: 700, alt: "Підлітки сміються на заході сонця біля Адріатики — табір Point Camp", label: "Ранкове море", tone: "sea", aspect: "4/5", rotate: "motion-safe:-rotate-2", span: "row-span-2" },
+  { src: m1, width: 560, height: 700, alt: "Підлітки сміються на заході сонця біля Адріатики — табір Point Camp", label: "Друзі", tone: "sea", aspect: "4/5", rotate: "motion-safe:-rotate-2", span: "row-span-2" },
   { src: m2, width: 560, height: 560, alt: "Діти радіють у бірюзовій воді Адріатики", label: "Команда", tone: "sun", aspect: "1/1", rotate: "motion-safe:rotate-1" },
-  { src: m3, width: 560, height: 560, alt: "Вожатий-ментор обіймає підлітка — підтримка в Point Camp", label: "Каякінг", tone: "mint", aspect: "1/1" },
-  { src: m4, width: 1100, height: 825, alt: "Підлітки на каяках біля берега під драматичним небом Адріатики", label: "Друзі", tone: "sand", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
-  { src: m5, width: 560, height: 560, alt: "Командна гра підлітків у таборі Point Camp", label: "Ватра", tone: "primary", aspect: "1/1", rotate: "motion-safe:rotate-2" },
-  { src: m6, width: 560, height: 560, alt: "Хлопці жартують із табірними каченятами", label: "Захід", tone: "sun", aspect: "1/1" },
-  { src: m7, width: 1100, height: 825, alt: "Селфі друзів із каченям на тлі моря", label: "Сосни", tone: "mint", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
-  { src: m8, width: 560, height: 560, alt: "Друзі роблять спільне селфі за вечерею", label: "Перемога", tone: "sea", aspect: "1/1", rotate: "motion-safe:rotate-1" },
-  { src: m9, width: 720, height: 900, alt: "Група учасників із сап-бордами на березі Адріатики", label: "Сап-борди", tone: "sea", aspect: "1/1", rotate: "motion-safe:-rotate-1" },
+  { src: m3, width: 560, height: 560, alt: "Вожатий-ментор обіймає підлітка — підтримка в Point Camp", label: "Вайб", tone: "mint", aspect: "1/1" },
+  { src: m4, width: 1100, height: 825, alt: "Підлітки на каяках біля берега під драматичним небом Адріатики", label: "Літо", tone: "sand", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
+  { src: m5, width: 560, height: 560, alt: "Командна гра підлітків у таборі Point Camp", label: "Пригода", tone: "primary", aspect: "1/1", rotate: "motion-safe:rotate-2" },
+  { src: m6, width: 560, height: 560, alt: "Хлопці жартують із табірними каченятами", label: "Свобода", tone: "sun", aspect: "1/1" },
+  { src: m7, width: 1100, height: 825, alt: "Селфі друзів із каченям на тлі моря", label: "Море", tone: "mint", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
+  { src: m8, width: 560, height: 560, alt: "Друзі роблять спільне селфі за вечерею", label: "Драйв", tone: "sea", aspect: "1/1", rotate: "motion-safe:rotate-1" },
+  { src: m9, width: 720, height: 900, alt: "Група учасників із сап-бордами на березі Адріатики", label: "Ми", tone: "sea", aspect: "1/1", rotate: "motion-safe:-rotate-1" },
 ];
 
 export function MomentsGallery() {
@@ -61,11 +61,11 @@ export function MomentsGallery() {
           id="moments-heading"
           className="mt-4 text-balance text-3xl font-extrabold text-foreground md:text-5xl"
         >
-          Літо, яке хочеться пам'ятати.
+          Щасливі миті, які діти згадують роками.
         </h2>
         <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-          Невеликий зріз із минулих заїздів — атмосфера, з якої народжується дружба
-          на роки.
+          Кілька кадрів із минулих заїздів — і та сама атмосфера, з якої народжується
+          дружба на роки.
         </p>
 
         <div className="relative mt-12">

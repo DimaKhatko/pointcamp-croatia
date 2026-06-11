@@ -4,7 +4,7 @@ import safetyTeam from "@/assets/photos/safety-team-alt.webp";
 const ITEMS = [
   { icon: HeartPulse, title: "Лікар 24/7", body: "Кваліфікований медик постійно в кемпі." },
   { icon: ShieldCheck, title: "Страхування", body: "Повне покриття на весь період заїзду." },
-  { icon: Users, title: "10 дорослих у команді", body: "Дбайливі вожаті й куратори поруч." },
+  { icon: Users, title: "10 дорослих у команді", body: "Тренована команда, що не лишає дітей без уваги." },
   { icon: Sparkles, title: "Лише 55 місць", body: "Камерність і увага до кожної дитини." },
 ];
 
@@ -26,7 +26,7 @@ export function Safety() {
             Ви передаєте дитину команді, яка знає, що робить.
           </h2>
           <p className="mt-5 text-lg text-primary-foreground/80">
-            Десятиліття практики, чіткі протоколи і людська увага — у кожному дні
+            15+ років досвіду, чіткі протоколи і людська увага — у кожному дні
             заїзду.
           </p>
         </div>

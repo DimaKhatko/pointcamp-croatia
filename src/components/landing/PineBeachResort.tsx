@@ -27,10 +27,10 @@ const RICH_SHADOW =
 const ARROW_SHADOW = "shadow-[0_8px_20px_-10px_rgba(69,43,112,0.45)]";
 
 const FEATURES = [
-  { icon: Trees, title: "Затишні бунгало", body: "Прохолодний сосновий ліс просто над морем." },
-  { icon: Bath, title: "Сучасний санітарний блок", body: "Поруч із житлом, охайно й комфортно." },
-  { icon: Utensils, title: "All-inclusive 4 рази", body: "Середземноморська кухня щодня." },
-  { icon: MapPin, title: "Pakoštane, Далмація", body: "Між Адріатикою і озером Врана, 4 нацпарки поруч." },
+  { icon: Trees, title: "Затишні бунгало", body: "Прохолодний сосновий ліс просто біля моря." },
+  { icon: Bath, title: "Душові та санвузли поруч", body: "Сучасні й чисті, за кілька кроків від житла." },
+  { icon: Utensils, title: "All-inclusive, 4 рази на день", body: "Середземноморська кухня — смачно й ситно щодня." },
+  { icon: MapPin, title: "Піщаний пляж", body: "Рідкість для Адріатики — м'який пісок замість гальки." },
 ];
 
 // Resort-only imagery, grouped: exterior/sea → interiors → facilities → dining → aerial.
@@ -198,9 +198,8 @@ export function PineBeachResort() {
               Сосни. Море. Тиша. Дім на десять днів.
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-[#452B70]/80">
-              Camp розташований у курорті Pine Beach — на самому березі Адріатики,
-              у Pakoštane. Між морем і озером Врана, у годині від чотирьох
-              національних парків Хорватії.
+              Живемо в курорті Pine Beach — просто на березі Адріатики,
+              у Pakoštane. Повертаємось сюди не перший рік — бо тут справді комфортно.
             </p>
           </div>
           {/* Decorative traveler — bottom-anchored to the heading block (never

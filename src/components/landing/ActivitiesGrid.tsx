@@ -10,7 +10,7 @@ import actually from "@/assets/actually.svg";
 /** Photo source per labelled activity (all exported at 560×560). */
 const PHOTO_SRC: Record<string, string> = {
   "Каякінг": actKayak,
-  "Рефлексія": actReflection,
+  "Групові рефлексії": actReflection,
   "Стрільба з лука": actArchery,
   "Педдлбординг": actPaddleboard,
 };
@@ -36,10 +36,11 @@ export function ActivitiesGrid() {
               id="activities-heading"
               className="mt-3 text-balance text-3xl font-extrabold text-[#452B70] md:text-5xl"
             >
-              Більше, ніж може здатися з першого погляду.
+              Ми встигаємо більше, ніж здається.
             </h2>
             <p className="mt-4 text-lg text-[#452B70]/80">
-              Кожен день — нова грань: спорт, творчість, англійська, дослідження себе.
+              Спорт, творчість, англійська, групові рефлексії — кожен день про різне,
+              але важливе.
             </p>
           </div>
           {/* Decorative character — bottom-anchored to the heading block (never

@@ -18,7 +18,7 @@ export function DatesPricing() {
             id="dates-heading"
             className="mt-3 text-balance text-3xl font-extrabold text-foreground md:text-5xl"
           >
-            Один заїзд. <span className="text-primary">55 місць.</span> Без других шансів.
+            Лише <span className="text-primary">55 місць.</span> Бронюйте заздалегідь.
           </h2>
         </div>
 
@@ -42,12 +42,11 @@ export function DatesPricing() {
                 <span className="text-6xl font-extrabold tracking-tight md:text-7xl">
                   1550&nbsp;€
                 </span>
-                <span className="text-primary-foreground/80">/ заїзд</span>
               </div>
 
               <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-sun/90 px-3 py-1.5 text-sm font-semibold text-sun-foreground">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-                Лише 1 заїзд · 55 місць
+                Місць небагато
               </p>
 
               <div className="mt-8">
