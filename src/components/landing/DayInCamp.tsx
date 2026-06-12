@@ -53,20 +53,20 @@ export function DayInCamp() {
             return (
               <Fragment key={item.time}>
                 {isHighlight ? (
-                  /* Key brand moment. Mobile: a normal stacked row (dot on the
-                     left axis, left-aligned) but highlighted. Desktop (md+):
-                     marker on the centre timeline axis + content centred on the plate. */
-                  <li className="relative mb-8 rounded-2xl bg-[#FFE8C7] px-4 py-4 ring-1 ring-[#452B70]/20 md:mb-12 md:px-6 md:pt-10">
-                    {/* timeline dot — left border (mobile) / centre axis (desktop), like normal rows */}
-                    <span
-                      aria-hidden
-                      className="absolute -left-[31px] top-2 h-3.5 w-3.5 rounded-full bg-[#452B70] ring-4 ring-background md:left-1/2 md:top-3 md:-translate-x-1/2"
-                    />
-                    <div className="md:flex md:flex-col md:items-center md:text-center">
+                  /* Key brand moment. Mobile and desktop are built as separate
+                     sub-trees so the (correct) mobile layout is never affected
+                     by the desktop arrangement. */
+                  <li className="relative mb-8 rounded-2xl bg-[#FFE8C7] px-4 py-4 ring-1 ring-[#452B70]/20 md:mb-12 md:px-6 md:py-6">
+                    {/* MOBILE: normal stacked highlighted row (dot on the left axis) */}
+                    <div className="md:hidden">
+                      <span
+                        aria-hidden
+                        className="absolute -left-[31px] top-2 h-3.5 w-3.5 rounded-full bg-[#452B70] ring-4 ring-background"
+                      />
                       <div className="inline-block rounded-full bg-[#452B70] px-3 py-1 text-sm font-semibold text-[#FFE8C7]">
                         {item.time}
                       </div>
-                      <div className="mt-2 md:mt-3">
+                      <div className="mt-2">
                         <span className="mb-2 inline-flex items-center rounded-full bg-[#452B70] px-2.5 py-0.5 text-xs font-semibold text-[#FFE8C7]">
                           Ключовий момент
                         </span>
@@ -75,6 +75,23 @@ export function DayInCamp() {
                           {item.body}
                         </p>
                       </div>
+                    </div>
+
+                    {/* DESKTOP (md+): centred group — badge / pill·marker·heading / subtitle */}
+                    <div className="hidden md:flex md:flex-col md:items-center md:text-center">
+                      <span className="inline-flex items-center rounded-full bg-[#452B70] px-2.5 py-0.5 text-xs font-semibold text-[#FFE8C7]">
+                        Ключовий момент
+                      </span>
+                      <div className="mt-3 flex items-center gap-3">
+                        <div className="rounded-full bg-[#452B70] px-3 py-1 text-sm font-semibold text-[#FFE8C7]">
+                          {item.time}
+                        </div>
+                        <span aria-hidden className="h-3.5 w-3.5 shrink-0 rounded-full bg-[#452B70]" />
+                        <p className="text-xl font-bold tracking-[-0.02em] text-foreground">{item.title}</p>
+                      </div>
+                      <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+                        {item.body}
+                      </p>
                     </div>
                   </li>
                 ) : (
