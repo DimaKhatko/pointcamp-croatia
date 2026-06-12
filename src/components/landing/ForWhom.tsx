@@ -1,3 +1,5 @@
+import dotsAmber from "@/assets/Group-1.svg";
+
 const AGE_BLOCKS = [
   {
     age: "8–11",
@@ -17,9 +19,9 @@ export function ForWhom() {
   return (
     <section
       aria-labelledby="forwhom-heading"
-      className="scroll-mt-24 bg-[#FFE8C7] py-20 md:py-28"
+      className="relative scroll-mt-24 overflow-hidden bg-[#FFE8C7] py-20 md:py-28"
     >
-      <div className="mx-auto max-w-4xl px-4 md:px-6">
+      <div className="mx-auto max-w-5xl px-4 md:px-6">
         <div className="text-center">
           <p className="text-sm font-medium uppercase tracking-widest text-[#452B70]/70">
             Для кого
@@ -36,20 +38,30 @@ export function ForWhom() {
           </h2>
         </div>
 
-        <div className="mx-auto mt-10 max-w-3xl space-y-4">
-          {AGE_BLOCKS.map(({ age, body }) => (
-            <div
-              key={age}
-              className="flex flex-col gap-2 rounded-2xl border border-[#452B70]/15 bg-card p-5 text-left shadow-[0_14px_32px_-20px_rgba(69,43,112,0.45)] md:flex-row md:items-center md:gap-6 md:p-6"
-            >
-              <span className="shrink-0 text-3xl font-medium leading-none text-[#452B70] md:w-[72px] md:text-4xl">
-                {age}
-              </span>
-              <p className="text-base leading-relaxed text-[#452B70]/80 md:text-lg">
-                {body}
-              </p>
-            </div>
-          ))}
+        <div className="relative mx-auto mt-10 max-w-4xl">
+          {/* Decorative yellow-dots pattern (same asset as the «Моменти» section),
+              behind the cards — opaque white cards stay fully readable on top. */}
+          <img
+            src={dotsAmber}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute -bottom-12 -right-12 z-0 w-[420px] max-w-none opacity-70"
+          />
+          <div className="relative z-10 space-y-4">
+            {AGE_BLOCKS.map(({ age, body }) => (
+              <div
+                key={age}
+                className="flex flex-col gap-2 rounded-2xl border border-[#452B70]/15 bg-card p-5 text-left shadow-[0_14px_32px_-20px_rgba(69,43,112,0.45)] md:flex-row md:items-center md:gap-6 md:p-6"
+              >
+                <span className="shrink-0 whitespace-nowrap text-3xl font-medium leading-none text-[#452B70] md:w-[104px] md:text-4xl">
+                  {age}
+                </span>
+                <p className="text-base leading-relaxed text-[#452B70]/80 md:text-lg">
+                  {body}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <p className="mx-auto mt-8 max-w-2xl text-center text-base leading-relaxed text-[#452B70]/70 md:text-lg">
