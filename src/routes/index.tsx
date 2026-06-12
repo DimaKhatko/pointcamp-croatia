@@ -11,6 +11,7 @@ import { ActivitiesGrid } from "@/components/landing/ActivitiesGrid";
 import { DayInCamp } from "@/components/landing/DayInCamp";
 import { PineBeachResort } from "@/components/landing/PineBeachResort";
 import { Safety } from "@/components/landing/Safety";
+import { Reviews } from "@/components/landing/Reviews";
 import { DatesPricing } from "@/components/landing/DatesPricing";
 import { FAQ } from "@/components/landing/FAQ";
 import { ApplicationForm } from "@/components/landing/ApplicationForm";
@@ -115,6 +116,7 @@ function LandingPage() {
         <DayInCamp />
         <PineBeachResort />
         <Safety />
+        <Reviews />
         <DatesPricing />
         <FAQ />
         <ApplicationForm />
