@@ -77,21 +77,43 @@ export function DayInCamp() {
                       </div>
                     </div>
 
-                    {/* DESKTOP (md+): centred group — badge / pill·marker·heading / subtitle */}
-                    <div className="hidden md:flex md:flex-col md:items-center md:text-center">
-                      <span className="inline-flex items-center rounded-full bg-[#452B70] px-2.5 py-0.5 text-xs font-semibold text-[#FFE8C7]">
-                        Ключовий момент
-                      </span>
-                      <div className="mt-3 flex items-center gap-3">
-                        <div className="rounded-full bg-[#452B70] px-3 py-1 text-sm font-semibold text-[#FFE8C7]">
-                          {item.time}
+                    {/* DESKTOP (md+): badge / [pill · axis marker · heading] / caption.
+                        Same 2-col grid geometry as normal rows (cols anchored to the
+                        centre via gap-10 + pl/pr-10), so the marker stays on the shared
+                        axis and the heading's left edge matches the normal content
+                        column — regardless of the plate's symmetric padding. */}
+                    <div className="hidden md:block">
+                      {/* Row 1: badge, aligned to the content column */}
+                      <div className="grid grid-cols-2 gap-10">
+                        <div />
+                        <div className="pl-10">
+                          <span className="inline-flex items-center rounded-full bg-[#452B70] px-2.5 py-0.5 text-xs font-semibold text-[#FFE8C7]">
+                            Ключовий момент
+                          </span>
                         </div>
-                        <span aria-hidden className="h-3.5 w-3.5 shrink-0 rounded-full bg-[#452B70]" />
-                        <p className="text-xl font-bold tracking-[-0.02em] text-foreground">{item.title}</p>
                       </div>
-                      <p className="mt-2 text-base leading-relaxed text-muted-foreground">
-                        {item.body}
-                      </p>
+                      {/* Row 2: pill (left gutter) · marker (on axis) · heading (content column) */}
+                      <div className="relative mt-2 grid grid-cols-2 items-center gap-10">
+                        <span
+                          aria-hidden
+                          className="absolute left-1/2 top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#452B70] ring-4 ring-[#FFE8C7]"
+                        />
+                        <div className="pr-10 text-right">
+                          <span className="inline-block rounded-full bg-[#452B70] px-3 py-1 text-sm font-semibold text-[#FFE8C7]">
+                            {item.time}
+                          </span>
+                        </div>
+                        <p className="pl-10 text-xl font-bold tracking-[-0.02em] text-foreground">
+                          {item.title}
+                        </p>
+                      </div>
+                      {/* Row 3: caption, aligned to the content column */}
+                      <div className="mt-2 grid grid-cols-2 gap-10">
+                        <div />
+                        <p className="pl-10 text-base leading-relaxed text-muted-foreground">
+                          {item.body}
+                        </p>
+                      </div>
                     </div>
                   </li>
                 ) : (
