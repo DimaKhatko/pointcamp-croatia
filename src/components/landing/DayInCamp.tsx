@@ -53,17 +53,20 @@ export function DayInCamp() {
             return (
               <Fragment key={item.time}>
                 {isHighlight ? (
-                  /* Key brand moment — compact, centered group on the plate. */
-                  <li className="relative mb-8 rounded-2xl bg-[#FFE8C7] px-4 py-5 ring-1 ring-[#452B70]/20 md:mb-12 md:px-6">
-                    <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-center sm:gap-4 sm:text-left">
-                      <div className="shrink-0 rounded-full bg-[#452B70] px-3 py-1 text-sm font-semibold text-[#FFE8C7]">
+                  /* Key brand moment. Mobile: a normal stacked row (dot on the
+                     left axis, left-aligned) but highlighted. Desktop (md+):
+                     marker on the centre timeline axis + content centred on the plate. */
+                  <li className="relative mb-8 rounded-2xl bg-[#FFE8C7] px-4 py-4 ring-1 ring-[#452B70]/20 md:mb-12 md:px-6 md:pt-10">
+                    {/* timeline dot — left border (mobile) / centre axis (desktop), like normal rows */}
+                    <span
+                      aria-hidden
+                      className="absolute -left-[31px] top-2 h-3.5 w-3.5 rounded-full bg-[#452B70] ring-4 ring-background md:left-1/2 md:top-3 md:-translate-x-1/2"
+                    />
+                    <div className="md:flex md:flex-col md:items-center md:text-center">
+                      <div className="inline-block rounded-full bg-[#452B70] px-3 py-1 text-sm font-semibold text-[#FFE8C7]">
                         {item.time}
                       </div>
-                      <span
-                        aria-hidden
-                        className="h-3.5 w-3.5 shrink-0 rounded-full bg-[#452B70] ring-4 ring-[#FFE8C7]"
-                      />
-                      <div>
+                      <div className="mt-2 md:mt-3">
                         <span className="mb-2 inline-flex items-center rounded-full bg-[#452B70] px-2.5 py-0.5 text-xs font-semibold text-[#FFE8C7]">
                           Ключовий момент
                         </span>
