@@ -35,6 +35,10 @@ export function EmotionalIntro() {
             дорослішими.
           </p>
         </div>
+
+        <p className="mt-10 text-2xl font-extrabold text-[#452B70] md:text-3xl">
+          Діти щасливі, батьки спокійні.
+        </p>
       </div>
     </section>
   );

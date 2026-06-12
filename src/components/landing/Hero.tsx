@@ -45,12 +45,6 @@ export function Hero() {
             кемп у Хорватії для дітей 8–17 — без скролінгу, з живою англійською щодня.
           </p>
 
-          <p className="mt-5">
-            <span className="inline-block rounded-full bg-[#FFE8C7] px-4 py-1.5 text-base font-semibold text-[#452B70] shadow-sm md:text-lg">
-              Діти щасливі, батьки спокійні.
-            </span>
-          </p>
-
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Button
               asChild
