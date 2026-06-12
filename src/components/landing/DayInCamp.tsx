@@ -7,14 +7,16 @@ import dayMorning from "@/assets/photos/day-morning-sea.webp";
 import dayNoon from "@/assets/photos/day-noon-beach.webp";
 import dayEvening from "@/assets/photos/day-evening-gathering.webp";
 
-/** Indexes in SCHEDULE after which we drop an atmospheric photo band. */
+/** Photo bands keyed by the schedule row's time — anchored by row identity, so
+ *  they stay at the right moment of day even if rows are added/reordered.
+ *  9:00 (after breakfast) → morning · 13:00 (lunch) → noon · 20:00 (evening event) → evening. */
 const PHOTO_AFTER: Record<
-  number,
+  string,
   { src: string; width: number; height: number; alt: string; label: string; tone: "sea" | "sun" | "primary" }
 > = {
-  1: { src: dayMorning, width: 2000, height: 857, alt: "Ранок біля моря в таборі Point Camp, Хорватія", label: "Ранок", tone: "sea" },
-  5: { src: dayNoon, width: 2000, height: 857, alt: "Денний відпочинок на пляжі Адріатики в таборі", label: "Полудень", tone: "sun" },
-  9: { src: dayEvening, width: 2000, height: 857, alt: "Вечірнє зібрання табору біля моря на заході сонця", label: "Вечір", tone: "primary" },
+  "9:00": { src: dayMorning, width: 2000, height: 857, alt: "Ранок біля моря в таборі Point Camp, Хорватія", label: "Ранок", tone: "sea" },
+  "13:00": { src: dayNoon, width: 2000, height: 857, alt: "Денний відпочинок на пляжі Адріатики в таборі", label: "Полудень", tone: "sun" },
+  "20:00": { src: dayEvening, width: 2000, height: 857, alt: "Вечірнє зібрання табору біля моря на заході сонця", label: "Вечір", tone: "primary" },
 };
 
 export function DayInCamp() {
@@ -46,25 +48,41 @@ export function DayInCamp() {
           />
           {SCHEDULE.map((item, i) => {
             const isLeft = i % 2 === 0;
-            const photo = PHOTO_AFTER[i];
+            const isHighlight = item.time === "22:00";
+            const photo = PHOTO_AFTER[item.time];
             return (
               <Fragment key={item.time}>
                 <li
                   className={`relative mb-8 md:mb-12 md:grid md:grid-cols-2 md:gap-10 ${
                     isLeft ? "" : "md:[&>*:first-child]:order-2"
+                  } ${
+                    isHighlight
+                      ? "rounded-2xl bg-[#FFE8C7] px-4 py-4 ring-1 ring-[#452B70]/20 md:px-6"
+                      : ""
                   }`}
                 >
                   {/* timeline dot */}
                   <span
                     aria-hidden
-                    className="absolute -left-[31px] top-2 h-3.5 w-3.5 rounded-full bg-primary ring-4 ring-background md:left-1/2 md:-translate-x-1/2"
+                    className={`absolute -left-[31px] top-2 h-3.5 w-3.5 rounded-full ring-4 ring-background md:left-1/2 md:-translate-x-1/2 ${
+                      isHighlight ? "bg-[#452B70]" : "bg-primary"
+                    }`}
                   />
                   <div className={`${isLeft ? "md:text-right md:pr-10" : "md:pl-10"}`}>
-                    <div className="inline-block rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
+                    <div
+                      className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${
+                        isHighlight ? "bg-[#452B70] text-[#FFE8C7]" : "bg-primary/10 text-primary"
+                      }`}
+                    >
                       {item.time}
                     </div>
                   </div>
                   <div className={`${isLeft ? "md:pl-10" : "md:pr-10 md:text-right"}`}>
+                    {isHighlight && (
+                      <span className="mb-2 inline-flex items-center rounded-full bg-[#452B70] px-2.5 py-0.5 text-xs font-semibold text-[#FFE8C7]">
+                        Ключовий момент
+                      </span>
+                    )}
                     <p className="text-xl font-bold tracking-[-0.02em] text-foreground">{item.title}</p>
                     <p className="mt-1 text-base leading-relaxed text-muted-foreground">
                       {item.body}

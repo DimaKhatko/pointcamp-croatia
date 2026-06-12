@@ -29,7 +29,6 @@ const schema = z.object({
     .min(7, { message: "Вкажіть номер телефону" })
     .max(25)
     .regex(/^[+\d\s()\-]+$/, { message: "Лише цифри, +, пробіли і дужки" }),
-  promo: z.string().trim().max(40).optional().or(z.literal("")),
   details: z.string().trim().max(1000).optional().or(z.literal("")),
 });
 
@@ -44,7 +43,7 @@ export function ApplicationForm() {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { name: "", email: "", phone: "", promo: "", details: "" },
+    defaultValues: { name: "", email: "", phone: "", details: "" },
     mode: "onTouched",
   });
 
@@ -157,30 +156,21 @@ export function ApplicationForm() {
               </Field>
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2">
-              <Field
+            <Field
+              id="email"
+              label="E-mail"
+              required
+              error={form.formState.errors.email?.message}
+            >
+              <Input
                 id="email"
-                label="E-mail"
-                required
-                error={form.formState.errors.email?.message}
-              >
-                <Input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="ilovemykids@gmail.com"
-                  aria-invalid={!!form.formState.errors.email}
-                  {...form.register("email")}
-                />
-              </Field>
-              <Field id="promo" label="Промокод" error={form.formState.errors.promo?.message}>
-                <Input
-                  id="promo"
-                  placeholder="Якщо є"
-                  {...form.register("promo")}
-                />
-              </Field>
-            </div>
+                type="email"
+                autoComplete="email"
+                placeholder="ilovemykids@gmail.com"
+                aria-invalid={!!form.formState.errors.email}
+                {...form.register("email")}
+              />
+            </Field>
 
             <Field
               id="details"

@@ -2,7 +2,6 @@ export interface TelegramFormValues {
   name: string;
   email: string;
   phone: string;
-  promo?: string;
   details?: string;
 }
 
@@ -31,7 +30,6 @@ export async function sendToTelegram(values: TelegramFormValues) {
     `👤 Ім'я: ${values.name}`,
     `📞 Телефон: ${values.phone}`,
     `✉️ E-mail: ${values.email}`,
-    `🎟 Промокод: ${values.promo || "—"}`,
     `📝 Учасник: ${values.details || "—"}`,
     "",
     "Заявка Дэнс!",

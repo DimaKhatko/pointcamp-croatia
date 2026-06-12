@@ -1,4 +1,4 @@
-import { Mail, Phone, MessageCircle, Send, Facebook, Instagram } from "lucide-react";
+import { Mail, Phone, MessageCircle, MessageSquare, Send, Facebook, Instagram } from "lucide-react";
 import logo from "@/assets/logo-pointcamp.svg";
 
 export function Footer() {
@@ -8,7 +8,10 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-3">
           <div>
             <img src={logo} alt="PointCamp" className="h-14 w-auto" />
-            <p className="mt-4 max-w-xs text-sm text-muted-foreground">
+            <p className="mt-4 text-sm font-semibold text-[#452B70]">
+              Діти щасливі, батьки спокійні.
+            </p>
+            <p className="mt-2 max-w-xs text-sm text-muted-foreground">
               Англомовний літній кемп у Хорватії для дітей і підлітків 8–17 років.
               15 років турботи, тепла й справжнього літа.
             </p>
@@ -46,6 +49,15 @@ export function Footer() {
               </li>
               <li>
                 <a
+                  href="https://wa.me/+380662217373"
+                  className="inline-flex items-center gap-2 text-foreground hover:text-primary"
+                  rel="noopener"
+                >
+                  <MessageSquare className="h-4 w-4" aria-hidden /> WhatsApp
+                </a>
+              </li>
+              <li>
+                <a
                   href="mailto:contact@pointcamp.com.ua"
                   className="inline-flex items-center gap-2 text-foreground hover:text-primary"
                 >
@@ -75,6 +87,14 @@ export function Footer() {
                 className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-card text-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
                 <Instagram className="h-4 w-4" />
+              </a>
+              <a
+                href="https://t.me/pointcamp"
+                aria-label="Telegram-канал"
+                rel="noopener"
+                className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-card text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+              >
+                <Send className="h-4 w-4" />
               </a>
             </div>
 
