@@ -52,43 +52,52 @@ export function DayInCamp() {
             const photo = PHOTO_AFTER[item.time];
             return (
               <Fragment key={item.time}>
-                <li
-                  className={`relative mb-8 md:mb-12 md:grid md:grid-cols-2 md:gap-10 ${
-                    isLeft ? "" : "md:[&>*:first-child]:order-2"
-                  } ${
-                    isHighlight
-                      ? "rounded-2xl bg-[#FFE8C7] px-4 py-4 ring-1 ring-[#452B70]/20 md:px-6"
-                      : ""
-                  }`}
-                >
-                  {/* timeline dot */}
-                  <span
-                    aria-hidden
-                    className={`absolute -left-[31px] top-2 h-3.5 w-3.5 rounded-full ring-4 ring-background md:left-1/2 md:-translate-x-1/2 ${
-                      isHighlight ? "bg-[#452B70]" : "bg-primary"
-                    }`}
-                  />
-                  <div className={`${isLeft ? "md:text-right md:pr-10" : "md:pl-10"}`}>
-                    <div
-                      className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${
-                        isHighlight ? "bg-[#452B70] text-[#FFE8C7]" : "bg-primary/10 text-primary"
-                      }`}
-                    >
-                      {item.time}
+                {isHighlight ? (
+                  /* Key brand moment — compact, centered group on the plate. */
+                  <li className="relative mb-8 rounded-2xl bg-[#FFE8C7] px-4 py-5 ring-1 ring-[#452B70]/20 md:mb-12 md:px-6">
+                    <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-center sm:gap-4 sm:text-left">
+                      <div className="shrink-0 rounded-full bg-[#452B70] px-3 py-1 text-sm font-semibold text-[#FFE8C7]">
+                        {item.time}
+                      </div>
+                      <span
+                        aria-hidden
+                        className="h-3.5 w-3.5 shrink-0 rounded-full bg-[#452B70] ring-4 ring-[#FFE8C7]"
+                      />
+                      <div>
+                        <span className="mb-2 inline-flex items-center rounded-full bg-[#452B70] px-2.5 py-0.5 text-xs font-semibold text-[#FFE8C7]">
+                          Ключовий момент
+                        </span>
+                        <p className="text-xl font-bold tracking-[-0.02em] text-foreground">{item.title}</p>
+                        <p className="mt-1 text-base leading-relaxed text-muted-foreground">
+                          {item.body}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className={`${isLeft ? "md:pl-10" : "md:pr-10 md:text-right"}`}>
-                    {isHighlight && (
-                      <span className="mb-2 inline-flex items-center rounded-full bg-[#452B70] px-2.5 py-0.5 text-xs font-semibold text-[#FFE8C7]">
-                        Ключовий момент
-                      </span>
-                    )}
-                    <p className="text-xl font-bold tracking-[-0.02em] text-foreground">{item.title}</p>
-                    <p className="mt-1 text-base leading-relaxed text-muted-foreground">
-                      {item.body}
-                    </p>
-                  </div>
-                </li>
+                  </li>
+                ) : (
+                  <li
+                    className={`relative mb-8 md:mb-12 md:grid md:grid-cols-2 md:gap-10 ${
+                      isLeft ? "" : "md:[&>*:first-child]:order-2"
+                    }`}
+                  >
+                    {/* timeline dot */}
+                    <span
+                      aria-hidden
+                      className="absolute -left-[31px] top-2 h-3.5 w-3.5 rounded-full bg-primary ring-4 ring-background md:left-1/2 md:-translate-x-1/2"
+                    />
+                    <div className={`${isLeft ? "md:text-right md:pr-10" : "md:pl-10"}`}>
+                      <div className="inline-block rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
+                        {item.time}
+                      </div>
+                    </div>
+                    <div className={`${isLeft ? "md:pl-10" : "md:pr-10 md:text-right"}`}>
+                      <p className="text-xl font-bold tracking-[-0.02em] text-foreground">{item.title}</p>
+                      <p className="mt-1 text-base leading-relaxed text-muted-foreground">
+                        {item.body}
+                      </p>
+                    </div>
+                  </li>
+                )}
                 {photo && (
                   <li
                     aria-hidden={false}
