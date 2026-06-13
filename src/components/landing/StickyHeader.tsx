@@ -5,8 +5,9 @@ import logo from "@/assets/logo-pointcamp.svg";
 
 const NAV = [
   { href: "#program", label: "Програма" },
-  { href: "#day", label: "День" },
+  { href: "#day", label: "Розклад" },
   { href: "#resort", label: "Резорт" },
+  { href: "#reviews", label: "Відгуки" },
   { href: "#dates", label: "Дати" },
   { href: "#faq", label: "FAQ" },
   { href: "https://japan.pointcamp.com.ua/", label: "Japan'26", external: true },

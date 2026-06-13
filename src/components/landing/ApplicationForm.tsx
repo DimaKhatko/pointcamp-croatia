@@ -29,7 +29,11 @@ const schema = z.object({
     .min(7, { message: "Вкажіть номер телефону" })
     .max(25)
     .regex(/^[+\d\s()\-]+$/, { message: "Лише цифри, +, пробіли і дужки" }),
-  details: z.string().trim().max(1000).optional().or(z.literal("")),
+  details: z
+    .string()
+    .trim()
+    .min(1, { message: "Будь ласка, заповніть це поле." })
+    .max(1000),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -175,6 +179,7 @@ export function ApplicationForm() {
             <Field
               id="details"
               label="Інформація про учасника"
+              required
               error={form.formState.errors.details?.message}
             >
               <Textarea

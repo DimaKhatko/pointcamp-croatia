@@ -103,12 +103,22 @@ export function Footer() {
             </h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-primary">
+                <a
+                  href="https://drive.google.com/file/d/1OFvq9GX9-4brPLVxUoqpcWETbJV-_555/preview"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   Публічна оферта
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-primary">
+                <a
+                  href="https://drive.google.com/file/d/16D4I7OvCw2L4-G1QejjEtVx3G4P448ob/preview"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   Обробка персональних даних
                 </a>
               </li>
