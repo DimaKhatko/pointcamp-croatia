@@ -191,7 +191,7 @@ export function ApplicationForm() {
               className="h-12 text-base"
               disabled={form.formState.isSubmitting}
             >
-              {form.formState.isSubmitting ? "Надсилаємо…" : "Залишити заявку"}
+              {form.formState.isSubmitting ? "Надсилаємо…" : "🏖️ Залишити заявку"}
             </Button>
 
             <p className="text-center text-xs text-muted-foreground">

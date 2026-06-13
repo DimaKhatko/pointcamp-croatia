@@ -16,6 +16,7 @@ import { DatesPricing } from "@/components/landing/DatesPricing";
 import { FAQ } from "@/components/landing/FAQ";
 import { ApplicationForm } from "@/components/landing/ApplicationForm";
 import { Footer } from "@/components/landing/Footer";
+import { StickyApplyButton } from "@/components/landing/StickyApplyButton";
 
 const SITE_URL = "https://croatia.pointcamp.com.ua/";
 const OG_IMAGE = "https://croatia.pointcamp.com.ua/og-image.jpg";
@@ -122,6 +123,7 @@ function LandingPage() {
         <ApplicationForm />
       </main>
       <Footer />
+      <StickyApplyButton />
     </>
   );
 }
