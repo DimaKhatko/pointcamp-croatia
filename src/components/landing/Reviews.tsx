@@ -1,4 +1,5 @@
 import { Star } from "lucide-react";
+import dotsAmber from "@/assets/Group-1.svg";
 
 /** Rating chips (aggregate scores). */
 const RATING_CHIPS = [
@@ -43,9 +44,17 @@ export function Reviews() {
     <section
       id="reviews"
       aria-labelledby="reviews-heading"
-      className="scroll-mt-24 bg-[#FFE8C7] py-24 md:py-32"
+      className="relative scroll-mt-24 overflow-hidden bg-[#FFE8C7] py-24 md:py-32"
     >
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+      {/* Decorative yellow-dots pattern (same asset as other blocks), behind the
+          cards in the bottom-right corner — opaque cards stay readable on top. */}
+      <img
+        src={dotsAmber}
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute -bottom-10 -right-10 z-0 w-[340px] max-w-none opacity-70 md:w-[480px]"
+      />
+      <div className="relative z-10 mx-auto max-w-6xl px-4 md:px-6">
         {/* Header */}
         <div className="text-center">
           <p className="text-sm font-medium uppercase tracking-widest text-[#452B70]/70">
