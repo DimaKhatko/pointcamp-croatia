@@ -59,15 +59,22 @@ export function DatesPricing() {
                 </Button>
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-4">
+              <div className="mt-8 grid gap-2 sm:grid-cols-2">
                 {DISCOUNTS.map((d) => (
                   <div
-                    key={d.label}
-                    className="rounded-xl bg-white/10 p-3 text-center backdrop-blur-sm"
+                    key={d.title}
+                    className="flex items-center justify-between gap-3 rounded-xl bg-white/10 px-4 py-3 text-left backdrop-blur-sm"
                   >
-                    <p className="text-base font-bold">{d.value}</p>
-                    <p className="mt-0.5 text-xs text-primary-foreground/80">
-                      {d.label}
+                    <div className="min-w-0">
+                      <p className="text-sm font-bold leading-tight">{d.title}</p>
+                      {d.subtitle && (
+                        <p className="mt-0.5 text-xs text-primary-foreground/70">
+                          {d.subtitle}
+                        </p>
+                      )}
+                    </div>
+                    <p className="shrink-0 text-base font-extrabold text-[#FFE8C7]">
+                      {d.value}
                     </p>
                   </div>
                 ))}

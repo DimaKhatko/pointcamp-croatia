@@ -138,11 +138,11 @@ export const NOT_INCLUDED = [
   "Кишенькові витрати (~100 €)",
 ];
 
-export const DISCOUNTS = [
-  { label: "Поінтерам", value: "−100 €" },
-  { label: "Родинам", value: "−100 €/дитина" },
-  { label: "Дітям військових", value: "−100 €" },
-  { label: "Реферальна", value: "−50 €" },
+export const DISCOUNTS: { title: string; subtitle?: string; value: string }[] = [
+  { title: "Поінтерам", subtitle: "Були в нас раніше", value: "−100 €" },
+  { title: "Дітям з однієї родини", subtitle: "Якщо їдуть уперше", value: "−100 €/дитина" },
+  { title: "Дітям військових", value: "−100 €" },
+  { title: "Приведіть друга", subtitle: "Знижка вам обом", value: "−50 €" },
 ];
 
 export const FAQS = [
