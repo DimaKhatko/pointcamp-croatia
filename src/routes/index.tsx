@@ -17,6 +17,7 @@ import { FAQ } from "@/components/landing/FAQ";
 import { ApplicationForm } from "@/components/landing/ApplicationForm";
 import { Footer } from "@/components/landing/Footer";
 import { StickyApplyButton } from "@/components/landing/StickyApplyButton";
+import { FAQS } from "@/components/landing/data";
 
 const SITE_URL = "https://croatia.pointcamp.com.ua/";
 const OG_IMAGE = "https://croatia.pointcamp.com.ua/og-image.jpg";
@@ -57,21 +58,24 @@ export const Route = createFileRoute("/")({
           "@type": "Organization",
           name: "Point Camp",
           url: SITE_URL,
-          logo: `${SITE_URL}favicon.svg`,
+          logo: `${SITE_URL}favicon-512x512.png`,
           sameAs: [
-            "https://facebook.com/pointcamp",
-            "https://instagram.com/pointcamp",
+            "https://www.facebook.com/pointcamp",
+            "https://www.instagram.com/point_camp",
           ],
           contactPoint: {
             "@type": "ContactPoint",
             telephone: "+380662217373",
             contactType: "customer service",
             email: "contact@pointcamp.com.ua",
-            availableLanguage: ["uk", "en"],
+            availableLanguage: ["uk"],
           },
           event: {
             "@type": "Event",
             name: "Point Camp Хорватія — Flagship заїзд 2026",
+            description:
+              "Англомовний літній кемп на Адріатиці для дітей 8–17 років. 10 днів: море, жива англійська щодня, безпека 24/7. 31.07–09.08.2026, Pine Beach Resort, Pakoštane.",
+            image: OG_IMAGE,
             startDate: "2026-07-31",
             endDate: "2026-08-09",
             eventAttendanceMode:
@@ -95,6 +99,18 @@ export const Route = createFileRoute("/")({
             },
             organizer: { "@type": "Organization", name: "Point Camp", url: SITE_URL },
           },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQS.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
         }),
       },
     ],
