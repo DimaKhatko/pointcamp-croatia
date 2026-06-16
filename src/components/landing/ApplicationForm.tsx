@@ -127,6 +127,22 @@ export function ApplicationForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="mt-12 grid gap-5 rounded-3xl border border-border bg-card p-6 shadow-sm md:p-10"
           >
+            {/* Price up-front so users don't submit just to ask the cost */}
+            <div className="rounded-2xl border border-border bg-secondary/40 p-5 text-center">
+              <p className="text-xs font-medium uppercase tracking-widest text-primary/70">
+                Вартість заїзду
+              </p>
+              <p className="mt-1 text-4xl font-extrabold tracking-tight text-primary md:text-5xl">
+                1550&nbsp;€
+              </p>
+              <a
+                href="#dates"
+                className="mt-2 inline-block text-sm font-medium text-primary underline-offset-4 hover:underline"
+              >
+                Детальніше про ціну та знижки
+              </a>
+            </div>
+
             <div className="grid gap-5 md:grid-cols-2">
               <Field
                 id="name"
