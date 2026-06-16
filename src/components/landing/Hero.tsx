@@ -65,13 +65,13 @@ export function Hero() {
           </div>
         </div>
 
-        <ul className="mt-12 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap md:gap-3">
+        <ul className="mt-12 flex flex-wrap gap-2 md:gap-3">
           {QUICK_FACTS.map((fact, i) => {
             const dot = ["var(--sun)", "var(--mint)", "var(--sea)", "var(--sand)", "var(--sun)"][i % 5];
             return (
               <li
                 key={fact}
-                className="inline-flex items-center justify-self-start gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2 text-sm font-medium text-white backdrop-blur-md shadow-[0_6px_18px_-10px_rgba(0,0,0,0.35)]"
+                className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2 text-sm font-medium text-white backdrop-blur-md shadow-[0_6px_18px_-10px_rgba(0,0,0,0.35)]"
               >
                 <span
                   aria-hidden
