@@ -1,0 +1,40 @@
+{
+  "pkg": "pointcamp-croatia",
+  "globalName": "PointCampCroatia",
+  "shape": "package",
+  "srcDir": "src/components/landing",
+  "tsconfig": "tsconfig.json",
+  "cssEntry": "src/styles.css",
+  "componentSrcMap": {
+    "ActivitiesGrid": "src/components/landing/ActivitiesGrid.tsx",
+    "ApplicationForm": "src/components/landing/ApplicationForm.tsx",
+    "DatesPricing": "src/components/landing/DatesPricing.tsx",
+    "DayInCamp": "src/components/landing/DayInCamp.tsx",
+    "EmotionalIntro": "src/components/landing/EmotionalIntro.tsx",
+    "FAQ": "src/components/landing/FAQ.tsx",
+    "Footer": "src/components/landing/Footer.tsx",
+    "ForWhom": "src/components/landing/ForWhom.tsx",
+    "Hero": "src/components/landing/Hero.tsx",
+    "MomentsGallery": "src/components/landing/MomentsGallery.tsx",
+    "PhotoSlot": "src/components/landing/PhotoSlot.tsx",
+    "PineBeachResort": "src/components/landing/PineBeachResort.tsx",
+    "Reviews": "src/components/landing/Reviews.tsx",
+    "Safety": "src/components/landing/Safety.tsx",
+    "StickyApplyButton": "src/components/landing/StickyApplyButton.tsx",
+    "StickyHeader": "src/components/landing/StickyHeader.tsx",
+    "ThreePillars": "src/components/landing/ThreePillars.tsx",
+    "WhyPointCamp": "src/components/landing/WhyPointCamp.tsx",
+    "AccentDot": "src/components/landing/decor/AccentDot.tsx",
+    "Blob": "src/components/landing/decor/Blob.tsx",
+    "DotGrid": "src/components/landing/decor/DotGrid.tsx",
+    "HeroSunGlow": "src/components/landing/decor/HeroSunGlow.tsx",
+    "HeroWaveDivider": "src/components/landing/decor/HeroWaveDivider.tsx",
+    "Underline": "src/components/landing/decor/Underline.tsx",
+    "WavePattern": "src/components/landing/decor/WavePattern.tsx"
+  },
+  "extraFonts": ["public/fonts/KyivTypeSans-VarGX.woff2"],
+  "runtimeFontPrefixes": ["Manrope", "Inter"],
+  "libOverrides": {
+    "bundle.mjs": "add .webp/.jpg/.jpeg dataurl loaders — landing components import photo assets"
+  }
+}
