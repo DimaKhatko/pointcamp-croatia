@@ -219,14 +219,14 @@
 
 /* --------------------------------------------------------------------------
    Polaroid hero collage
-   Ported pattern: white-framed photo cards with washi-tape strips. The two
-   small cards drift with `.float-slow`; the central card is statically tilted
-   via a Tailwind `-rotate-*` utility.
+   Ported pattern: white-framed photo cards with washi-tape strips. All cards
+   are statically tilted (no motion): the central card via a Tailwind
+   `-rotate-*` utility, the side cards via `.polaroid-tilt` reading `--tilt`.
    -------------------------------------------------------------------------- */
 .polaroid {
-  /* No `position` here on purpose: the small cards carry Tailwind's `absolute`
+  /* No `position` here on purpose: the side cards carry Tailwind's `absolute`
      and must not be reset to `relative`. Positioning (needed so the tape strips
-     anchor to the card) comes from `absolute` on the small cards and a
+     anchor to the card) comes from `absolute` on the side cards and a
      `relative` utility on the central card. */
   background: #fff;
   padding: 0.75rem 0.75rem 2.25rem;
@@ -234,23 +234,11 @@
   box-shadow: var(--shadow-polaroid);
 }
 
-/* Gentle float for the small cards. The base tilt is kept in the `--tilt`
-   custom property and re-applied at every keyframe, so animating `transform`
-   never wipes it out (a plain Tailwind `rotate-*` would be overridden here). */
-@keyframes float-slow {
-  from { transform: translateY(0) rotate(var(--tilt, 0deg)); }
-  to   { transform: translateY(-10px) rotate(calc(var(--tilt, 0deg) + 2deg)); }
-}
-.float-slow {
-  animation: float-slow 6s ease-in-out infinite alternate;
-  will-change: transform;
-}
-@media (prefers-reduced-motion: reduce) {
-  /* No motion, but the static tilt must survive. */
-  .float-slow {
-    animation: none;
-    transform: rotate(var(--tilt, 0deg));
-  }
+/* Static tilt for the side cards. The angle lives in the `--tilt` custom
+   property (set per card) so both desktop corner cards and the mobile fan can
+   reuse it. */
+.polaroid-tilt {
+  transform: rotate(var(--tilt, 0deg));
 }
 
 /* Washi-tape strip — pure CSS, no image. Lives INSIDE a `.polaroid` so it
