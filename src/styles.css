@@ -114,6 +114,10 @@
   --sea-foreground: oklch(0.20 0.05 230);
   --sand: oklch(0.92 0.05 75);
   --sand-foreground: oklch(0.30 0.04 60);
+  /* Two layered shadows for the polaroid hero collage cards. */
+  --shadow-polaroid:
+    0 1px 2px rgba(0, 0, 0, 0.12),
+    0 14px 30px -10px rgba(0, 0, 0, 0.38);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -211,6 +215,77 @@
 @keyframes pc-float {
   from { transform: translateY(0); }
   to { transform: translateY(-9px); }
+}
+
+/* --------------------------------------------------------------------------
+   Polaroid hero collage
+   Ported pattern: white-framed photo cards with washi-tape strips. The two
+   small cards drift with `.float-slow`; the central card is statically tilted
+   via a Tailwind `-rotate-*` utility.
+   -------------------------------------------------------------------------- */
+.polaroid {
+  /* No `position` here on purpose: the small cards carry Tailwind's `absolute`
+     and must not be reset to `relative`. Positioning (needed so the tape strips
+     anchor to the card) comes from `absolute` on the small cards and a
+     `relative` utility on the central card. */
+  background: #fff;
+  padding: 0.75rem 0.75rem 2.25rem;
+  border-radius: 4px;
+  box-shadow: var(--shadow-polaroid);
+}
+
+/* Gentle float for the small cards. The base tilt is kept in the `--tilt`
+   custom property and re-applied at every keyframe, so animating `transform`
+   never wipes it out (a plain Tailwind `rotate-*` would be overridden here). */
+@keyframes float-slow {
+  from { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  to   { transform: translateY(-10px) rotate(calc(var(--tilt, 0deg) + 2deg)); }
+}
+.float-slow {
+  animation: float-slow 6s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* No motion, but the static tilt must survive. */
+  .float-slow {
+    animation: none;
+    transform: rotate(var(--tilt, 0deg));
+  }
+}
+
+/* Washi-tape strip — pure CSS, no image. Lives INSIDE a `.polaroid` so it
+   inherits the card's tilt/float. `multiply` lets the photo show through.
+   Per-instance knobs: --tape-color, --tape-rotate, and top/left/right/bottom.
+   Tilt uses the `rotate` property (not `transform`) so top-center strips can
+   still center themselves with `transform: translateX(-50%)`. */
+.tape {
+  position: absolute;
+  z-index: 1;
+  width: 88px;
+  height: 26px;
+  rotate: var(--tape-rotate, 0deg);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.10) 0 2px,
+      rgba(0, 0, 0, 0.05) 2px 4px
+    ),
+    color-mix(in oklab, var(--tape-color, var(--sun)) 62%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 1px 2px rgba(0, 0, 0, 0.10);
+  /* Straight top/bottom, torn (zig-zag) short ends left & right. */
+  clip-path: polygon(
+    6% 0%, 94% 0%,
+    100% 15%, 95% 35%, 100% 55%, 95% 75%, 100% 90%, 94% 100%,
+    6% 100%,
+    0% 90%, 5% 75%, 0% 55%, 5% 35%, 0% 15%
+  );
+}
+@media (max-width: 640px) {
+  .tape { width: 70px; height: 21px; }
 }
 
 @utility chip-3d {
