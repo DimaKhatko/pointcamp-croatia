@@ -39,4 +39,3 @@ dist-ssr
 *.report.html
 package-lock.json
 .claude/
-CLAUDE.md
