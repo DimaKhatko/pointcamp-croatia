@@ -100,13 +100,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", sizes: "any" },
-      { rel: "icon", href: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
-      { rel: "icon", href: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
-      { rel: "icon", href: "/favicon-48x48.png", type: "image/png", sizes: "48x48" },
-      { rel: "icon", href: "/favicon-192x192.png", type: "image/png", sizes: "192x192" },
-      { rel: "icon", href: "/favicon-512x512.png", type: "image/png", sizes: "512x512" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      // BASE_URL is "/" today, so these are identical at "/"; using it keeps the
+      // icons correct if a subfolder base (e.g. "/croatia/") is set later.
+      { rel: "icon", href: `${import.meta.env.BASE_URL}favicon.ico`, sizes: "any" },
+      { rel: "icon", href: `${import.meta.env.BASE_URL}favicon-16x16.png`, type: "image/png", sizes: "16x16" },
+      { rel: "icon", href: `${import.meta.env.BASE_URL}favicon-32x32.png`, type: "image/png", sizes: "32x32" },
+      { rel: "icon", href: `${import.meta.env.BASE_URL}favicon-48x48.png`, type: "image/png", sizes: "48x48" },
+      { rel: "icon", href: `${import.meta.env.BASE_URL}favicon-192x192.png`, type: "image/png", sizes: "192x192" },
+      { rel: "icon", href: `${import.meta.env.BASE_URL}favicon-512x512.png`, type: "image/png", sizes: "512x512" },
+      { rel: "apple-touch-icon", href: `${import.meta.env.BASE_URL}apple-touch-icon.png` },
     ],
     scripts: [
       {

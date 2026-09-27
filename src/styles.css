@@ -9,7 +9,7 @@
    Falls back to a clean geometric sans if the font fails to load. */
 @font-face {
   font-family: "Kyiv Type Sans";
-  src: url("/fonts/KyivTypeSans-VarGX.woff2") format("woff2");
+  src: url("./assets/fonts/KyivTypeSans-VarGX.woff2") format("woff2");
   font-weight: 100 900;   /* variable weight range */
   font-style: normal;
   font-display: swap;
