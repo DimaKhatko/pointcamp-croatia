@@ -3,6 +3,7 @@
 ## Repo facts
 - Landing: Croatia summer camp, Pine Beach Pakoštane.
 - Repo: `pointcamp-croatia` · Stack: TanStack Start (Lovable config) + Bun.
+- Toolchain (aligned with the reference repo smart-point-camp2): Vite `8.1.5`; `@tanstack/react-router` `1.170.18`, `@tanstack/react-start` `1.168.32`, `@tanstack/router-plugin` `1.168.23`; `@lovable.dev/vite-tanstack-config` `^2.20.0`; `nitro` `3.0.260603-beta`; `@vitejs/plugin-react` `^5.2.0`; top-level `overrides: { "rolldown": "1.2.1" }`. `bun run build` prerenders `/` to `dist/client/index.html`.
 - `LANDING = "croatia"`.
 - Build output: `dist/client`.
 - Firebase: target `croatia` → site `pointcamp-croatia-2026` · domain `croatia.pointcamp.com.ua`.
@@ -40,4 +41,3 @@
 - **og:image 1200×630 swap** — current `og-image.jpg` is 1920×1280; replace the file and update the declared `og:image:width/height` in `src/routes/index.tsx` once the 1200×630 asset is supplied.
 - **Subfolder migration to `pointcamp.com.ua/croatia/`** — set Vite `base: "/croatia/"` + `createRouter({ basepath: import.meta.env.BASE_URL })` and re-verify. Not done this session.
 - **Unused Lovable scaffolding** — `src/lib/lovable-error-reporting.ts`, `src/lib/error-capture.ts`, `src/lib/error-page.ts`, `src/lib/config.server.ts`: verify they are truly dead and remove later.
-- **Build note (not an action):** local `bun run build` (bun 1.3.14, committed `bun.lock`) passes including prerender; the prerender step can fail in sandboxed CI-like environments. Do not change dependencies or lockfiles to "fix" this.
