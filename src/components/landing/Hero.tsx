@@ -23,11 +23,11 @@ export function Hero() {
               Літо 2026 · Pakoštane, Хорватія
             </span>
 
-            <h1 className="mt-5 text-balance text-4xl font-extrabold leading-[1.05] text-white drop-shadow-sm sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="mt-5 text-balance text-4xl font-extrabold leading-[1.05] text-white drop-shadow-sm max-lg:[text-shadow:0_1px_12px_rgba(0,20,40,0.45)] sm:text-5xl md:text-6xl lg:text-7xl">
               Десять днів, які ваша дитина пам'ятатиме&nbsp;<Underline color="sun">все життя</Underline>
             </h1>
 
-            <p className="mt-6 max-w-2xl text-balance text-lg text-white/90 md:text-xl">
+            <p className="mt-6 max-w-2xl text-balance text-lg text-white/90 max-lg:[text-shadow:0_1px_12px_rgba(0,20,40,0.45)] md:text-xl">
               Адріатичне море, сосновий ліс і команда, що стає сім'єю. Англомовний
               кемп у Хорватії для дітей 8–17 — без скролінгу, з живою англійською щодня.
             </p>
@@ -89,7 +89,12 @@ const HERO_BG = `${import.meta.env.BASE_URL}hero-bg/`;
  * This image is the LCP element, so it is eager, `fetchPriority="high"` and
  * carries width/height. It fills the section (`absolute inset-0`) so its box
  * never depends on the file, i.e. no layout shift. `object-position` keeps the
- * boats and shoreline in frame on desktop (centre 60%); mobile is centred.
+ * boats and shoreline in frame on desktop (centre 60%). On phones the image is
+ * scaled to the hero's height, so ~250px is cropped sideways; x=9% keeps the
+ * paddle boarders in the middle of the frame (irrelevant from ~640px, where it
+ * scales by width and nothing is cropped sideways). From md (768px) the crop
+ * is instead shifted up (y=20%): scaled by width the sky would otherwise be
+ * cropped away and the dark header logo/nav would sit on dark trees.
  */
 function HeroBackground() {
   const desktop = (ext: "avif" | "webp") =>
@@ -110,7 +115,7 @@ function HeroBackground() {
         loading="eager"
         fetchPriority="high"
         decoding="async"
-        className="absolute inset-0 h-full w-full object-cover object-center lg:object-[center_60%]"
+        className="absolute inset-0 h-full w-full object-cover object-[9%_center] md:object-[9%_20%] lg:object-[center_60%]"
       />
     </picture>
   );
