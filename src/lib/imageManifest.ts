@@ -19,7 +19,9 @@ export interface ResponsiveImageSources {
   height: number;
 }
 
-const HERO = "/hero";
+// BASE_URL is "/" today, so this resolves to "/hero" — identical at "/". Using it
+// keeps the collage images correct if a subfolder base (e.g. "/croatia/") is set later.
+const HERO = `${import.meta.env.BASE_URL}hero`;
 
 function heroSquare(name: string): ResponsiveImageSources {
   return {
