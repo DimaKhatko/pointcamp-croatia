@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
 import { Button } from "@/components/ui/button";
-import heroImg from "@/assets/hero-sea.jpg";
 import { ResponsiveImage } from "@/components/ResponsiveImage";
 import { QUICK_FACTS } from "./data";
 import { HeroSunGlow } from "./decor/HeroSunGlow";
@@ -11,24 +10,9 @@ import { AccentDot } from "./decor/AccentDot";
 export function Hero() {
   return (
     <section id="top" className="relative isolate min-h-[100svh] overflow-hidden">
-      <img
-        src={heroImg}
-        alt="Тихий захід сонця на Адріатичному узбережжі Хорватії — сосновий ліс, бірюзова вода і пісок"
-        width={1920}
-        height={1280}
-        fetchPriority="high"
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      {/* Soft purple atmospheric overlay */}
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, color-mix(in oklab, var(--primary) 55%, transparent) 0%, color-mix(in oklab, var(--primary) 18%, transparent) 45%, color-mix(in oklab, var(--background) 40%, transparent) 100%)",
-        }}
-      />
+      <HeroBackground />
+      {/* Scrim for text/header contrast on the bright photo — see .hero-scrim in styles.css */}
+      <div aria-hidden className="hero-scrim absolute inset-0" />
       <HeroSunGlow />
 
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-4 pb-16 pt-32 md:px-6 md:pb-24 md:pt-40">
@@ -95,6 +79,43 @@ export function Hero() {
   );
 }
 
+const HERO_BG = `${import.meta.env.BASE_URL}hero-bg/`;
+
+/**
+ * Full-bleed hero background with art direction: a portrait 9:16 crop below `lg`
+ * and the landscape 4:3 photo from `lg` up (AVIF first, WebP fallback). The
+ * `<source>` order matters — the first one whose media + type match wins.
+ *
+ * This image is the LCP element, so it is eager, `fetchPriority="high"` and
+ * carries width/height. It fills the section (`absolute inset-0`) so its box
+ * never depends on the file, i.e. no layout shift. `object-position` keeps the
+ * boats and shoreline in frame on desktop (centre 60%); mobile is centred.
+ */
+function HeroBackground() {
+  const desktop = (ext: "avif" | "webp") =>
+    `${HERO_BG}hero-bg-1280.${ext} 1280w, ${HERO_BG}hero-bg-1920.${ext} 1920w`;
+  const mobile = (ext: "avif" | "webp") =>
+    `${HERO_BG}hero-bg-mobile-640.${ext} 640w, ${HERO_BG}hero-bg-mobile-828.${ext} 828w`;
+  return (
+    <picture>
+      <source media="(min-width: 1024px)" type="image/avif" srcSet={desktop("avif")} sizes="100vw" width={1920} height={1438} />
+      <source media="(min-width: 1024px)" type="image/webp" srcSet={desktop("webp")} sizes="100vw" width={1920} height={1438} />
+      <source type="image/avif" srcSet={mobile("avif")} sizes="100vw" width={828} height={1472} />
+      <source type="image/webp" srcSet={mobile("webp")} sizes="100vw" width={828} height={1472} />
+      <img
+        src={`${HERO_BG}hero-bg-1280.webp`}
+        alt="Діти на сапбордах і парусниках біля табору Pine Beach, Хорватія"
+        width={1920}
+        height={1438}
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover object-center lg:object-[center_60%]"
+      />
+    </picture>
+  );
+}
+
 /**
  * Polaroid photo collage — one node, two layouts.
  *
@@ -128,7 +149,6 @@ function HeroCollage() {
             image="hero-jump"
             alt="Хлопчик стрибає з водної гірки в море"
             sizes="(min-width:1024px) 360px, 148px"
-            priority
             className="h-full w-full object-cover"
           />
         </div>

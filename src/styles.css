@@ -218,6 +218,42 @@
 }
 
 /* --------------------------------------------------------------------------
+   Hero scrim
+   Tuned for the bright daytime hero photo: light sky on top, dark pine
+   shoreline and water below. Below `lg` the white copy sits on the sky, so the
+   tint is strongest through the text zone; from `lg` up only the first H1 line
+   touches sky, so it is lighter. The first 64px stay clear so the dark header
+   logo/nav keep their contrast on open sky. Stops are in px because the header
+   and copy sit at fixed offsets from the top, not proportionally to the hero
+   height. The tint is the brand purple darkened (lower opacity, same hue).
+   -------------------------------------------------------------------------- */
+.hero-scrim {
+  --scrim: color-mix(in oklab, var(--primary) 60%, black);
+  background: linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 64px,
+    color-mix(in oklab, var(--scrim) 56%, transparent) 190px,
+    color-mix(in oklab, var(--scrim) 60%, transparent) 430px,
+    color-mix(in oklab, var(--scrim) 40%, transparent) 640px,
+    color-mix(in oklab, var(--scrim) 30%, transparent) 100%
+  );
+}
+@media (min-width: 1024px) {
+  .hero-scrim {
+    background: linear-gradient(
+      180deg,
+      transparent 0px,
+      transparent 64px,
+      color-mix(in oklab, var(--scrim) 46%, transparent) 190px,
+      color-mix(in oklab, var(--scrim) 40%, transparent) 340px,
+      color-mix(in oklab, var(--scrim) 28%, transparent) 560px,
+      color-mix(in oklab, var(--scrim) 24%, transparent) 100%
+    );
+  }
+}
+
+/* --------------------------------------------------------------------------
    Polaroid hero collage
    Ported pattern: white-framed photo cards with washi-tape strips. All cards
    are statically tilted (no motion): the central card via a Tailwind
