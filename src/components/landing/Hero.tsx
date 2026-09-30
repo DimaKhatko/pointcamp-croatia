@@ -99,32 +99,35 @@ export function Hero() {
  * Polaroid photo collage — one node, two layouts.
  *
  * DESKTOP (lg+): the hero's right grid column. Central card in flow (large,
- * static -3° tilt); the two side cards are pinned to opposite corners, spread
- * so they only lightly overlap the central card.
+ * static -3° tilt); the two side cards are pinned to opposite corners. The
+ * squad card sits far enough left that it never covers the central caption.
  *
  * MOBILE/TABLET (<lg): the same node falls into normal flow BELOW the CTAs and
- * ABOVE the quick-facts (single-column grid), rendering as a compact fan —
- * three ~112–144px cards overlapping with the same tilts and tape. The hero
- * copy fills the first viewport, so the fan sits under it: on 375×667 / 390×844
- * the H1 and primary CTA stay fully visible and uncovered.
+ * ABOVE the quick-facts, rendering as a horizontal three-card fan (crew ·
+ * jump · duck) with tilts -6° / 2° / 7°. The centre card is wider and in front
+ * so its caption "Point Camp · Croatia" fits on one line at 11px; neighbours
+ * overlap by only ~10px (~10% of a side card) so every photo and caption
+ * stays readable — the tilts add to the visual overlap. Card widths use clamp() so the row scales
+ * down on narrow phones instead of overflowing. The hero copy fills the first
+ * viewport, so the fan sits under it: H1 and the primary CTA stay uncovered.
  *
  * A single `<img>` per card (no duplicate hidden block) keeps mobile to the
- * 400px variants: each `sizes` value maps the on-screen width so the browser
- * never picks 800w below `lg`. Every card carries width/height + `aspect-square`
- * so the box is reserved before load (no layout shift). Stacking = DOM order:
- * central first (bottom), side cards on top.
+ * 400px variants: each `sizes` value maps the on-screen width. Every card
+ * carries width/height + `aspect-square` so the box is reserved before load
+ * (no layout shift).
  */
 function HeroCollage() {
   return (
-    <div className="relative mx-auto w-36 shrink-0 lg:w-[360px]">
-      {/* Central card — first in DOM (bottom of stack), static tilt.
+    <div className="relative mx-auto flex w-full max-w-[22rem] items-center justify-center [--overlap:clamp(6px,2.7vw,10px)] [--w-mid:clamp(120px,39.5vw,148px)] [--w-side:clamp(84px,27.7vw,104px)] lg:block lg:w-[360px] lg:max-w-none">
+      {/* Central card. Desktop: first in DOM (bottom of the stack), static -3°
+          tilt. Mobile: middle of the row, in front, wider than its neighbours.
           `relative` so its corner tape strips anchor to it. */}
-      <figure className="polaroid relative w-full -rotate-3">
+      <figure className="polaroid relative z-10 order-2 -mx-[var(--overlap)] w-[var(--w-mid)] rotate-2 lg:z-auto lg:mx-0 lg:w-full lg:-rotate-3">
         <div className="relative aspect-square overflow-hidden rounded-[2px]">
           <ResponsiveImage
             image="hero-jump"
             alt="Хлопчик стрибає з водної гірки в море"
-            sizes="(min-width:1024px) 360px, 144px"
+            sizes="(min-width:1024px) 360px, 148px"
             priority
             className="h-full w-full object-cover"
           />
@@ -137,25 +140,24 @@ function HeroCollage() {
           style={{ "--tape-color": "var(--sun)", "--tape-rotate": "-35deg", top: "-14px", left: "-16px" } as CSSProperties}
         />
         <span
-          className="tape"
+          className="tape -right-4 lg:-right-2.5 xl:-right-4"
           aria-hidden
-          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "35deg", right: "-16px", bottom: "-14px" } as CSSProperties}
+          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "35deg", bottom: "-14px" } as CSSProperties}
         />
-        <figcaption className="mt-3 hidden text-center font-display text-sm font-semibold text-foreground lg:block">
+        <figcaption className="mt-2 text-center font-display text-[11px] font-semibold leading-tight text-foreground lg:mt-3 lg:text-sm">
           Point Camp · Croatia
         </figcaption>
       </figure>
 
-      {/* Duck card — mobile: fans out to the right; desktop: top-right corner */}
+      {/* Duck card — mobile: right of the row (7°); desktop: top-right corner (6°) */}
       <figure
-        className="polaroid polaroid-tilt absolute w-28 lg:w-40 -right-14 lg:-right-12 top-6 lg:-top-12"
-        style={{ "--tilt": "6deg" } as CSSProperties}
+        className="polaroid polaroid-tilt relative order-3 w-[var(--w-side)] [--tilt:7deg] lg:absolute lg:-right-2 lg:-top-12 lg:w-40 lg:[--tilt:6deg] xl:-right-12"
       >
         <div className="relative aspect-square overflow-hidden rounded-[2px]">
           <ResponsiveImage
             image="hero-duck"
             alt="Дівчинка в касці з гумовою качкою у мотузковому парку"
-            sizes="(min-width:1024px) 160px, 112px"
+            sizes="(min-width:1024px) 160px, 104px"
             className="h-full w-full object-cover"
           />
         </div>
@@ -164,21 +166,21 @@ function HeroCollage() {
           aria-hidden
           style={{ "--tape-color": "var(--mint)", "--tape-rotate": "-4deg", top: "-10px", left: "50%", transform: "translateX(-50%)" } as CSSProperties}
         />
-        <figcaption className="mt-2 hidden text-center font-display text-[11px] font-semibold text-foreground lg:block">
+        <figcaption className="mt-2 text-balance text-center font-display text-[11px] font-semibold leading-tight text-foreground">
           Helmet on. Duck on.
         </figcaption>
       </figure>
 
-      {/* Crew card — mobile: fans out to the left; desktop: bottom-left corner */}
+      {/* Crew card — mobile: left of the row (-6°); desktop: bottom-left corner
+          (-8°), shifted well left so it clears the central caption. */}
       <figure
-        className="polaroid polaroid-tilt absolute w-28 lg:w-40 -left-14 lg:-left-10 top-10 lg:top-auto lg:-bottom-16"
-        style={{ "--tilt": "-8deg" } as CSSProperties}
+        className="polaroid polaroid-tilt relative order-1 w-[var(--w-side)] [--tilt:-6deg] lg:absolute lg:-bottom-16 lg:-left-[72px] lg:w-40 lg:[--tilt:-8deg]"
       >
         <div className="relative aspect-square overflow-hidden rounded-[2px]">
           <ResponsiveImage
             image="hero-crew"
             alt="Діти й вожаті табору разом"
-            sizes="(min-width:1024px) 160px, 112px"
+            sizes="(min-width:1024px) 160px, 104px"
             className="h-full w-full object-cover"
           />
         </div>
@@ -187,7 +189,7 @@ function HeroCollage() {
           aria-hidden
           style={{ "--tape-color": "var(--sun)", "--tape-rotate": "5deg", top: "-10px", left: "50%", transform: "translateX(-50%)" } as CSSProperties}
         />
-        <figcaption className="mt-2 hidden text-center font-display text-[11px] font-semibold text-foreground lg:block">
+        <figcaption className="mt-2 text-balance text-center font-display text-[11px] font-semibold leading-tight text-foreground">
           The squad
         </figcaption>
       </figure>
