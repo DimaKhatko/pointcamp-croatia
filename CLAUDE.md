@@ -28,6 +28,8 @@
 - Prompts and code comments in English.
 - Never write shell commands with `#` comments.
 - Assets must be committed to be visible (nothing is fetched at deploy time).
+- Measure layout shift and load timing on the static output (`bunx serve dist/client -p 5000`), not `vite preview`: preview serves server-rendered pages, while Firebase hosts the static shell whose text is created by JS, so font/CLS timing differs.
+- The display font is preloaded in `src/routes/__root.tsx` (same hashed file the CSS `@font-face` uses). Keep the two in sync: it removes the font-swap layout shift, which was 0.2–0.29 at 768–1023px before.
 - Lockfile: `bun.lock` is the only lockfile (`package-lock.json` is not used and stays gitignored).
 
 ## Content rules (S6 — audit, do not edit copy without a task)
