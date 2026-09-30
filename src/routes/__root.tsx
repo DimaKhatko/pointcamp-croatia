@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 
 import appCss from "../styles.css?url";
+import kyivTypeSansUrl from "../assets/fonts/KyivTypeSans-VarGX.woff2?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -96,6 +97,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: "https://croatia.pointcamp.com.ua/og-image.jpg" },
     ],
     links: [
+      // The page renders client-side, so without this the browser only discovers the
+      // display font after React lays out text — it then swaps in late and re-wraps
+      // the H1, shifting everything below (CLS). Preloading starts the download with
+      // the HTML. The URL comes from the same import the CSS @font-face resolves to
+      // (one hashed file, fetched once). `crossOrigin` is required for font preloads.
+      {
+        rel: "preload",
+        href: kyivTypeSansUrl,
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
       {
         rel: "stylesheet",
         href: appCss,
