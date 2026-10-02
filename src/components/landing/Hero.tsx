@@ -23,11 +23,11 @@ export function Hero() {
               Літо 2026 · Pakoštane, Хорватія
             </span>
 
-            <h1 className="mt-5 text-balance text-4xl font-extrabold leading-[1.05] text-white drop-shadow-sm max-lg:[text-shadow:0_1px_12px_rgba(0,20,40,0.45)] sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="mt-5 text-balance text-4xl font-extrabold leading-[1.05] text-white drop-shadow-sm max-lg:[text-shadow:0_1px_2px_rgba(0,20,40,0.5),0_2px_14px_rgba(0,20,40,0.6)] lg:[text-shadow:0_1px_2px_rgba(0,20,40,0.4),0_2px_12px_rgba(0,20,40,0.45)] sm:text-5xl md:text-6xl lg:text-7xl">
               Десять днів, які ваша дитина пам'ятатиме&nbsp;<Underline color="sun">все життя</Underline>
             </h1>
 
-            <p className="mt-6 max-w-2xl text-balance text-lg text-white/90 max-lg:[text-shadow:0_1px_12px_rgba(0,20,40,0.45)] md:text-xl">
+            <p className="mt-6 max-w-2xl text-balance text-lg text-white/90 max-lg:[text-shadow:0_1px_2px_rgba(0,20,40,0.5),0_2px_14px_rgba(0,20,40,0.6)] lg:[text-shadow:0_1px_2px_rgba(0,20,40,0.4),0_2px_12px_rgba(0,20,40,0.45)] md:text-xl">
               Адріатичне море, сосновий ліс і команда, що стає сім'єю. Англомовний
               кемп у Хорватії для дітей 8–17 — без скролінгу, з живою англійською щодня.
             </p>

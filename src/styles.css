@@ -225,8 +225,12 @@
    Below `lg` the photo is the mobile crop: a little sky, a strip of trees, then
    saturated blue water with the paddle boarders behind the paragraph. The tint
    is a deep sea navy at low weight so the photo stays sunny, shaped to the
-   photo rather than uniform: firm only over the bright-sky line of the H1 and
-   behind the paragraph/boarders, light again over the deep water below.
+   photo rather than uniform: firm only behind the paragraph/boarders, light
+   again over the deep water below. The top band, over the bright sky and the
+   first H1 line, uses a more saturated blue (--scrim-sky) at 42%: navy over
+   light sky mixes to a grey patch that reads like a cloud over the forest,
+   while a saturated blue keeps the sky blue. It cannot go much lighter: below
+   ~40% the first H1 line drops under 3:1.
    Legibility is shared with a soft text-shadow on the H1 and paragraph (see
    Hero.tsx). Where the copy sits changes with the viewport width, so there are
    three profiles below `lg`, each tuned so that H1 >= 3:1 and paragraph, CTAs
@@ -236,20 +240,21 @@
      768 - 1023px   tablets; the crop is shifted up (object-position in
                     Hero.tsx) so sky stays under the header logo/nav
 
-   From `lg` up only the first H1 line touches sky, so a darkened brand purple
-   at lower weight is used (unchanged).
+   From `lg` up only the first H1 line touches sky, so a deep saturated blue
+   (--scrim) at lower weight is used, for the same grey-patch reason.
    Stops are in px because header and copy sit at fixed offsets from the top,
    not proportionally to the hero height.
    -------------------------------------------------------------------------- */
 .hero-scrim {
-  --scrim: color-mix(in oklab, var(--primary) 60%, black);
+  --scrim: oklch(0.18 0.09 262);
   --scrim-sea: oklch(0.26 0.065 245);
+  --scrim-sky: oklch(0.30 0.14 260);
   background: linear-gradient(
     180deg,
     transparent 0px,
     transparent 64px,
-    color-mix(in oklab, var(--scrim-sea) 58%, transparent) 150px,
-    color-mix(in oklab, var(--scrim-sea) 58%, transparent) 215px,
+    color-mix(in oklab, var(--scrim-sky) 42%, transparent) 150px,
+    color-mix(in oklab, var(--scrim-sky) 42%, transparent) 215px,
     color-mix(in oklab, var(--scrim-sea) 26%, transparent) 245px,
     color-mix(in oklab, var(--scrim-sea) 26%, transparent) 262px,
     color-mix(in oklab, var(--scrim-sea) 50%, transparent) 300px,
@@ -290,10 +295,10 @@
       180deg,
       transparent 0px,
       transparent 64px,
-      color-mix(in oklab, var(--scrim) 46%, transparent) 190px,
-      color-mix(in oklab, var(--scrim) 40%, transparent) 340px,
-      color-mix(in oklab, var(--scrim) 28%, transparent) 560px,
-      color-mix(in oklab, var(--scrim) 24%, transparent) 100%
+      color-mix(in oklab, var(--scrim) 40%, transparent) 190px,
+      color-mix(in oklab, var(--scrim) 34%, transparent) 340px,
+      color-mix(in oklab, var(--scrim) 26%, transparent) 560px,
+      color-mix(in oklab, var(--scrim) 22%, transparent) 100%
     );
   }
 }
