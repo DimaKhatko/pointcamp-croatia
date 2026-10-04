@@ -162,14 +162,14 @@ function HeroCollage() {
         {/* Tape on the diagonal — TL + BR corners (the other two are covered by
             the side cards on desktop). Yellow, per brand tokens. */}
         <span
-          className="tape"
+          className="tape -left-3 -top-2.5 lg:-left-[18px] lg:-top-4"
           aria-hidden
-          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "-35deg", top: "-16px", left: "-18px" } as CSSProperties}
+          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "-35deg" } as CSSProperties}
         />
         <span
-          className="tape -right-[18px] lg:-right-[11px] xl:-right-[18px]"
+          className="tape -bottom-2.5 -right-3 lg:-bottom-4 lg:-right-[11px] xl:-right-[18px]"
           aria-hidden
-          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "35deg", bottom: "-16px" } as CSSProperties}
+          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "35deg" } as CSSProperties}
         />
         <figcaption className="mt-2 text-center font-display text-[11px] font-semibold leading-tight text-foreground lg:mt-3 lg:text-base">
           Point Camp · Croatia
@@ -189,9 +189,9 @@ function HeroCollage() {
           />
         </div>
         <span
-          className="tape"
+          className="tape tape-sm -top-2 lg:-top-3"
           aria-hidden
-          style={{ "--tape-color": "var(--mint)", "--tape-rotate": "-4deg", top: "-12px", left: "50%", transform: "translateX(-50%)" } as CSSProperties}
+          style={{ "--tape-color": "var(--mint)", "--tape-rotate": "-4deg", left: "50%", transform: "translateX(-50%)" } as CSSProperties}
         />
         <figcaption className="mt-2 text-balance text-center font-display text-[11px] font-semibold leading-tight text-foreground lg:text-[13px]">
           Helmet on. Duck on.
@@ -212,9 +212,9 @@ function HeroCollage() {
           />
         </div>
         <span
-          className="tape"
+          className="tape tape-sm -top-2 lg:-top-3"
           aria-hidden
-          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "5deg", top: "-12px", left: "50%", transform: "translateX(-50%)" } as CSSProperties}
+          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "5deg", left: "50%", transform: "translateX(-50%)" } as CSSProperties}
         />
         <figcaption className="mt-2 text-balance text-center font-display text-[11px] font-semibold leading-tight text-foreground lg:text-[13px]">
           The squad

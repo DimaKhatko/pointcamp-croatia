@@ -299,8 +299,11 @@
     0% 90%, 5% 75%, 0% 55%, 5% 35%, 0% 15%
   );
 }
-@media (max-width: 640px) {
-  .tape { width: 80px; height: 24px; }
+/* Below lg the cards are 119-170px wide, so the tape is sized to the card rather
+   than to the desktop strip: ~34% of the centre card, ~44% of a side card. */
+@media (max-width: 1023px) {
+  .tape { width: 58px; height: 17px; }
+  .tape-sm { width: 52px; height: 16px; }
 }
 
 @utility chip-3d {
