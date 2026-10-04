@@ -61,11 +61,11 @@ export function MomentsGallery() {
           id="moments-heading"
           className="mt-4 text-balance text-3xl font-extrabold text-foreground md:text-5xl"
         >
-          Щасливі миті, які діти згадують роками.
+          Яскраві миті, які діти згадують роками.
         </h2>
         <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
           Кілька кадрів із минулих заїздів — і та сама атмосфера, з якої народжується
-          дружба на роки.
+          дружба надовго.
         </p>
 
         <div className="relative mt-12">
