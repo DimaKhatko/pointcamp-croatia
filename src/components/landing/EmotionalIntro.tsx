@@ -7,7 +7,10 @@ export function EmotionalIntro() {
   return (
     <section
       aria-labelledby="intro-heading"
-      className="relative scroll-mt-24 overflow-hidden bg-background py-24 md:py-32"
+      // No bottom padding: the next section ("Моменти") starts flush on the same
+      // background with its own top padding, so a bottom padding here doubled the
+      // gap below the pull quote (96+96px on phones, 128+128px on desktop).
+      className="relative scroll-mt-24 overflow-hidden bg-background pb-0 pt-24 md:pt-32"
     >
       <WavePattern color="var(--sea)" opacity={0.07} />
       <Blob className="-top-20 -right-20 h-[420px] w-[420px]" color="var(--sun)" opacity={0.3} />
