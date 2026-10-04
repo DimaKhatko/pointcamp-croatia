@@ -26,15 +26,15 @@ type Tile = {
 };
 
 const TILES: Tile[] = [
-  { src: m1, width: 560, height: 700, alt: "Підлітки сміються на заході сонця біля Адріатики — табір Point Camp", label: "Друзі", tone: "sea", aspect: "4/5", rotate: "motion-safe:-rotate-2", span: "row-span-2" },
-  { src: m2, width: 560, height: 560, alt: "Діти радіють у бірюзовій воді Адріатики", label: "Команда", tone: "sun", aspect: "1/1", rotate: "motion-safe:rotate-1" },
-  { src: m3, width: 560, height: 560, alt: "Вожатий-ментор обіймає підлітка — підтримка в Point Camp", label: "Вайб", tone: "mint", aspect: "1/1" },
-  { src: m4, width: 1100, height: 825, alt: "Підлітки на каяках біля берега під драматичним небом Адріатики", label: "Літо", tone: "sand", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
-  { src: m5, width: 560, height: 560, alt: "Командна гра підлітків у таборі Point Camp", label: "Пригода", tone: "primary", aspect: "1/1", rotate: "motion-safe:rotate-2" },
-  { src: m6, width: 560, height: 560, alt: "Хлопці жартують із табірними каченятами", label: "Свобода", tone: "sun", aspect: "1/1" },
-  { src: m7, width: 1100, height: 825, alt: "Селфі друзів із каченям на тлі моря", label: "Море", tone: "mint", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
-  { src: m8, width: 560, height: 560, alt: "Друзі роблять спільне селфі за вечерею", label: "Драйв", tone: "sea", aspect: "1/1", rotate: "motion-safe:rotate-1" },
-  { src: m9, width: 720, height: 900, alt: "Група учасників із сап-бордами на березі Адріатики", label: "Ми", tone: "sea", aspect: "1/1", rotate: "motion-safe:-rotate-1" },
+  { src: m1, width: 560, height: 700, alt: "Дівчата-підлітки корчать кумедні гримаси біля моря на заході сонця, одна з них тримає жовту гумову качечку", label: "Друзі", tone: "sea", aspect: "4/5", rotate: "motion-safe:-rotate-2", span: "row-span-2" },
+  { src: m2, width: 560, height: 560, alt: "Діти з піднятими руками радісно плещуться в прозорій бірюзовій воді", label: "Команда", tone: "sun", aspect: "1/1", rotate: "motion-safe:rotate-1" },
+  { src: m3, width: 560, height: 560, alt: "Високий хлопець обіймає маленьку дитину, що повисла в нього на спині", label: "Вайб", tone: "mint", aspect: "1/1" },
+  { src: m4, width: 1100, height: 825, alt: "Підлітки сидять на березі біля каяків і на них, над морем хмарне небо", label: "Літо", tone: "sand", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
+  { src: m5, width: 560, height: 560, alt: "Діти й дорослі стоять тісним колом у світлому приміщенні, поклавши руки докупи", label: "Пригода", tone: "primary", aspect: "1/1", rotate: "motion-safe:rotate-2" },
+  { src: m6, width: 560, height: 560, alt: "Двоє усміхнених хлопчиків тримають на головах гумові качечки в сосновому лісі", label: "Свобода", tone: "sun", aspect: "1/1" },
+  { src: m7, width: 1100, height: 825, alt: "Селфі двох усміхнених дівчат і хлопця з рожевою гумовою качкою, позаду море й вкритий лісом берег", label: "Море", tone: "mint", aspect: "4/3", rotate: "motion-safe:-rotate-1", span: "col-span-2" },
+  { src: m8, width: 560, height: 560, alt: "Підлітки й дорослі збилися за столом у їдальні, щоб сфотографуватися разом, на столі тарілки з їжею", label: "Драйв", tone: "sea", aspect: "1/1", rotate: "motion-safe:rotate-1" },
+  { src: m9, width: 720, height: 900, alt: "Група у помаранчевих рятувальних жилетах стоїть із сап-бордами біля очеретяного бунгало на березі", label: "Ми", tone: "sea", aspect: "1/1", rotate: "motion-safe:-rotate-1" },
 ];
 
 export function MomentsGallery() {
