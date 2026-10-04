@@ -27,6 +27,11 @@ export function withBase(path: string | undefined): string | undefined {
  *     src: "/video/moments-sea.mp4", poster: "/video/moments-sea.jpg" }
  */
 export const MOMENTS_VIDEOS: VideoItem[] = [
-  { id: "moments-sea", title: "Стрибок у море", src: "", poster: "" },
+  {
+    id: "moments-sea",
+    title: "Прогулянка табором",
+    src: "/video/moments-test.mp4",
+    poster: "/video/moments-test.webp",
+  },
   { id: "moments-duck", title: "Де сьогодні качка?", src: "", poster: "" },
 ];
