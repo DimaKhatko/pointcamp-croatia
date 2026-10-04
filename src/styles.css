@@ -306,6 +306,36 @@
   .tape-sm { width: 52px; height: 16px; }
 }
 
+/* --------------------------------------------------------------------------
+   Video placeholder (src/components/video/VideoCard.tsx): animated brand
+   gradient and a fake progress bar, shown while a video has no `src`. Brand
+   tokens only. Motion is off for prefers-reduced-motion.
+   -------------------------------------------------------------------------- */
+.video-ph-bg {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--mint) 48%, var(--sun) 100%);
+  background-size: 220% 220%;
+  animation: video-ph-shift 16s ease-in-out infinite;
+}
+@keyframes video-ph-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.video-ph-progress {
+  transform: scaleX(0);
+  animation: video-ph-progress 8s linear infinite;
+}
+@keyframes video-ph-progress {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .video-ph-bg,
+  .video-ph-progress {
+    animation: none;
+  }
+}
+
 @utility chip-3d {
   display: inline-flex;
   align-items: center;

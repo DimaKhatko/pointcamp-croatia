@@ -12,6 +12,10 @@ import m8 from "@/assets/photos/moments-m8-dinner-selfie.webp";
 import m9 from "@/assets/photos/spare-sup-group.webp";
 import roofPurple from "@/assets/Group.svg";
 import roofAmber from "@/assets/Group-1.svg";
+import { VideoProvider } from "@/components/video/VideoContext";
+import { VideoCard } from "@/components/video/VideoCard";
+import { MOMENTS_VIDEOS } from "@/components/video/videos";
+import type { VideoItem } from "@/components/video/videos";
 
 type Tile = {
   src: string;
@@ -36,6 +40,26 @@ const TILES: Tile[] = [
   { src: m8, width: 560, height: 560, alt: "Підлітки й дорослі збилися за столом у їдальні, щоб сфотографуватися разом, на столі тарілки з їжею", label: "Ми", tone: "sea", aspect: "1/1", rotate: "motion-safe:rotate-1" },
   { src: m9, width: 720, height: 900, alt: "Група у помаранчевих рятувальних жилетах стоїть із сап-бордами біля очеретяного бунгало на березі", label: "SUPs", tone: "sea", aspect: "1/1", rotate: "motion-safe:-rotate-1" },
 ];
+
+type GalleryItem = { kind: "photo"; tile: Tile } | { kind: "video"; video: VideoItem; rotate: string };
+
+/**
+ * Photos in page order with the two vertical videos spliced in among them (after
+ * the 3rd and the 6th photo, never first or last). The grid gives a video a
+ * two-row cell; its own 9:16 box is what holds the space before it loads.
+ */
+const ITEMS: GalleryItem[] = (() => {
+  const items: GalleryItem[] = TILES.map((tile) => ({ kind: "photo", tile }));
+  const slots: Array<[number, string]> = [
+    [3, "motion-safe:rotate-1"],
+    [7, "motion-safe:-rotate-1"],
+  ];
+  slots.forEach(([at, rotate], i) => {
+    const video = MOMENTS_VIDEOS[i];
+    if (video) items.splice(at, 0, { kind: "video", video, rotate });
+  });
+  return items;
+})();
 
 export function MomentsGallery() {
   return (
@@ -84,21 +108,32 @@ export function MomentsGallery() {
             className="pointer-events-none absolute -bottom-10 -right-10 z-0 w-[420px] max-w-none md:w-[560px] motion-safe:animate-[pc-float_9s_ease-in-out_infinite_alternate] [animation-delay:-3s]"
           />
 
-          <div className="relative z-10 grid grid-flow-dense grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
-            {TILES.map((t) => (
-              <PhotoSlot
-                key={t.label}
-                src={t.src}
-                width={t.width}
-                height={t.height}
-                alt={t.alt}
-                label={t.label}
-                tone={t.tone}
-                aspect={t.aspect}
-                className={`${t.rotate ?? ""} ${t.span ?? ""} shadow-md transition-transform hover:rotate-0`}
-              />
-            ))}
-          </div>
+          <VideoProvider>
+            <div className="relative z-10 grid grid-flow-dense grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+              {ITEMS.map((item) =>
+                item.kind === "photo" ? (
+                  <PhotoSlot
+                    key={item.tile.label}
+                    src={item.tile.src}
+                    width={item.tile.width}
+                    height={item.tile.height}
+                    alt={item.tile.alt}
+                    label={item.tile.label}
+                    tone={item.tile.tone}
+                    aspect={item.tile.aspect}
+                    className={`${item.tile.rotate ?? ""} ${item.tile.span ?? ""} shadow-md transition-transform hover:rotate-0`}
+                  />
+                ) : (
+                  <div
+                    key={item.video.id}
+                    className={`relative row-span-2 aspect-[9/16] overflow-hidden rounded-2xl border border-border/60 bg-foreground shadow-md transition-transform hover:rotate-0 ${item.rotate}`}
+                  >
+                    <VideoCard item={item.video} block="moments" active />
+                  </div>
+                ),
+              )}
+            </div>
+          </VideoProvider>
         </div>
       </div>
     </section>
