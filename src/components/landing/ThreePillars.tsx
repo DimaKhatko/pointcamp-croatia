@@ -1,111 +1,17 @@
-import { useEffect, useState } from "react";
 import { PILLARS } from "./data";
 import { PhotoSlot } from "./PhotoSlot";
 import { Blob } from "./decor/Blob";
 import { AccentDot } from "./decor/AccentDot";
 import pillarSea from "@/assets/photos/pillar-sea.webp";
 import pillarActivities from "@/assets/photos/pillar-activities.webp";
-import pillarFun from "@/assets/photos/pillar-fun.webp";
-import pillarSea2 from "@/assets/photos/pillar-sea-2.webp";
-import pillarActivities2 from "@/assets/photos/pillar-activities-2.webp";
-import pillarFun2 from "@/assets/photos/pillar-fun-2.webp";
-import pillarFun3 from "@/assets/photos/pillar-fun-3.webp";
+import pillarFun from "@/assets/photos/moments-toss.webp";
 
-type InsetPhoto = { src: string; alt: string };
-
-/**
- * Aligned by index with PILLARS: Море, Активності, Розваги. `inset` is the small
- * photo (360px square thumbnails) shown top-right of the main photo, tilted like
- * a polaroid; with more than one photo it becomes a small slider. `tilt` is the
- * inset's angle in degrees.
- */
-const PILLAR_IMG: Array<{ src: string; alt: string; inset: InsetPhoto[]; tilt: number }> = [
-  {
-    src: pillarSea,
-    alt: "Подруги біля бірюзової води, позаду водний парк — море в таборі",
-    inset: [{ src: pillarSea2, alt: "Троє дітей в помаранчевих жилетах на сап-бордах біля берега" }],
-    tilt: 5,
-  },
-  {
-    src: pillarActivities,
-    alt: "Група з веслами та сапами на пляжі — активності табору",
-    inset: [{ src: pillarActivities2, alt: "Підлітки й дорослий грають у міні-гольф на зеленій площадці біля сосен і моря" }],
-    tilt: -4,
-  },
-  {
-    src: pillarFun,
-    alt: "Діти з гігантським м'ячем і вожатим — розваги в таборі",
-    inset: [
-      { src: pillarFun3, alt: "Діти підкидають хлопчика вгору в просторому приміщенні" },
-      { src: pillarFun2, alt: "Підлітки з піднятими руками радісно позують на скелястому березі" },
-    ],
-    tilt: 4,
-  },
+/** Aligned by index with PILLARS: Море, Активності, Розваги. */
+const PILLAR_IMG = [
+  { src: pillarSea, alt: "Подруги біля бірюзової води, позаду водний парк — море в таборі" },
+  { src: pillarActivities, alt: "Група з веслами та сапами на пляжі — активності табору" },
+  { src: pillarFun, alt: "Діти підкидають хлопчика вгору в просторому приміщенні — розваги в таборі" },
 ];
-
-const SLIDE_MS = 4000;
-
-/**
- * Small tilted photo on a pillar card. One photo is static; several cycle with a
- * crossfade every few seconds (not at all for prefers-reduced-motion) and a tap
- * advances to the next one. The box is a fixed square, so nothing shifts.
- */
-function PillarInset({ photos, tilt }: { photos: InsetPhoto[]; tilt: number }) {
-  const [idx, setIdx] = useState(0);
-  const multi = photos.length > 1;
-
-  useEffect(() => {
-    if (!multi || typeof window === "undefined") return;
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-    const id = window.setInterval(() => setIdx((i) => (i + 1) % photos.length), SLIDE_MS);
-    return () => window.clearInterval(id);
-  }, [multi, photos.length]);
-
-  const box =
-    "absolute right-3 top-3 aspect-square w-[34%] max-w-[9.5rem] overflow-hidden rounded-lg border-[3px] border-white shadow-lg";
-  const slides = photos.map((ph, i) => (
-    <img
-      key={ph.src}
-      src={ph.src}
-      alt={ph.alt}
-      aria-hidden={i !== idx}
-      width={360}
-      height={360}
-      loading="lazy"
-      decoding="async"
-      className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 motion-reduce:duration-0 ${
-        i === idx ? "opacity-100" : "opacity-0"
-      }`}
-    />
-  ));
-
-  if (!multi) {
-    return (
-      <div className={box} style={{ transform: `rotate(${tilt}deg)` }}>
-        {slides}
-      </div>
-    );
-  }
-  return (
-    <button
-      type="button"
-      onClick={() => setIdx((i) => (i + 1) % photos.length)}
-      aria-label="Наступне фото"
-      className={`${box} cursor-pointer p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-sun`}
-      style={{ transform: `rotate(${tilt}deg)` }}
-    >
-      {slides}
-      <span aria-hidden className="absolute inset-x-0 bottom-1.5 flex justify-center gap-1">
-        {photos.map((ph, i) => (
-          <span
-            key={ph.src}
-            className={`h-1.5 w-1.5 rounded-full ring-1 ring-black/20 ${i === idx ? "bg-white" : "bg-white/50"}`}
-          />
-        ))}
-      </span>
-    </button>
-  );
-}
 
 const TONE = { sea: "sea", mint: "mint", sun: "sun" } as const;
 const BADGE_BG: Record<"sea" | "mint" | "sun", string> = {
@@ -164,7 +70,6 @@ export function ThreePillars() {
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <PillarInset photos={PILLAR_IMG[i].inset} tilt={PILLAR_IMG[i].tilt} />
               </PhotoSlot>
               <div className="p-7">
                 <h3 className="text-2xl font-bold text-foreground">{p.title}</h3>
