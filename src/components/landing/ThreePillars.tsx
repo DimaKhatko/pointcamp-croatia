@@ -5,12 +5,34 @@ import { AccentDot } from "./decor/AccentDot";
 import pillarSea from "@/assets/photos/pillar-sea.webp";
 import pillarActivities from "@/assets/photos/pillar-activities.webp";
 import pillarFun from "@/assets/photos/pillar-fun.webp";
+import pillarSea2 from "@/assets/photos/pillar-sea-2.webp";
+import pillarActivities2 from "@/assets/photos/pillar-activities-2.webp";
+import pillarFun2 from "@/assets/photos/pillar-fun-2.webp";
 
-/** Aligned by index with PILLARS: Море, Активності, Розваги. */
+/**
+ * Aligned by index with PILLARS: Море, Активності, Розваги. `second` is a small
+ * inset photo (360px square thumbnail) shown top-right of the main photo, tilted
+ * like a polaroid; `tilt` is its angle in degrees.
+ */
 const PILLAR_IMG = [
-  { src: pillarSea, alt: "Подруги біля бірюзової води, позаду водний парк — море в таборі" },
-  { src: pillarActivities, alt: "Група з веслами та сапами на пляжі — активності табору" },
-  { src: pillarFun, alt: "Діти з гігантським м'ячем і вожатим — розваги в таборі" },
+  {
+    src: pillarSea,
+    alt: "Подруги біля бірюзової води, позаду водний парк — море в таборі",
+    second: { src: pillarSea2, alt: "Троє дітей в помаранчевих жилетах на сап-бордах біля берега" },
+    tilt: 5,
+  },
+  {
+    src: pillarActivities,
+    alt: "Група з веслами та сапами на пляжі — активності табору",
+    second: { src: pillarActivities2, alt: "Підлітки й дорослий грають у міні-гольф на зеленій площадці біля сосен і моря" },
+    tilt: -4,
+  },
+  {
+    src: pillarFun,
+    alt: "Діти з гігантським м'ячем і вожатим — розваги в таборі",
+    second: { src: pillarFun2, alt: "Підлітки з піднятими руками радісно позують на скелястому березі" },
+    tilt: 4,
+  },
 ];
 
 const TONE = { sea: "sea", mint: "mint", sun: "sun" } as const;
@@ -70,6 +92,16 @@ export function ThreePillars() {
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
+                <img
+                  src={PILLAR_IMG[i].second.src}
+                  alt={PILLAR_IMG[i].second.alt}
+                  width={360}
+                  height={360}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute right-3 top-3 aspect-square w-[34%] max-w-[9.5rem] rounded-lg border-[3px] border-white object-cover shadow-lg"
+                  style={{ transform: `rotate(${PILLAR_IMG[i].tilt}deg)` }}
+                />
               </PhotoSlot>
               <div className="p-7">
                 <h3 className="text-2xl font-bold text-foreground">{p.title}</h3>
