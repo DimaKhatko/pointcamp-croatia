@@ -11,12 +11,12 @@ export function Hero() {
   return (
     <section id="top" className="relative isolate min-h-[100svh] overflow-hidden">
       <HeroBackground />
-      {/* Scrim for text/header contrast on the bright photo — see .hero-scrim in styles.css */}
-      <div aria-hidden className="hero-scrim absolute inset-0" />
+      {/* Scrim for text/header contrast, lg+ only (below lg the hero is the pure photo) — see .hero-scrim in styles.css */}
+      <div aria-hidden className="hero-scrim absolute inset-0 hidden lg:block" />
       <HeroSunGlow />
 
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-4 pb-16 pt-32 md:px-6 md:pb-24 md:pt-40">
-        <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto]">
+        <div className="grid w-full grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:max-[1099px]:gap-x-[88px]">
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full bg-background/80 px-3 py-1.5 text-xs font-medium text-primary backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-sun" />
@@ -90,11 +90,13 @@ const HERO_BG = `${import.meta.env.BASE_URL}hero-bg/`;
  * carries width/height. It fills the section (`absolute inset-0`) so its box
  * never depends on the file, i.e. no layout shift. `object-position` keeps the
  * boats and shoreline in frame on desktop (centre 60%). On phones the image is
- * scaled to the hero's height, so ~250px is cropped sideways; x=9% keeps the
- * paddle boarders in the middle of the frame (irrelevant from ~640px, where it
- * scales by width and nothing is cropped sideways). From md (768px) the crop
- * is instead shifted up (y=20%): scaled by width the sky would otherwise be
- * cropped away and the dark header logo/nav would sit on dark trees.
+ * scaled to the hero's height (~1100px), so only ~60% of its width fits and the
+ * rest is cropped sideways. x=95% shows the big blue-white sail on the right and
+ * the centre paddle boarder; the two boarders on the left are cropped (they sit
+ * ~84% of the image width away from the sail, which no phone-width crop can
+ * hold). From ~640px the image scales by width instead and nothing is cropped
+ * sideways, so x no longer matters; from md (768px) the crop is shifted up
+ * (y=20%) so sky stays under the dark header logo/nav.
  */
 function HeroBackground() {
   const desktop = (ext: "avif" | "webp") =>
@@ -115,7 +117,7 @@ function HeroBackground() {
         loading="eager"
         fetchPriority="high"
         decoding="async"
-        className="absolute inset-0 h-full w-full object-cover object-[9%_center] md:object-[9%_20%] lg:object-[center_60%]"
+        className="absolute inset-0 h-full w-full object-cover object-[95%_center] md:object-[95%_20%] lg:object-[center_60%]"
       />
     </picture>
   );
@@ -144,16 +146,16 @@ function HeroBackground() {
  */
 function HeroCollage() {
   return (
-    <div className="relative mx-auto flex w-full max-w-[22rem] items-center justify-center [--overlap:clamp(6px,2.7vw,10px)] [--w-mid:clamp(120px,39.5vw,148px)] [--w-side:clamp(84px,27.7vw,104px)] lg:block lg:w-[360px] lg:max-w-none">
+    <div className="relative mx-auto flex w-full min-w-0 max-w-[26rem] items-center justify-center [--overlap:clamp(8px,6.1vw,22px)] [--w-mid:clamp(130px,43.5vw,170px)] [--w-side:clamp(91px,30.4vw,120px)] lg:block lg:w-[414px] lg:max-w-none">
       {/* Central card. Desktop: first in DOM (bottom of the stack), static -3°
           tilt. Mobile: middle of the row, in front, wider than its neighbours.
           `relative` so its corner tape strips anchor to it. */}
-      <figure className="polaroid relative z-10 order-2 -mx-[var(--overlap)] w-[var(--w-mid)] rotate-2 lg:z-auto lg:mx-0 lg:w-full lg:-rotate-3">
+      <figure className="polaroid relative z-10 order-2 shrink-0 -mx-[var(--overlap)] w-[var(--w-mid)] rotate-2 lg:z-auto lg:mx-0 lg:w-full lg:-rotate-3">
         <div className="relative aspect-square overflow-hidden rounded-[2px]">
           <ResponsiveImage
             image="hero-jump"
             alt="Хлопчик стрибає з водної гірки в море"
-            sizes="(min-width:1024px) 360px, 148px"
+            sizes="(min-width:1024px) 414px, 170px"
             className="h-full w-full object-cover"
           />
         </div>
@@ -162,36 +164,36 @@ function HeroCollage() {
         <span
           className="tape"
           aria-hidden
-          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "-35deg", top: "-14px", left: "-16px" } as CSSProperties}
+          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "-35deg", top: "-16px", left: "-18px" } as CSSProperties}
         />
         <span
-          className="tape -right-4 lg:-right-2.5 xl:-right-4"
+          className="tape -right-[18px] lg:-right-[11px] xl:-right-[18px]"
           aria-hidden
-          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "35deg", bottom: "-14px" } as CSSProperties}
+          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "35deg", bottom: "-16px" } as CSSProperties}
         />
-        <figcaption className="mt-2 text-center font-display text-[11px] font-semibold leading-tight text-foreground lg:mt-3 lg:text-sm">
+        <figcaption className="mt-2 text-center font-display text-[11px] font-semibold leading-tight text-foreground lg:mt-3 lg:text-base">
           Point Camp · Croatia
         </figcaption>
       </figure>
 
       {/* Duck card — mobile: right of the row (7°); desktop: top-right corner (6°) */}
       <figure
-        className="polaroid polaroid-tilt relative order-3 w-[var(--w-side)] [--tilt:7deg] lg:absolute lg:-right-2 lg:-top-12 lg:w-40 lg:[--tilt:6deg] xl:-right-12"
+        className="polaroid polaroid-tilt relative order-3 shrink-0 w-[var(--w-side)] [--tilt:7deg] lg:absolute lg:-right-[4px] lg:-top-[55px] lg:w-[184px] lg:[--tilt:6deg] xl:-right-[55px]"
       >
         <div className="relative aspect-square overflow-hidden rounded-[2px]">
           <ResponsiveImage
             image="hero-duck"
             alt="Дівчинка в касці з гумовою качкою у мотузковому парку"
-            sizes="(min-width:1024px) 160px, 104px"
+            sizes="(min-width:1024px) 184px, 120px"
             className="h-full w-full object-cover"
           />
         </div>
         <span
           className="tape"
           aria-hidden
-          style={{ "--tape-color": "var(--mint)", "--tape-rotate": "-4deg", top: "-10px", left: "50%", transform: "translateX(-50%)" } as CSSProperties}
+          style={{ "--tape-color": "var(--mint)", "--tape-rotate": "-4deg", top: "-12px", left: "50%", transform: "translateX(-50%)" } as CSSProperties}
         />
-        <figcaption className="mt-2 text-balance text-center font-display text-[11px] font-semibold leading-tight text-foreground">
+        <figcaption className="mt-2 text-balance text-center font-display text-[11px] font-semibold leading-tight text-foreground lg:text-[13px]">
           Helmet on. Duck on.
         </figcaption>
       </figure>
@@ -199,22 +201,22 @@ function HeroCollage() {
       {/* Crew card — mobile: left of the row (-6°); desktop: bottom-left corner
           (-8°), shifted well left so it clears the central caption. */}
       <figure
-        className="polaroid polaroid-tilt relative order-1 w-[var(--w-side)] [--tilt:-6deg] lg:absolute lg:-bottom-16 lg:-left-[72px] lg:w-40 lg:[--tilt:-8deg]"
+        className="polaroid polaroid-tilt relative order-1 shrink-0 w-[var(--w-side)] [--tilt:-6deg] lg:absolute lg:-bottom-[62px] lg:-left-[83px] lg:w-[184px] lg:[--tilt:-8deg]"
       >
         <div className="relative aspect-square overflow-hidden rounded-[2px]">
           <ResponsiveImage
             image="hero-crew"
             alt="Діти й вожаті табору разом"
-            sizes="(min-width:1024px) 160px, 104px"
+            sizes="(min-width:1024px) 184px, 120px"
             className="h-full w-full object-cover"
           />
         </div>
         <span
           className="tape"
           aria-hidden
-          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "5deg", top: "-10px", left: "50%", transform: "translateX(-50%)" } as CSSProperties}
+          style={{ "--tape-color": "var(--sun)", "--tape-rotate": "5deg", top: "-12px", left: "50%", transform: "translateX(-50%)" } as CSSProperties}
         />
-        <figcaption className="mt-2 text-balance text-center font-display text-[11px] font-semibold leading-tight text-foreground">
+        <figcaption className="mt-2 text-balance text-center font-display text-[11px] font-semibold leading-tight text-foreground lg:text-[13px]">
           The squad
         </figcaption>
       </figure>

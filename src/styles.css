@@ -218,79 +218,20 @@
 }
 
 /* --------------------------------------------------------------------------
-   Hero scrim
-   Tuned for the bright daytime hero photo. The first 64px stay clear on every
-   size so the dark header logo/nav keep their contrast on open sky.
-
-   Below `lg` the photo is the mobile crop: a little sky, a strip of trees, then
-   saturated blue water with the paddle boarders behind the paragraph. The tint
-   is a deep sea navy at low weight so the photo stays sunny, shaped to the
-   photo rather than uniform: firm only behind the paragraph/boarders, light
-   again over the deep water below. The top band, over the bright sky and the
-   first H1 line, uses a more saturated blue (--scrim-sky) at 42%: navy over
-   light sky mixes to a grey patch that reads like a cloud over the forest,
-   while a saturated blue keeps the sky blue. It cannot go much lighter: below
-   ~40% the first H1 line drops under 3:1.
-   Legibility is shared with a soft text-shadow on the H1 and paragraph (see
-   Hero.tsx). Where the copy sits changes with the viewport width, so there are
-   three profiles below `lg`, each tuned so that H1 >= 3:1 and paragraph, CTAs
-   and chips >= 4.5:1 at every width (measured against the rendered page):
-     < 480px        phones  (H1 wraps to 4 lines under 425px, 3 above)
-     480 - 767px    small tablets, photo scaled up
-     768 - 1023px   tablets; the crop is shifted up (object-position in
-                    Hero.tsx) so sky stays under the header logo/nav
-
-   From `lg` up only the first H1 line touches sky, so a deep saturated blue
-   (--scrim) at lower weight is used, for the same grey-patch reason.
-   Stops are in px because header and copy sit at fixed offsets from the top,
-   not proportionally to the hero height.
+   Hero scrim (lg and up only)
+   Below `lg` the hero is the pure photo, with no tint over it: legibility
+   there comes only from the text-shadow on the H1 and paragraph (see
+   Hero.tsx). From `lg` up a light deep-blue scrim is kept. It is a saturated
+   blue rather than navy or purple because those mix with the light sky into a
+   grey patch that reads like a cloud over the forest. It cannot go much
+   lighter: below ~40% at the top the first H1 line drops under 3:1.
+   The first 64px stay clear so the dark header logo/nav keep their contrast on
+   open sky. Stops are in px because header and copy sit at fixed offsets from
+   the top, not proportionally to the hero height.
    -------------------------------------------------------------------------- */
-.hero-scrim {
-  --scrim: oklch(0.18 0.09 262);
-  --scrim-sea: oklch(0.26 0.065 245);
-  --scrim-sky: oklch(0.30 0.14 260);
-  background: linear-gradient(
-    180deg,
-    transparent 0px,
-    transparent 64px,
-    color-mix(in oklab, var(--scrim-sky) 42%, transparent) 150px,
-    color-mix(in oklab, var(--scrim-sky) 42%, transparent) 215px,
-    color-mix(in oklab, var(--scrim-sea) 26%, transparent) 245px,
-    color-mix(in oklab, var(--scrim-sea) 26%, transparent) 262px,
-    color-mix(in oklab, var(--scrim-sea) 50%, transparent) 300px,
-    color-mix(in oklab, var(--scrim-sea) 50%, transparent) 540px,
-    color-mix(in oklab, var(--scrim-sea) 22%, transparent) 640px,
-    color-mix(in oklab, var(--scrim-sea) 22%, transparent) 100%
-  );
-}
-@media (480px <= width < 768px) {
-  .hero-scrim {
-    background: linear-gradient(
-      180deg,
-      transparent 0px,
-      transparent 64px,
-      color-mix(in oklab, var(--scrim-sea) 62%, transparent) 150px,
-      color-mix(in oklab, var(--scrim-sea) 62%, transparent) 540px,
-      color-mix(in oklab, var(--scrim-sea) 22%, transparent) 640px,
-      color-mix(in oklab, var(--scrim-sea) 22%, transparent) 100%
-    );
-  }
-}
-@media (768px <= width < 1024px) {
-  .hero-scrim {
-    background: linear-gradient(
-      180deg,
-      transparent 0px,
-      transparent 64px,
-      color-mix(in oklab, var(--scrim-sea) 50%, transparent) 150px,
-      color-mix(in oklab, var(--scrim-sea) 50%, transparent) 540px,
-      color-mix(in oklab, var(--scrim-sea) 42%, transparent) 640px,
-      color-mix(in oklab, var(--scrim-sea) 42%, transparent) 100%
-    );
-  }
-}
 @media (min-width: 1024px) {
   .hero-scrim {
+    --scrim: oklch(0.18 0.09 262);
     background: linear-gradient(
       180deg,
       transparent 0px,
@@ -335,8 +276,8 @@
 .tape {
   position: absolute;
   z-index: 1;
-  width: 88px;
-  height: 26px;
+  width: 101px;
+  height: 30px;
   rotate: var(--tape-rotate, 0deg);
   pointer-events: none;
   mix-blend-mode: multiply;
@@ -359,7 +300,7 @@
   );
 }
 @media (max-width: 640px) {
-  .tape { width: 70px; height: 21px; }
+  .tape { width: 80px; height: 24px; }
 }
 
 @utility chip-3d {
