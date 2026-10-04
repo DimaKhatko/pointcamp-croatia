@@ -36,9 +36,23 @@ export function EmotionalIntro() {
           </p>
         </div>
 
-        <p className="mt-10 text-2xl font-extrabold text-[#452B70] md:text-3xl">
-          Діти щасливі, батьки спокійні.
-        </p>
+        {/* Pull quote — the key brand statement. The opening mark is decorative and
+            sits behind the text; the underline reuses the page's scribble style. */}
+        <blockquote className="relative mt-16 md:mt-24">
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -left-1 -top-11 z-0 select-none font-display text-[6.5rem] font-extrabold leading-none text-sun md:-left-3 md:-top-[4.5rem] md:text-[9rem]"
+          >
+            “
+          </span>
+          <p className="relative z-10 text-balance font-display text-[2rem] font-extrabold leading-[1.08] tracking-tight text-primary sm:text-[2.5rem] md:text-5xl">
+            {/* Each half is its own line on phones (block); one line from md up. */}
+            <span className="block md:inline">Діти щасливі,</span>{" "}
+            <span className="block md:inline">
+              батьки <Underline color="sun">спокійні</Underline>.
+            </span>
+          </p>
+        </blockquote>
       </div>
     </section>
   );
