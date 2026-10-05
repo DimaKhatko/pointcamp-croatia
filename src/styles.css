@@ -336,6 +336,16 @@
   }
 }
 
+/* One-shot attention pulse for the "Забронювати місце" button in the dates block
+   (DatesPricing.tsx). The reduced-motion rule in @layer base already shortens it. */
+@keyframes cta-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 color-mix(in oklab, var(--sun) 60%, transparent); }
+  50% { transform: scale(1.04); box-shadow: 0 0 0 12px color-mix(in oklab, var(--sun) 0%, transparent); }
+}
+.animate-cta-pulse {
+  animation: cta-pulse 1s ease-out 1;
+}
+
 @utility chip-3d {
   display: inline-flex;
   align-items: center;
