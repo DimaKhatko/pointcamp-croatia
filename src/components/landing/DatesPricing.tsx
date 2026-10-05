@@ -2,20 +2,54 @@ import { useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { INCLUDED, NOT_INCLUDED, DISCOUNTS } from "./data";
+import {
+  RETURNING_DISCOUNT,
+  formatPrice,
+  formatUkDate,
+  getKyivDateString,
+  getPriceState,
+} from "@/lib/pricing";
+import type { PriceState } from "@/lib/pricing";
 
 /**
- * "Дати та вартість". All dates, prices, inclusions and discounts are plain
- * constants (data.ts and the three below), there is no backend. Layout: a price
- * card, "Що входить" (a list below lg, a card grid on lg+), a slim "Не входить"
- * row and the discounts as badge cards.
+ * "Дати та вартість". Dates, inclusions and discounts are plain constants
+ * (data.ts and the two below); the price comes from the ladder in
+ * src/lib/pricing.ts. Layout: a price card, "Що входить" (a list below lg, a
+ * card grid on lg+), a slim "Не входить" row and the discounts as badge cards.
  */
-const DATES = "31.07 — 09.08.2027";
+const DATES = "31.07\u00A0—\u00A009.08.2027";
 const DURATION = "10 днів на Адріатиці";
-const PRICE = "1550 €";
+
+/** The text lines under/next to the big price for the current tier. */
+function priceLines(state: PriceState): { line: string | null; small: string } {
+  const returning = `Ви вже були з нами? −${RETURNING_DISCOUNT}\u00A0€ від актуальної ціни.`;
+  if (state.returningOnly) {
+    return {
+      line: `Для тих, хто вже був з нами · до ${formatUkDate(state.end ?? "")}`,
+      small: state.next
+        ? `З ${formatUkDate(state.next.start)} — ${formatPrice(state.next.price)}`
+        : returning,
+    };
+  }
+  const until = state.end ? `до ${formatUkDate(state.end)}` : null;
+  const next = state.next
+    ? ` · з ${formatUkDate(state.next.start)} — ${formatPrice(state.next.price)}`
+    : "";
+  return { line: until ? `${until}${next}` : null, small: returning };
+}
 
 export function DatesPricing() {
   const sectionRef = useRef<HTMLElement>(null);
   const [pulse, setPulse] = useState(false);
+  // null until mounted: the tier depends on today's date, and the page is built
+  // (and could be prerendered) long before it is visited, so the server/first
+  // render shows a skeleton of the same size and the real tier appears on mount.
+  const [priceState, setPriceState] = useState<PriceState | null>(null);
+
+  useEffect(() => {
+    setPriceState(getPriceState(getKyivDateString()));
+  }, []);
+  const lines = priceState ? priceLines(priceState) : null;
 
   // One soft pulse on the CTA the first time the section is ~30% in view.
   useEffect(() => {
@@ -72,7 +106,33 @@ export function DatesPricing() {
             </div>
 
             <div className="flex flex-col items-start gap-5 border-t border-white/15 pt-8 lg:items-end lg:border-l lg:border-t-0 lg:pl-16 lg:pt-0">
-              <span className="text-6xl font-extrabold tracking-tight md:text-7xl">{PRICE}</span>
+              {/* Fixed-height box (room for the big price and two lines), so the
+                  skeleton and every tier take the same space. */}
+              <div
+                aria-busy={priceState === null}
+                aria-live="polite"
+                className="flex min-h-[10.5rem] w-full flex-col items-start gap-2 md:min-h-[11.5rem] lg:w-auto lg:min-w-[19rem] lg:items-end lg:text-right"
+              >
+                {priceState && lines ? (
+                  <>
+                    <span className="text-6xl font-extrabold leading-none tracking-tight md:text-7xl">
+                      {formatPrice(priceState.price)}
+                    </span>
+                    {lines.line && (
+                      <p className="mt-2 max-w-[22rem] text-base font-medium text-primary-foreground/90">
+                        {lines.line}
+                      </p>
+                    )}
+                    <p className="max-w-[22rem] text-sm text-primary-foreground/70">{lines.small}</p>
+                  </>
+                ) : (
+                  <div aria-hidden className="flex w-full flex-col items-start gap-3 lg:items-end">
+                    <span className="h-14 w-48 animate-pulse rounded-xl bg-white/20 md:h-[4.5rem]" />
+                    <span className="mt-2 h-4 w-64 max-w-full animate-pulse rounded bg-white/15" />
+                    <span className="h-3.5 w-44 max-w-full animate-pulse rounded bg-white/10" />
+                  </div>
+                )}
+              </div>
               <p className="inline-flex items-center gap-2 rounded-full bg-sun/90 px-3 py-1.5 text-sm font-semibold text-sun-foreground">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
                 Місць небагато

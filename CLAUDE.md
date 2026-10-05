@@ -30,6 +30,7 @@
 - Assets must be committed to be visible (nothing is fetched at deploy time).
 - Measure layout shift and load timing on the static output (`bunx serve dist/client -p 5000`), not `vite preview`: preview serves server-rendered pages, while Firebase hosts the static shell whose text is created by JS, so font/CLS timing differs.
 - The display font is preloaded in `src/routes/__root.tsx` (same hashed file the CSS `@font-face` uses). Keep the two in sync: it removes the font-swap layout shift, which was 0.2–0.29 at 768–1023px before.
+- **Pricing.** The price ladder (dates in Europe/Kyiv, prices, the −100 € returning-participant discount) lives only in `src/lib/pricing.ts`; the price block and the "Як змінюється ціна?" FAQ answer read from it. The block works out the current tier on the client from the real date (skeleton until mounted). The JSON-LD `offers.price` in `src/routes/index.tsx` is the tier current **at build time**, so the site must be rebuilt and redeployed on every switch date (**1 Nov 2026, 1 Jan 2027, 1 May 2027**) or crawlers will read a stale price. Tier names never appear in the UI.
 - Lockfile: `bun.lock` is the only lockfile (`package-lock.json` is not used and stays gitignored).
 
 ## Content rules (S6 — audit, do not edit copy without a task)
@@ -41,4 +42,6 @@
 - **S1 lead submission — blocked until the Make router is ready.** Keep `sendToTelegram.ts` and the current form until then; the switch to `submitLead.ts` + honeypot + `idle/sending/sent/error` states removes `VITE_TELEGRAM_*` from `.env`/`.env.example`.
 - **og:image 1200×630 swap** — current `og-image.jpg` is 1920×1280; replace the file and update the declared `og:image:width/height` in `src/routes/index.tsx` once the 1200×630 asset is supplied.
 - **Subfolder migration to `pointcamp.com.ua/croatia/`** — set Vite `base: "/croatia/"` + `createRouter({ basepath: import.meta.env.BASE_URL })` and re-verify. Not done this session.
+- **Other static prices still say 1550 €** — the hero quick-facts chip (`QUICK_FACTS` in `data.ts`) and the price box in `ApplicationForm.tsx`. They should read from `src/lib/pricing.ts` too (the current tier, or a neutral label) or they will contradict the price block.
+- **Footer year hydration mismatch** — `Footer.tsx` renders `new Date().getFullYear()`, so a server-rendered page built in one year and visited in another logs React error #418. Harmless in the static shell, but fix (e.g. `suppressHydrationWarning` or a constant) before relying on full prerender.
 - **Unused Lovable scaffolding** — `src/lib/lovable-error-reporting.ts`, `src/lib/error-capture.ts`, `src/lib/error-page.ts`, `src/lib/config.server.ts`: verify they are truly dead and remove later.

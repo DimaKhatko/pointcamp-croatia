@@ -1,3 +1,5 @@
+import { RETURNING_DISCOUNT, TIERS, formatPrice } from "@/lib/pricing";
+
 export const QUICK_FACTS = [
   "Вік 8–17",
   "10 днів",
@@ -127,6 +129,12 @@ export const FAQS = [
   {
     q: "Як дитина дістанеться до Хорватії?",
     a: "Дорога з України непроста — через Польщу й переліт до Хорватії. Тому маршрут плануємо з кожною сім'єю окремо: підкажемо найзручніший варіант і допоможемо все організувати.",
+  },
+  {
+    q: "Як змінюється ціна?",
+    // Prices come from the ladder in src/lib/pricing.ts so this answer cannot drift
+    // from the price block; the wording of the periods is plain prose.
+    a: `до 31 жовтня — ${formatPrice(TIERS[0].price)} (лише для постійних учасників); 1 листопада – 31 грудня — ${formatPrice(TIERS[1].price)}; січень – квітень — ${formatPrice(TIERS[2].price)}; травень – червень — ${formatPrice(TIERS[3].price)}. Постійним учасникам — мінус ${RETURNING_DISCOUNT}\u00A0€ від актуальної ціни. Знижки не сумуються.`,
   },
   {
     q: "Який порядок оплати?",

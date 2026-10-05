@@ -18,6 +18,7 @@ import { ApplicationForm } from "@/components/landing/ApplicationForm";
 import { Footer } from "@/components/landing/Footer";
 import { StickyApplyButton } from "@/components/landing/StickyApplyButton";
 import { FAQS } from "@/components/landing/data";
+import { getKyivDateString, getPriceState } from "@/lib/pricing";
 
 const SITE_URL = "https://croatia.pointcamp.com.ua/";
 const OG_IMAGE = "https://croatia.pointcamp.com.ua/og-image.jpg";
@@ -92,7 +93,9 @@ export const Route = createFileRoute("/")({
             },
             offers: {
               "@type": "Offer",
-              price: "1550",
+              // Tier current when the page is built (see src/lib/pricing.ts): rebuild
+              // and redeploy on every switch date so this stays correct.
+              price: String(getPriceState(getKyivDateString()).price),
               priceCurrency: "EUR",
               availability: "https://schema.org/LimitedAvailability",
               url: `${SITE_URL}#apply`,
