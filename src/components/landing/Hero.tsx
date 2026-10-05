@@ -10,8 +10,9 @@ import { Underline } from "./decor/Underline";
 import { AccentDot } from "./decor/AccentDot";
 
 export function Hero() {
-  // Current price for the price chip; null until mounted (skeleton, see usePriceState).
-  const priceState = usePriceState();
+  // Current price for the price chip; before mount it is the build-day tier drawn as a
+  // skeleton of exactly its own size (see usePriceState).
+  const { state: priceState, ready } = usePriceState();
   return (
     <section id="top" className="relative isolate min-h-[100svh] overflow-hidden">
       <HeroBackground />
@@ -74,12 +75,14 @@ export function Hero() {
                   style={{ background: dot, boxShadow: `0 0 8px ${dot}` }}
                 />
                 {isPrice ? (
-                  priceState ? (
-                    <span className="whitespace-nowrap">{priceChipLabel(priceState)}</span>
-                  ) : (
-                    // Same width as the longest label ("1 300 € · для своїх"), so the chip does not jump.
-                    <span aria-hidden className="inline-block h-4 w-[8.1rem] animate-pulse rounded bg-white/25" />
-                  )
+                  <span
+                    aria-hidden={!ready}
+                    className={`whitespace-nowrap ${
+                      ready ? "" : "animate-pulse select-none rounded bg-white/25 text-transparent"
+                    }`}
+                  >
+                    {priceChipLabel(priceState)}
+                  </span>
                 ) : (
                   fact
                 )}

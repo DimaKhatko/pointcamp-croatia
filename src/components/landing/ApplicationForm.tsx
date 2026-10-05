@@ -46,8 +46,8 @@ async function submitApplication(data: FormValues) {
 
 export function ApplicationForm() {
   const [success, setSuccess] = useState(false);
-  // Current price from src/lib/pricing.ts; null until mounted (skeleton).
-  const priceState = usePriceState();
+  // Current price from src/lib/pricing.ts; before mount the build-day tier as a skeleton.
+  const { state: priceState, ready } = usePriceState();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -137,23 +137,26 @@ export function ApplicationForm() {
                 Вартість заїзду
               </p>
               <div
-                aria-busy={priceState === null}
+                aria-busy={!ready}
+                aria-hidden={!ready}
                 aria-live="polite"
-                className="mt-1 flex min-h-10 items-baseline justify-center gap-2 md:min-h-12"
+                className="mt-1 flex items-baseline justify-center gap-2"
               >
-                {priceState ? (
-                  <>
-                    <span className="text-4xl font-extrabold tracking-tight text-primary md:text-5xl">
-                      {formatPrice(priceState.price)}
-                    </span>
-                    {priceState.returningOnly && (
-                      <span className="text-base font-semibold text-primary/70 md:text-lg">
-                        · {PRESALE_QUALIFIER}
-                      </span>
-                    )}
-                  </>
-                ) : (
-                  <span aria-hidden className="h-9 w-40 animate-pulse self-center rounded-lg bg-primary/15 md:h-11" />
+                <span
+                  className={`text-4xl font-extrabold tracking-tight text-primary md:text-5xl ${
+                    ready ? "" : "animate-pulse select-none rounded-lg bg-primary/15 text-transparent"
+                  }`}
+                >
+                  {formatPrice(priceState.price)}
+                </span>
+                {priceState.returningOnly && (
+                  <span
+                    className={`text-base font-semibold text-primary/70 md:text-lg ${
+                      ready ? "" : "animate-pulse select-none rounded bg-primary/10 text-transparent"
+                    }`}
+                  >
+                    · {PRESALE_QUALIFIER}
+                  </span>
                 )}
               </div>
               <a

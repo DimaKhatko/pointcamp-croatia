@@ -15,6 +15,11 @@ import { usePriceState } from "@/lib/usePriceState";
 const DATES = "31.07\u00A0—\u00A009.08.2027";
 const DURATION = "10 днів на Адріатиці";
 
+/** Skeleton looks (the text keeps its layout but is transparent, on a pulsing bar). */
+const SKELETON_BLOCK = "animate-pulse select-none rounded-xl bg-white/20 text-transparent";
+const SKELETON_TEXT =
+  "animate-pulse select-none rounded bg-white/15 text-transparent [box-decoration-break:clone]";
+
 /**
  * The text lines under/next to the big price for the current tier. The presale
  * shows who it is for and what comes next; later tiers only "until X · from Y"
@@ -40,14 +45,13 @@ function priceLines(state: PriceState): { line: string | null; small: string | n
 export function DatesPricing() {
   const sectionRef = useRef<HTMLElement>(null);
   const [pulse, setPulse] = useState(false);
-  // null until mounted: the tier depends on today's date, and the page is built
-  // (and could be prerendered) long before it is visited, so the server/first
-  // render shows a skeleton of the same size and the real tier appears on mount.
-  const priceState = usePriceState();
-  const lines = priceState ? priceLines(priceState) : null;
-  const visibleDiscounts = priceState
-    ? DISCOUNTS.filter((d) => !(d.hideDuringPresale && priceState.returningOnly))
-    : DISCOUNTS;
+  // `state` is the live tier once mounted and the build-day tier before that (then
+  // `ready` is false and the content is drawn as a same-size skeleton), see usePriceState.
+  const { state: priceState, ready } = usePriceState();
+  const lines = priceLines(priceState);
+  const visibleDiscounts = DISCOUNTS.filter(
+    (d) => !(d.hideDuringPresale && priceState.returningOnly),
+  );
 
   // One soft pulse on the CTA the first time the section is ~30% in view.
   useEffect(() => {
@@ -104,33 +108,30 @@ export function DatesPricing() {
             </div>
 
             <div className="flex flex-col items-start gap-5 border-t border-white/15 pt-8 lg:items-end lg:border-l lg:border-t-0 lg:pl-16 lg:pt-0">
-              {/* Fixed-height box (room for the big price and two lines), so the
-                  skeleton and every tier take the same space. */}
+              {/* Before mount the build-day tier is drawn with transparent text on a pulsing
+                  background: identical markup, so it takes exactly the real content's space. */}
               <div
-                aria-busy={priceState === null}
+                aria-busy={!ready}
+                aria-hidden={!ready}
                 aria-live="polite"
-                className="flex min-h-[10.5rem] w-full flex-col items-start gap-2 md:min-h-[11.5rem] lg:w-auto lg:min-w-[19rem] lg:items-end lg:text-right"
+                className="flex w-full flex-col items-start gap-2 lg:w-auto lg:min-w-[19rem] lg:items-end lg:text-right"
               >
-                {priceState && lines ? (
-                  <>
-                    <span className="text-6xl font-extrabold leading-none tracking-tight md:text-7xl">
-                      {formatPrice(priceState.price)}
-                    </span>
-                    {lines.line && (
-                      <p className="mt-2 max-w-[22rem] text-base font-medium text-primary-foreground/90">
-                        {lines.line}
-                      </p>
-                    )}
-                    {lines.small && (
-                      <p className="max-w-[22rem] text-sm text-primary-foreground/70">{lines.small}</p>
-                    )}
-                  </>
-                ) : (
-                  <div aria-hidden className="flex w-full flex-col items-start gap-3 lg:items-end">
-                    <span className="h-14 w-48 animate-pulse rounded-xl bg-white/20 md:h-[4.5rem]" />
-                    <span className="mt-2 h-4 w-64 max-w-full animate-pulse rounded bg-white/15" />
-                    <span className="h-3.5 w-44 max-w-full animate-pulse rounded bg-white/10" />
-                  </div>
+                <span
+                  className={`text-6xl font-extrabold leading-none tracking-tight md:text-7xl ${
+                    ready ? "" : SKELETON_BLOCK
+                  }`}
+                >
+                  {formatPrice(priceState.price)}
+                </span>
+                {lines.line && (
+                  <p className="mt-2 max-w-[22rem] text-base font-medium text-primary-foreground/90">
+                    <span className={ready ? undefined : SKELETON_TEXT}>{lines.line}</span>
+                  </p>
+                )}
+                {lines.small && (
+                  <p className="max-w-[22rem] text-sm text-primary-foreground/70">
+                    <span className={ready ? undefined : SKELETON_TEXT}>{lines.small}</span>
+                  </p>
                 )}
               </div>
               <p className="inline-flex items-center gap-2 rounded-full bg-sun/90 px-3 py-1.5 text-sm font-semibold text-sun-foreground">
@@ -208,10 +209,10 @@ export function DatesPricing() {
           {/* Before mount every card is rendered but invisible (they hold the space, so
               nothing shifts); after mount the presale-hidden ones are dropped. */}
           <ul
-            aria-hidden={priceState === null}
+            aria-hidden={!ready}
             className={`mt-5 grid grid-cols-2 gap-3 transition-opacity duration-300 sm:gap-4 max-lg:[&>li:last-child:nth-child(odd)]:col-span-2 ${
               visibleDiscounts.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"
-            } ${priceState ? "opacity-100" : "opacity-0"}`}
+            } ${ready ? "opacity-100" : "opacity-0"}`}
           >
             {visibleDiscounts.map((d) => (
               <li
