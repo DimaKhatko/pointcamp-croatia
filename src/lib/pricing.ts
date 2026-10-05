@@ -104,3 +104,25 @@ export function formatUkDate(isoDate: string): string {
   const [, month, day] = isoDate.split("-").map(Number);
   return `${day} ${MONTHS_GENITIVE[month - 1]}`;
 }
+
+/** Short qualifier shown next to the presale price (it is for returning participants only). */
+export const PRESALE_QUALIFIER = "для своїх";
+
+/** "1 300 € · для своїх" during the presale, plain "1 450 €" afterwards. */
+export function priceChipLabel(state: PriceState): string {
+  const price = formatPrice(state.price);
+  return state.returningOnly ? `${price} · ${PRESALE_QUALIFIER}` : price;
+}
+
+/**
+ * The price that may be published to crawlers (JSON-LD offers). The presale price
+ * is never exposed: until the presale ends the offer is the first public tier,
+ * valid from its start date; afterwards it is simply the current tier.
+ */
+export function getPublicOffer(kyivDate: string): { price: number; validFrom?: string } {
+  const state = getPriceState(kyivDate);
+  if (state.returningOnly && state.next) {
+    return { price: state.next.price, validFrom: state.next.start };
+  }
+  return { price: state.price };
+}

@@ -2,14 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { INCLUDED, NOT_INCLUDED, DISCOUNTS } from "./data";
-import {
-  RETURNING_DISCOUNT,
-  formatPrice,
-  formatUkDate,
-  getKyivDateString,
-  getPriceState,
-} from "@/lib/pricing";
+import { formatPrice, formatUkDate } from "@/lib/pricing";
 import type { PriceState } from "@/lib/pricing";
+import { usePriceState } from "@/lib/usePriceState";
 
 /**
  * "Дати та вартість". Dates, inclusions and discounts are plain constants
@@ -20,22 +15,26 @@ import type { PriceState } from "@/lib/pricing";
 const DATES = "31.07\u00A0—\u00A009.08.2027";
 const DURATION = "10 днів на Адріатиці";
 
-/** The text lines under/next to the big price for the current tier. */
-function priceLines(state: PriceState): { line: string | null; small: string } {
-  const returning = `Ви вже були з нами? −${RETURNING_DISCOUNT}\u00A0€ від актуальної ціни.`;
+/**
+ * The text lines under/next to the big price for the current tier. The presale
+ * shows who it is for and what comes next; later tiers only "until X · from Y"
+ * (the returning-participant discount is its own card below), and the last tier
+ * is the bare price.
+ */
+function priceLines(state: PriceState): { line: string | null; small: string | null } {
   if (state.returningOnly) {
     return {
       line: `Для тих, хто вже був з нами · до ${formatUkDate(state.end ?? "")}`,
       small: state.next
         ? `З ${formatUkDate(state.next.start)} — ${formatPrice(state.next.price)}`
-        : returning,
+        : null,
     };
   }
   const until = state.end ? `до ${formatUkDate(state.end)}` : null;
   const next = state.next
     ? ` · з ${formatUkDate(state.next.start)} — ${formatPrice(state.next.price)}`
     : "";
-  return { line: until ? `${until}${next}` : null, small: returning };
+  return { line: until ? `${until}${next}` : null, small: null };
 }
 
 export function DatesPricing() {
@@ -44,12 +43,11 @@ export function DatesPricing() {
   // null until mounted: the tier depends on today's date, and the page is built
   // (and could be prerendered) long before it is visited, so the server/first
   // render shows a skeleton of the same size and the real tier appears on mount.
-  const [priceState, setPriceState] = useState<PriceState | null>(null);
-
-  useEffect(() => {
-    setPriceState(getPriceState(getKyivDateString()));
-  }, []);
+  const priceState = usePriceState();
   const lines = priceState ? priceLines(priceState) : null;
+  const visibleDiscounts = priceState
+    ? DISCOUNTS.filter((d) => !(d.hideDuringPresale && priceState.returningOnly))
+    : DISCOUNTS;
 
   // One soft pulse on the CTA the first time the section is ~30% in view.
   useEffect(() => {
@@ -123,7 +121,9 @@ export function DatesPricing() {
                         {lines.line}
                       </p>
                     )}
-                    <p className="max-w-[22rem] text-sm text-primary-foreground/70">{lines.small}</p>
+                    {lines.small && (
+                      <p className="max-w-[22rem] text-sm text-primary-foreground/70">{lines.small}</p>
+                    )}
                   </>
                 ) : (
                   <div aria-hidden className="flex w-full flex-col items-start gap-3 lg:items-end">
@@ -205,13 +205,20 @@ export function DatesPricing() {
         {/* Знижки */}
         <div className="mt-14">
           <h3 className="text-xl font-bold text-foreground">Знижки</h3>
-          <ul className="mt-5 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            {DISCOUNTS.map((d) => (
+          {/* Before mount every card is rendered but invisible (they hold the space, so
+              nothing shifts); after mount the presale-hidden ones are dropped. */}
+          <ul
+            aria-hidden={priceState === null}
+            className={`mt-5 grid grid-cols-2 gap-3 transition-opacity duration-300 sm:gap-4 max-lg:[&>li:last-child:nth-child(odd)]:col-span-2 ${
+              visibleDiscounts.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"
+            } ${priceState ? "opacity-100" : "opacity-0"}`}
+          >
+            {visibleDiscounts.map((d) => (
               <li
                 key={d.title}
                 className="flex flex-col items-start gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5"
               >
-                <span className="rounded-full bg-sun px-3 py-1 text-sm font-extrabold text-sun-foreground">
+                <span className="whitespace-nowrap rounded-full bg-sun px-2 py-1 text-[12px] font-extrabold text-sun-foreground min-[360px]:px-2.5 min-[360px]:text-[13px] sm:px-3 sm:text-sm">
                   {d.value.replace(/ /g, " ")}
                 </span>
                 <div>

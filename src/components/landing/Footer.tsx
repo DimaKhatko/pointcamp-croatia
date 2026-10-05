@@ -1,7 +1,15 @@
 import { Mail, Phone, MessageCircle, MessageSquare, Send, Facebook, Instagram } from "lucide-react";
+import { useEffect, useState } from "react";
 import logo from "@/assets/logo-pointcamp.svg";
 
 export function Footer() {
+  // The year is read after mount: a server-rendered page built in one year and
+  // visited in another would otherwise mismatch on hydration. Until then an
+  // invisible placeholder of the same width keeps the line from shifting.
+  const [year, setYear] = useState<number | null>(null);
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
   return (
     <footer className="border-t border-border bg-secondary/40 py-14">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
@@ -127,7 +135,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t border-border pt-6 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Point Camp. Усі права захищені.
+          © <span className={year === null ? "invisible" : undefined}>{year ?? 2026}</span> Point Camp. Усі права захищені.
         </div>
       </div>
     </footer>

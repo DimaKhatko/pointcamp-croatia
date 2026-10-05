@@ -1,13 +1,18 @@
 import { RETURNING_DISCOUNT, TIERS, formatPrice } from "@/lib/pricing";
 
-export const QUICK_FACTS = [
+/**
+ * Hero chips. `PRICE_FACT` is a slot for the current price: it is filled on the
+ * client from src/lib/pricing.ts (see Hero), never written here.
+ */
+export const PRICE_FACT = { price: true } as const;
+export const QUICK_FACTS: ReadonlyArray<string | typeof PRICE_FACT> = [
   "Вік 8–17",
   "10 днів",
   "Адріатика",
-  "1550 €",
+  PRICE_FACT,
   "55 місць",
   "31.07 — 09.08",
-] as const;
+];
 
 export const WHY_CARDS = [
   {
@@ -114,8 +119,9 @@ export const NOT_INCLUDED = [
   "Кишенькові витрати (~100 €)",
 ];
 
-export const DISCOUNTS: { title: string; subtitle?: string; value: string }[] = [
-  { title: "Поінтерам", subtitle: "Були в нас раніше", value: "−100 €" },
+/** `hideDuringPresale`: not shown until the presale ends (discounts do not stack with it). */
+export const DISCOUNTS: { title: string; subtitle?: string; value: string; hideDuringPresale?: boolean }[] = [
+  { title: "Поінтерам", subtitle: "Були в нас раніше", value: "−100 €", hideDuringPresale: true },
   { title: "Дітям з однієї родини", subtitle: "Якщо їдуть уперше", value: "−100 €/дитина" },
   { title: "Дітям військових", value: "−100 €" },
   { title: "Приведіть друга", subtitle: "Знижка вам обом", value: "−50 €" },

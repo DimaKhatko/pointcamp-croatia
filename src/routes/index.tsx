@@ -18,13 +18,19 @@ import { ApplicationForm } from "@/components/landing/ApplicationForm";
 import { Footer } from "@/components/landing/Footer";
 import { StickyApplyButton } from "@/components/landing/StickyApplyButton";
 import { FAQS } from "@/components/landing/data";
-import { getKyivDateString, getPriceState } from "@/lib/pricing";
+import { getKyivDateString, getPublicOffer } from "@/lib/pricing";
 
 const SITE_URL = "https://croatia.pointcamp.com.ua/";
 const OG_IMAGE = "https://croatia.pointcamp.com.ua/og-image.jpg";
 const TITLE = "Англомовний літній кемп у Хорватії для дітей 8–17 | Point Camp";
 const DESCRIPTION =
   "Англомовний кемп на Адріатиці 31.07–09.08.2027. Англійська щодня, безпека 24/7, 15 років досвіду. Діти щасливі, батьки спокійні. Лише 55 місць.";
+
+/** JSON-LD Offer price fields for today's date in Kyiv (never the presale price). */
+function offerPrice(): { price: string; validFrom?: string } {
+  const { price, validFrom } = getPublicOffer(getKyivDateString());
+  return validFrom ? { price: String(price), validFrom } : { price: String(price) };
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -93,9 +99,10 @@ export const Route = createFileRoute("/")({
             },
             offers: {
               "@type": "Offer",
-              // Tier current when the page is built (see src/lib/pricing.ts): rebuild
-              // and redeploy on every switch date so this stays correct.
-              price: String(getPriceState(getKyivDateString()).price),
+              // Public price at build time (see src/lib/pricing.ts): the presale price is
+              // never published, so until the presale ends this is the first public tier
+              // with validFrom. Rebuild and redeploy on every switch date.
+              ...offerPrice(),
               priceCurrency: "EUR",
               availability: "https://schema.org/LimitedAvailability",
               url: `${SITE_URL}#apply`,

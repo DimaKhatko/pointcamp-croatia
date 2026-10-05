@@ -2,12 +2,16 @@ import type { CSSProperties } from "react";
 import { Button } from "@/components/ui/button";
 import { ResponsiveImage } from "@/components/ResponsiveImage";
 import { QUICK_FACTS } from "./data";
+import { priceChipLabel } from "@/lib/pricing";
+import { usePriceState } from "@/lib/usePriceState";
 import { HeroSunGlow } from "./decor/HeroSunGlow";
 import { HeroWaveDivider } from "./decor/HeroWaveDivider";
 import { Underline } from "./decor/Underline";
 import { AccentDot } from "./decor/AccentDot";
 
 export function Hero() {
+  // Current price for the price chip; null until mounted (skeleton, see usePriceState).
+  const priceState = usePriceState();
   return (
     <section id="top" className="relative isolate min-h-[100svh] overflow-hidden">
       <HeroBackground />
@@ -58,9 +62,10 @@ export function Hero() {
         <ul className="mt-12 flex flex-wrap gap-2 md:gap-3">
           {QUICK_FACTS.map((fact, i) => {
             const dot = ["var(--sun)", "var(--mint)", "var(--sea)", "var(--sand)", "var(--sun)"][i % 5];
+            const isPrice = typeof fact !== "string";
             return (
               <li
-                key={fact}
+                key={isPrice ? "price" : fact}
                 className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2 text-sm font-medium text-white backdrop-blur-md shadow-[0_6px_18px_-10px_rgba(0,0,0,0.35)]"
               >
                 <span
@@ -68,7 +73,16 @@ export function Hero() {
                   className="h-2 w-2 rounded-full"
                   style={{ background: dot, boxShadow: `0 0 8px ${dot}` }}
                 />
-                {fact}
+                {isPrice ? (
+                  priceState ? (
+                    <span className="whitespace-nowrap">{priceChipLabel(priceState)}</span>
+                  ) : (
+                    // Same width as the longest label ("1 300 € · для своїх"), so the chip does not jump.
+                    <span aria-hidden className="inline-block h-4 w-[8.1rem] animate-pulse rounded bg-white/25" />
+                  )
+                ) : (
+                  fact
+                )}
               </li>
             );
           })}

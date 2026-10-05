@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { sendToTelegram } from "@/lib/sendToTelegram";
+import { PRESALE_QUALIFIER, formatPrice } from "@/lib/pricing";
+import { usePriceState } from "@/lib/usePriceState";
 
 const schema = z.object({
   name: z
@@ -44,6 +46,8 @@ async function submitApplication(data: FormValues) {
 
 export function ApplicationForm() {
   const [success, setSuccess] = useState(false);
+  // Current price from src/lib/pricing.ts; null until mounted (skeleton).
+  const priceState = usePriceState();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -132,9 +136,26 @@ export function ApplicationForm() {
               <p className="text-xs font-medium uppercase tracking-widest text-primary/70">
                 Вартість заїзду
               </p>
-              <p className="mt-1 text-4xl font-extrabold tracking-tight text-primary md:text-5xl">
-                1550&nbsp;€
-              </p>
+              <div
+                aria-busy={priceState === null}
+                aria-live="polite"
+                className="mt-1 flex min-h-10 items-baseline justify-center gap-2 md:min-h-12"
+              >
+                {priceState ? (
+                  <>
+                    <span className="text-4xl font-extrabold tracking-tight text-primary md:text-5xl">
+                      {formatPrice(priceState.price)}
+                    </span>
+                    {priceState.returningOnly && (
+                      <span className="text-base font-semibold text-primary/70 md:text-lg">
+                        · {PRESALE_QUALIFIER}
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span aria-hidden className="h-9 w-40 animate-pulse self-center rounded-lg bg-primary/15 md:h-11" />
+                )}
+              </div>
               <a
                 href="#dates"
                 className="mt-2 inline-block text-sm font-medium text-primary underline-offset-4 hover:underline"
