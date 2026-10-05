@@ -39,7 +39,6 @@
 
 ## Pending
 - **S1 lead submission — blocked until the Make router is ready.** Keep `sendToTelegram.ts` and the current form until then; the switch to `submitLead.ts` + honeypot + `idle/sending/sent/error` states removes `VITE_TELEGRAM_*` from `.env`/`.env.example`.
-- **Season 2027 content update** — the landing still sells the summer **2026** shift (dates 31.07–09.08.2026, sitemap `lastmod`, copy). Refresh for 2027 when confirmed.
 - **og:image 1200×630 swap** — current `og-image.jpg` is 1920×1280; replace the file and update the declared `og:image:width/height` in `src/routes/index.tsx` once the 1200×630 asset is supplied.
 - **Subfolder migration to `pointcamp.com.ua/croatia/`** — set Vite `base: "/croatia/"` + `createRouter({ basepath: import.meta.env.BASE_URL })` and re-verify. Not done this session.
 - **Unused Lovable scaffolding** — `src/lib/lovable-error-reporting.ts`, `src/lib/error-capture.ts`, `src/lib/error-page.ts`, `src/lib/config.server.ts`: verify they are truly dead and remove later.

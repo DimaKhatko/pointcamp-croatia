@@ -23,7 +23,7 @@ const SITE_URL = "https://croatia.pointcamp.com.ua/";
 const OG_IMAGE = "https://croatia.pointcamp.com.ua/og-image.jpg";
 const TITLE = "Англомовний літній кемп у Хорватії для дітей 8–17 | Point Camp";
 const DESCRIPTION =
-  "Англомовний кемп на Адріатиці 31.07–09.08.2026. Англійська щодня, безпека 24/7, 15 років досвіду. Діти щасливі, батьки спокійні. Лише 55 місць.";
+  "Англомовний кемп на Адріатиці 31.07–09.08.2027. Англійська щодня, безпека 24/7, 15 років досвіду. Діти щасливі, батьки спокійні. Лише 55 місць.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -72,12 +72,12 @@ export const Route = createFileRoute("/")({
           },
           event: {
             "@type": "Event",
-            name: "Point Camp Хорватія — Flagship заїзд 2026",
+            name: "Point Camp Хорватія — Flagship заїзд 2027",
             description:
-              "Англомовний літній кемп на Адріатиці для дітей 8–17 років. 10 днів: море, жива англійська щодня, безпека 24/7. 31.07–09.08.2026, Pine Beach Resort, Pakoštane.",
+              "Англомовний літній кемп на Адріатиці для дітей 8–17 років. 10 днів: море, жива англійська щодня, безпека 24/7. 31.07–09.08.2027, Pine Beach Resort, Pakoštane.",
             image: OG_IMAGE,
-            startDate: "2026-07-31",
-            endDate: "2026-08-09",
+            startDate: "2027-07-31",
+            endDate: "2027-08-09",
             eventAttendanceMode:
               "https://schema.org/OfflineEventAttendanceMode",
             eventStatus: "https://schema.org/EventScheduled",

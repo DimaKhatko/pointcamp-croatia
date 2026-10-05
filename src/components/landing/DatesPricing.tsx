@@ -34,7 +34,7 @@ export function DatesPricing() {
                 Flagship заїзд
               </span>
               <p className="mt-5 text-3xl font-extrabold md:text-4xl">
-                31.07 — 09.08.2026
+                31.07 — 09.08.2027
               </p>
               <p className="mt-2 text-primary-foreground/80">10 днів на Адріатиці</p>
 

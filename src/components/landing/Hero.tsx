@@ -20,7 +20,7 @@ export function Hero() {
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full bg-background/80 px-3 py-1.5 text-xs font-medium text-primary backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-sun" />
-              Літо 2026 · Pakoštane, Хорватія
+              Літо 2027 · Pakoštane, Хорватія
             </span>
 
             <h1 className="mt-5 text-balance text-4xl font-extrabold leading-[1.05] text-white drop-shadow-sm max-lg:[text-shadow:0_1px_2px_rgba(0,20,40,0.5),0_2px_14px_rgba(0,20,40,0.6)] lg:[text-shadow:0_1px_2px_rgba(0,20,40,0.4),0_2px_12px_rgba(0,20,40,0.45)] sm:text-5xl md:text-6xl lg:text-7xl">
