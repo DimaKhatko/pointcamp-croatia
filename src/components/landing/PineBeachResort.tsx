@@ -234,25 +234,28 @@ export function PineBeachResort() {
           {FEATURES.map(({ icon: Icon, title, body, lines }) => (
             <div
               key={title}
-              className={`flex h-full gap-3 rounded-2xl border border-[#452B70]/15 bg-card p-4 ${
+              className={`flex h-full flex-col gap-2.5 rounded-2xl border border-[#452B70]/15 bg-card p-5 ${
                 lines ? "sm:col-span-2 lg:col-span-1 lg:row-span-2" : ""
               } ${RICH_SHADOW}`}
             >
-              <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#452B70]" aria-hidden />
-              <div>
-                <dt className="font-semibold text-[#452B70]">{title}</dt>
-                {lines ? (
-                  <dd className="mt-1">
-                    <ul className="list-disc space-y-1.5 pl-4 text-sm text-[#452B70]/75 marker:text-[#452B70]/40">
-                      {lines.map((line) => (
-                        <li key={line}>{line}</li>
-                      ))}
-                    </ul>
-                  </dd>
-                ) : (
-                  <dd className="mt-0.5 text-sm text-[#452B70]/75">{body}</dd>
-                )}
-              </div>
+              {/* Icon and title on one line; the text below uses the full card width */}
+              <dt className="flex items-center gap-3 font-semibold text-[#452B70]">
+                <Icon className="h-5 w-5 shrink-0" aria-hidden />
+                {title}
+              </dt>
+              {lines ? (
+                <dd>
+                  <ul className="list-disc space-y-2 pl-5 text-[15px] leading-snug text-[#452B70]/85 marker:text-[#452B70]/50">
+                    {lines.map((line) => (
+                      <li key={line} className="text-pretty pl-0.5">
+                        {line}
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              ) : (
+                <dd className="text-pretty text-[15px] leading-snug text-[#452B70]/85">{body}</dd>
+              )}
             </div>
           ))}
         </dl>
