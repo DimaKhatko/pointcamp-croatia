@@ -52,7 +52,7 @@ const SLIDES: {
   { src: pineFeatured, width: 1536, height: 1024, alt: "Бунгало Pine Beach серед сосен біля Адріатичного моря", tone: "mint" },
   { src: pine03, width: 1000, height: 750, alt: "Очеретяне бунгало у золотому світлі серед сосон", tone: "sun" },
   { src: pineHut, width: 1000, height: 750, alt: "Брендований будиночок Pine Beach серед сосон", tone: "primary" },
-  { src: pine02, width: 1000, height: 750, alt: "Інтер'єр бунгало зі шафами та полицями для речей", tone: "mint" },
+  { src: pine02, width: 1000, height: 750, alt: "Очеретяне бунгало з солом'яним дахом серед сосен біля пляжу", tone: "mint" },
   { src: pine05, width: 1000, height: 750, alt: "Сучасний санітарний блок просто неба в Pine Beach", tone: "sand" },
   { src: pine06, width: 1000, height: 750, alt: "Чистий санвузол із кольоровою плиткою, зручний для дітей", tone: "sea" },
   { src: pine07, width: 1000, height: 750, alt: "Шведський стіл — свіжі салати та страви середземноморської кухні", tone: "sun" },

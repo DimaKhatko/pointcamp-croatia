@@ -136,11 +136,11 @@ export const FAQS = [
     q: "Як змінюється ціна?",
     // Prices come from the ladder in src/lib/pricing.ts so this answer cannot drift
     // from the price block; the wording of the periods is plain prose.
-    a: `до 31 жовтня — ${formatPrice(TIERS[0].price)} (лише для постійних учасників); 1 листопада – 31 грудня — ${formatPrice(TIERS[1].price)}; січень – березень — ${formatPrice(TIERS[2].price)}; квітень – червень — ${formatPrice(TIERS[3].price)}.`,
+    a: `до 31 жовтня — ${formatPrice(TIERS[0].price)} (лише для постійних учасників); 1 листопада – 31 грудня — ${formatPrice(TIERS[1].price)}; січень – березень — ${formatPrice(TIERS[2].price)}; квітень – червень — ${formatPrice(TIERS[3].price)}. Знижки не сумуються.`,
   },
   {
     q: "Який порядок оплати?",
-    a: "Аванс 350 €, щоб забронювати місце для дитини. Повну суму вносите не пізніше ніж за 31 день до заїзду.",
+    a: "Аванс 500 €, щоб забронювати місце для дитини. Повну суму вносите не пізніше ніж за 31 день до заїзду. При повній оплаті — додаткова знижка 50 €.",
   },
   {
     q: "Чи можна оплатити частинами?",
