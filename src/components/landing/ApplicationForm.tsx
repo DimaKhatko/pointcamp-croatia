@@ -76,11 +76,6 @@ export function ApplicationForm() {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    // Honeypot: a bot filled the hidden field (named so autofill does not guess it), so pretend success without calling the webhook.
-    if (String(formData.get("pc_hp_field") ?? "") !== "") {
-      setStatus("sent");
-      return;
-    }
     void form.handleSubmit(() => send(formData))(event);
   };
 
@@ -162,22 +157,6 @@ export function ApplicationForm() {
             onSubmit={onSubmit}
             className="mt-12 grid gap-5 rounded-3xl border border-border bg-card p-6 shadow-sm md:p-10"
           >
-            {/* Honeypot: visually hidden, not reachable by keyboard; humans never fill it. */}
-            <div className="sr-only">
-              <input
-                type="text"
-                id="pc_hp_field"
-                name="pc_hp_field"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-                data-lpignore="true"
-                data-1p-ignore="true"
-                data-form-type="other"
-                defaultValue=""
-              />
-            </div>
-
             <div className="grid gap-5 md:grid-cols-2">
               <Field
                 id="name"
