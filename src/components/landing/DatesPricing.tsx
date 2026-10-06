@@ -135,10 +135,6 @@ export function DatesPricing() {
                   </p>
                 )}
               </div>
-              <ul className="max-w-[22rem] space-y-1 text-sm text-primary-foreground/80 lg:text-right">
-                <li>Аванс — 500{"\u00A0"}€.</li>
-                <li>При повній оплаті — додаткова знижка 50{"\u00A0"}€.</li>
-              </ul>
               <p className="inline-flex items-center gap-2 rounded-full bg-sun/90 px-3 py-1.5 text-sm font-semibold text-sun-foreground">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
                 Місць небагато
