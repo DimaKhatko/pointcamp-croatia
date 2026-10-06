@@ -10,7 +10,7 @@ const NAV = [
   { href: "#reviews", label: "Відгуки" },
   { href: "#dates", label: "Дати" },
   { href: "#faq", label: "FAQ" },
-  { href: "https://japan.pointcamp.com.ua/", label: "Japan'26", external: true },
+  { href: "https://japan.pointcamp.com.ua/", label: "Japan", external: true },
 ];
 
 export function StickyHeader() {
@@ -52,7 +52,7 @@ export function StickyHeader() {
 
         <div className="flex items-center gap-2">
           <Button asChild size="default" className="hidden md:inline-flex">
-            <a href="#apply">Залишити заявку</a>
+            <a href="#price">Забронювати</a>
           </Button>
           <button
             type="button"
@@ -81,8 +81,8 @@ export function StickyHeader() {
               </a>
             ))}
             <Button asChild className="mt-2">
-              <a href="#apply" onClick={() => setOpen(false)}>
-                Залишити заявку
+              <a href="#price" onClick={() => setOpen(false)}>
+                Забронювати
               </a>
             </Button>
           </nav>

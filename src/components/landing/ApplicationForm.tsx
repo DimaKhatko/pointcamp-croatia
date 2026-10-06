@@ -10,8 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { sendToTelegram } from "@/lib/sendToTelegram";
-import { PRESALE_QUALIFIER, formatPrice } from "@/lib/pricing";
-import { usePriceState } from "@/lib/usePriceState";
 
 const schema = z.object({
   name: z
@@ -46,8 +44,6 @@ async function submitApplication(data: FormValues) {
 
 export function ApplicationForm() {
   const [success, setSuccess] = useState(false);
-  // Current price from src/lib/pricing.ts; before mount the build-day tier as a skeleton.
-  const { state: priceState, ready } = usePriceState();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -131,42 +127,6 @@ export function ApplicationForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="mt-12 grid gap-5 rounded-3xl border border-border bg-card p-6 shadow-sm md:p-10"
           >
-            {/* Price up-front so users don't submit just to ask the cost */}
-            <div className="rounded-2xl border border-border bg-secondary/40 p-5 text-center">
-              <p className="text-xs font-medium uppercase tracking-widest text-primary/70">
-                Вартість заїзду
-              </p>
-              <div
-                aria-busy={!ready}
-                aria-hidden={!ready}
-                aria-live="polite"
-                className="mt-1 flex items-baseline justify-center gap-2"
-              >
-                <span
-                  className={`text-4xl font-extrabold tracking-tight text-primary md:text-5xl ${
-                    ready ? "" : "animate-pulse select-none rounded-lg bg-primary/15 text-transparent"
-                  }`}
-                >
-                  {formatPrice(priceState.price)}
-                </span>
-                {priceState.returningOnly && (
-                  <span
-                    className={`text-base font-semibold text-primary/70 md:text-lg ${
-                      ready ? "" : "animate-pulse select-none rounded bg-primary/10 text-transparent"
-                    }`}
-                  >
-                    · {PRESALE_QUALIFIER}
-                  </span>
-                )}
-              </div>
-              <a
-                href="#dates"
-                className="mt-2 inline-block text-sm font-medium text-primary underline-offset-4 hover:underline"
-              >
-                Детальніше про ціну та знижки
-              </a>
-            </div>
-
             <div className="grid gap-5 md:grid-cols-2">
               <Field
                 id="name"
@@ -236,7 +196,7 @@ export function ApplicationForm() {
               className="h-12 text-base"
               disabled={form.formState.isSubmitting}
             >
-              {form.formState.isSubmitting ? "Надсилаємо…" : "🏖️ Залишити заявку"}
+              {form.formState.isSubmitting ? "Надсилаємо…" : "🏖️ Забронювати"}
             </Button>
 
             <p className="text-center text-xs text-muted-foreground">

@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const FORM_ID = "apply";
+const PRICE_ID = "price";
 
 /**
- * Mobile-only sticky "Залишити заявку" CTA. Rendered once at page level.
+ * Mobile-only sticky "Забронювати" CTA (scrolls to the price card). Rendered once at page level.
  * Appears after the user scrolls ~1 viewport past the hero, and hides while the
  * application form itself is on screen (so the same button never shows twice).
  */
@@ -39,8 +40,8 @@ export function StickyApplyButton() {
     };
   }, []);
 
-  const scrollToForm = () => {
-    document.getElementById(FORM_ID)?.scrollIntoView({ behavior: "smooth" });
+  const scrollToPrice = () => {
+    document.getElementById(PRICE_ID)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -52,13 +53,13 @@ export function StickyApplyButton() {
       }`}
     >
       <Button
-        onClick={scrollToForm}
+        onClick={scrollToPrice}
         size="lg"
         className="h-12 w-full text-base shadow-lg"
         aria-hidden={!show}
         tabIndex={show ? 0 : -1}
       >
-        🏖️ Залишити заявку
+        🏖️ Забронювати
       </Button>
     </div>
   );

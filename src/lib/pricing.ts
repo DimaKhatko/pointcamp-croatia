@@ -22,12 +22,9 @@ export type PriceTier = {
 export const TIERS: readonly PriceTier[] = [
   { start: null, end: "2026-10-31", price: 1300, returningOnly: true },
   { start: "2026-11-01", end: "2026-12-31", price: 1450 },
-  { start: "2027-01-01", end: "2027-04-30", price: 1550 },
-  { start: "2027-05-01", end: null, price: 1650 },
+  { start: "2027-01-01", end: "2027-03-31", price: 1550 },
+  { start: "2027-04-01", end: null, price: 1650 },
 ];
-
-/** Returning participants: this much off the current price (from Nov 1). Not stackable. */
-export const RETURNING_DISCOUNT = 100;
 
 export type PriceState = {
   price: number;

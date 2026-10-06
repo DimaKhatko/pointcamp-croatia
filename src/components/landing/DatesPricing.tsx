@@ -43,20 +43,19 @@ function priceLines(state: PriceState): { line: string | null; small: string | n
 }
 
 export function DatesPricing() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const ctaRef = useRef<HTMLAnchorElement>(null);
   const [pulse, setPulse] = useState(false);
   // `state` is the live tier once mounted and the build-day tier before that (then
   // `ready` is false and the content is drawn as a same-size skeleton), see usePriceState.
   const { state: priceState, ready } = usePriceState();
   const lines = priceLines(priceState);
-  const visibleDiscounts = DISCOUNTS.filter(
-    (d) => !(d.hideDuringPresale && priceState.returningOnly),
-  );
 
-  // One soft pulse on the CTA the first time the section is ~30% in view.
+  // Ring pulse on the CTA, once: the first time it is ≥60% in view (never on re-entry,
+  // never with reduced motion).
   useEffect(() => {
-    const el = sectionRef.current;
+    const el = ctaRef.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
@@ -64,7 +63,7 @@ export function DatesPricing() {
           io.disconnect();
         }
       },
-      { threshold: 0.3 },
+      { threshold: 0.6 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -72,7 +71,6 @@ export function DatesPricing() {
 
   return (
     <section
-      ref={sectionRef}
       id="dates"
       aria-labelledby="dates-heading"
       className="scroll-mt-24 bg-background py-24 md:py-32"
@@ -91,7 +89,10 @@ export function DatesPricing() {
         </div>
 
         {/* Price card */}
-        <article className="relative mt-12 overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary to-primary/80 p-6 text-primary-foreground shadow-xl sm:p-8 md:p-10">
+        <article
+          id="price"
+          className="relative mt-12 scroll-mt-24 overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary to-primary/80 p-6 text-primary-foreground shadow-xl sm:p-8 md:p-10"
+        >
           <div
             aria-hidden
             className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-sun/40 blur-3xl"
@@ -134,6 +135,10 @@ export function DatesPricing() {
                   </p>
                 )}
               </div>
+              <ul className="max-w-[22rem] space-y-1 text-sm text-primary-foreground/80 lg:text-right">
+                <li>Аванс — 500{"\u00A0"}€.</li>
+                <li>При повній оплаті — додаткова знижка 50{"\u00A0"}€.</li>
+              </ul>
               <p className="inline-flex items-center gap-2 rounded-full bg-sun/90 px-3 py-1.5 text-sm font-semibold text-sun-foreground">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
                 Місць небагато
@@ -145,8 +150,8 @@ export function DatesPricing() {
                   pulse ? "animate-cta-pulse" : ""
                 }`}
               >
-                <a href="#apply" onAnimationEnd={() => setPulse(false)}>
-                  Забронювати місце
+                <a ref={ctaRef} href="#apply" onAnimationEnd={() => setPulse(false)}>
+                  Забронювати
                 </a>
               </Button>
             </div>
@@ -206,21 +211,14 @@ export function DatesPricing() {
         {/* Знижки */}
         <div className="mt-14">
           <h3 className="text-xl font-bold text-foreground">Знижки</h3>
-          {/* Before mount every card is rendered but invisible (they hold the space, so
-              nothing shifts); after mount the presale-hidden ones are dropped. */}
-          <ul
-            aria-hidden={!ready}
-            className={`mt-5 grid grid-cols-2 gap-3 transition-opacity duration-300 sm:gap-4 max-lg:[&>li:last-child:nth-child(odd)]:col-span-2 ${
-              visibleDiscounts.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"
-            } ${ready ? "opacity-100" : "opacity-0"}`}
-          >
-            {visibleDiscounts.map((d) => (
+          <ul className="mt-5 grid max-w-sm grid-cols-1 gap-3 sm:gap-4">
+            {DISCOUNTS.map((d) => (
               <li
                 key={d.title}
                 className="flex flex-col items-start gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5"
               >
                 <span className="whitespace-nowrap rounded-full bg-sun px-2 py-1 text-[12px] font-extrabold text-sun-foreground min-[360px]:px-2.5 min-[360px]:text-[13px] sm:px-3 sm:text-sm">
-                  {d.value.replace(/ /g, " ")}
+                  {d.value.replace(/ /g, "\u00A0")}
                 </span>
                 <div>
                   <p className="font-bold leading-snug text-foreground">{d.title}</p>

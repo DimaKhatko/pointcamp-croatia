@@ -1,4 +1,4 @@
-import { RETURNING_DISCOUNT, TIERS, formatPrice } from "@/lib/pricing";
+import { TIERS, formatPrice } from "@/lib/pricing";
 
 /**
  * Hero chips. `PRICE_FACT` is a slot for the current price: it is filled on the
@@ -119,12 +119,8 @@ export const NOT_INCLUDED = [
   "Кишенькові витрати (~100 €)",
 ];
 
-/** `hideDuringPresale`: not shown until the presale ends (discounts do not stack with it). */
-export const DISCOUNTS: { title: string; subtitle?: string; value: string; hideDuringPresale?: boolean }[] = [
-  { title: "Поінтерам", subtitle: "Були в нас раніше", value: "−100 €", hideDuringPresale: true },
-  { title: "Дітям з однієї родини", subtitle: "Якщо їдуть уперше", value: "−100 €/дитина" },
-  { title: "Дітям військових", value: "−100 €" },
-  { title: "Приведіть друга", subtitle: "Знижка вам обом", value: "−50 €" },
+export const DISCOUNTS: { title: string; subtitle?: string; value: string }[] = [
+  { title: "Приведіть друга", subtitle: "Знижка вам обом · до 31 жовтня", value: "−50 €" },
 ];
 
 export const FAQS = [
@@ -134,13 +130,13 @@ export const FAQS = [
   },
   {
     q: "Як дитина дістанеться до Хорватії?",
-    a: "Дорога з України непроста — через Польщу й переліт до Хорватії. Тому маршрут плануємо з кожною сім'єю окремо: підкажемо найзручніший варіант і допоможемо все організувати.",
+    a: "Дорога з України непроста — через Польщу й переліт до Хорватії. Тому маршрут плануємо з кожною сім'єю окремо: підкажемо найзручніший варіант і допоможемо все організувати. Також можна привезти дитину самостійно. Ми зустрінемо її в аеропорту Задара або Спліта та організуємо трансфер до табору за додаткову плату. Вартість уточнюйте в менеджера.",
   },
   {
     q: "Як змінюється ціна?",
     // Prices come from the ladder in src/lib/pricing.ts so this answer cannot drift
     // from the price block; the wording of the periods is plain prose.
-    a: `до 31 жовтня — ${formatPrice(TIERS[0].price)} (лише для постійних учасників); 1 листопада – 31 грудня — ${formatPrice(TIERS[1].price)}; січень – квітень — ${formatPrice(TIERS[2].price)}; травень – червень — ${formatPrice(TIERS[3].price)}. Постійним учасникам — мінус ${RETURNING_DISCOUNT}\u00A0€ від актуальної ціни. Знижки не сумуються.`,
+    a: `до 31 жовтня — ${formatPrice(TIERS[0].price)} (лише для постійних учасників); 1 листопада – 31 грудня — ${formatPrice(TIERS[1].price)}; січень – березень — ${formatPrice(TIERS[2].price)}; квітень – червень — ${formatPrice(TIERS[3].price)}.`,
   },
   {
     q: "Який порядок оплати?",
