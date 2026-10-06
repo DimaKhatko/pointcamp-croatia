@@ -39,7 +39,6 @@
 - Flag outdated years/dates, template or Lovable leftovers, lorem, `{{placeholders}}`, or mentions belonging to another landing.
 
 ## Pending
-- **Telegram confirm link** — the success screen button "Підтвердити в Telegram" in `ApplicationForm.tsx` still points to the literal placeholder `{{TG_CONFIRM_LINK}}` (`TG_CONFIRM_LINK` constant); replace it with the real link.
 - **og:image 1200×630 swap** — current `og-image.jpg` is 1920×1280; replace the file and update the declared `og:image:width/height` in `src/routes/index.tsx` once the 1200×630 asset is supplied.
 - **Subfolder migration to `pointcamp.com.ua/croatia/`** — set Vite `base: "/croatia/"` + `createRouter({ basepath: import.meta.env.BASE_URL })` and re-verify. Not done this session.
 - **Unused Lovable scaffolding** — `src/lib/lovable-error-reporting.ts`, `src/lib/error-capture.ts`, `src/lib/error-page.ts`, `src/lib/config.server.ts`: verify they are truly dead and remove later.

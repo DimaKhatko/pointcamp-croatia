@@ -40,7 +40,7 @@ type FormValues = z.infer<typeof schema>;
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-const TG_CONFIRM_LINK = "{{TG_CONFIRM_LINK}}";
+const TG_CONFIRM_LINK = "https://t.me/PointCampAdmin_Bot?start=6ac4bd10747f188b2b087050";
 const TG_CHAT_LINK = "https://t.me/point_camp";
 
 export function ApplicationForm() {
