@@ -33,7 +33,7 @@ const FEATURES = [
   { icon: MapPin, title: "Піщаний пляж", body: "Рідкість для Адріатики — м'який пісок замість гальки." },
 ];
 
-// Resort-only imagery, grouped: bedrooms (beds) → exterior/sea → facilities → dining → aerial.
+// Resort-only imagery, grouped: hero bungalow by the sea → bedrooms (beds) → exterior → facilities → dining → aerial.
 // `imgClass` lets a single photo tune its crop without affecting the others —
 // e.g. shift object-position so the important part stays in frame. Keep these
 // as full static classes so Tailwind's scanner emits them (nudge the % by eye).
@@ -45,11 +45,11 @@ const SLIDES: {
   tone: "sea" | "sun" | "mint" | "sand" | "primary" | "mix";
   imgClass?: string;
 }[] = [
-  // Bedrooms first (these two show beds), then the rest.
-  { src: pine01, width: 1000, height: 750, alt: "Інтер'єр бунгало — спальні місця з москітною сіткою", tone: "sea" },
-  { src: pine04, width: 1000, height: 750, alt: "Просторий інтер'єр бунгало — ліжка з москітними сітками", tone: "sand" },
   // Native 3:2 (1536×1024) — matches the slide ratio, so default centering is fine.
   { src: pineFeatured, width: 1536, height: 1024, alt: "Бунгало Pine Beach серед сосен біля Адріатичного моря", tone: "mint" },
+  // Then the bedrooms (these two show beds), then the rest.
+  { src: pine01, width: 1000, height: 750, alt: "Інтер'єр бунгало — спальні місця з москітною сіткою", tone: "sea" },
+  { src: pine04, width: 1000, height: 750, alt: "Просторий інтер'єр бунгало — ліжка з москітними сітками", tone: "sand" },
   { src: pine03, width: 1000, height: 750, alt: "Очеретяне бунгало у золотому світлі серед сосон", tone: "sun" },
   { src: pineHut, width: 1000, height: 750, alt: "Брендований будиночок Pine Beach серед сосон", tone: "primary" },
   { src: pine02, width: 1000, height: 750, alt: "Очеретяне бунгало з солом'яним дахом серед сосен біля пляжу", tone: "mint" },
