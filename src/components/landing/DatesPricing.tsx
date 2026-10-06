@@ -204,28 +204,30 @@ export function DatesPricing() {
           </div>
         </div>
 
-        {/* Знижки */}
-        <div className="mt-14">
-          <h3 className="text-xl font-bold text-foreground">Знижки</h3>
-          <ul className="mt-5 grid max-w-sm grid-cols-1 gap-3 sm:gap-4">
-            {DISCOUNTS.map((d) => (
-              <li
-                key={d.title}
-                className="flex flex-col items-start gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5"
-              >
-                <span className="whitespace-nowrap rounded-full bg-sun px-2 py-1 text-[12px] font-extrabold text-sun-foreground min-[360px]:px-2.5 min-[360px]:text-[13px] sm:px-3 sm:text-sm">
-                  {d.value.replace(/ /g, "\u00A0")}
-                </span>
-                <div>
-                  <p className="font-bold leading-snug text-foreground">{d.title}</p>
-                  {d.subtitle && (
-                    <p className="mt-1 text-sm text-muted-foreground">{d.subtitle}</p>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Знижки: hidden while DISCOUNTS is empty */}
+        {DISCOUNTS.length > 0 && (
+          <div className="mt-14">
+            <h3 className="text-xl font-bold text-foreground">Знижки</h3>
+            <ul className="mt-5 grid max-w-sm grid-cols-1 gap-3 sm:gap-4">
+              {DISCOUNTS.map((d) => (
+                <li
+                  key={d.title}
+                  className="flex flex-col items-start gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5"
+                >
+                  <span className="whitespace-nowrap rounded-full bg-sun px-2 py-1 text-[12px] font-extrabold text-sun-foreground min-[360px]:px-2.5 min-[360px]:text-[13px] sm:px-3 sm:text-sm">
+                    {d.value.replace(/ /g, "\u00A0")}
+                  </span>
+                  <div>
+                    <p className="font-bold leading-snug text-foreground">{d.title}</p>
+                    {d.subtitle && (
+                      <p className="mt-1 text-sm text-muted-foreground">{d.subtitle}</p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </section>
   );

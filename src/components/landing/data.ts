@@ -119,9 +119,8 @@ export const NOT_INCLUDED = [
   "Кишенькові витрати (~100 €)",
 ];
 
-export const DISCOUNTS: { title: string; subtitle?: string; value: string }[] = [
-  { title: "Приведіть друга", subtitle: "Знижка вам обом · до 31 жовтня", value: "−50 €" },
-];
+/** Discount cards. While empty the "Знижки" block is not rendered (DatesPricing). */
+export const DISCOUNTS: { title: string; subtitle?: string; value: string }[] = [];
 
 export const FAQS = [
   {
