@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MapPin, Utensils, Trees, Bath, ChevronLeft, ChevronRight } from "lucide-react";
+import { MapPin, Utensils, Trees, ChevronLeft, ChevronRight } from "lucide-react";
 import { PhotoSlot } from "./PhotoSlot";
 import { DotGrid } from "./decor/DotGrid";
 import { AccentDot } from "./decor/AccentDot";
@@ -26,9 +26,25 @@ const RICH_SHADOW =
 // Lighter shadow for the small round arrow buttons.
 const ARROW_SHADOW = "shadow-[0_8px_20px_-10px_rgba(69,43,112,0.45)]";
 
-const FEATURES = [
-  { icon: Trees, title: "Затишні бунгало", body: "Прохолодний сосновий ліс просто біля моря." },
-  { icon: Bath, title: "Душові та санвузли поруч", body: "Сучасні й чисті, за кілька кроків від житла." },
+// A feature has either a one-line `body` or a list of `lines` (the bungalow card; it
+// spans two columns on sm+ so the row stays full).
+const FEATURES: {
+  icon: typeof Trees;
+  title: string;
+  body?: string;
+  lines?: readonly string[];
+}[] = [
+  {
+    icon: Trees,
+    title: "Затишні бунгало",
+    lines: [
+      "Еко-бунгало Comfort із натуральних матеріалів у сосновому лісі, за кілька кроків від моря",
+      "2–5 осіб в одному бунгало",
+      "Ліжка з постільною білизною, місце для речей, москітна сітка",
+      "Світло, USB-зарядка, Wi-Fi",
+      "Душ і туалети — у сучасних санітарних блоках поруч",
+    ],
+  },
   { icon: Utensils, title: "All-inclusive, 4 рази на день", body: "Середземноморська кухня — смачно й ситно щодня." },
   { icon: MapPin, title: "Піщаний пляж", body: "Рідкість для Адріатики — м'який пісок замість гальки." },
 ];
@@ -213,17 +229,29 @@ export function PineBeachResort() {
           />
         </div>
 
-        {/* Fact cards — full-width row, equal height */}
-        <dl className="mt-10 grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map(({ icon: Icon, title, body }) => (
+        {/* Fact cards — full-width row; cards in the same row are equal height */}
+        <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {FEATURES.map(({ icon: Icon, title, body, lines }) => (
             <div
               key={title}
-              className={`flex h-full gap-3 rounded-2xl border border-[#452B70]/15 bg-card p-4 ${RICH_SHADOW}`}
+              className={`flex h-full gap-3 rounded-2xl border border-[#452B70]/15 bg-card p-4 ${
+                lines ? "sm:col-span-2" : ""
+              } ${RICH_SHADOW}`}
             >
               <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#452B70]" aria-hidden />
               <div>
                 <dt className="font-semibold text-[#452B70]">{title}</dt>
-                <dd className="mt-0.5 text-sm text-[#452B70]/75">{body}</dd>
+                {lines ? (
+                  <dd className="mt-1">
+                    <ul className="list-disc space-y-1 pl-4 text-sm text-[#452B70]/75 marker:text-[#452B70]/40">
+                      {lines.map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  </dd>
+                ) : (
+                  <dd className="mt-0.5 text-sm text-[#452B70]/75">{body}</dd>
+                )}
               </div>
             </div>
           ))}
