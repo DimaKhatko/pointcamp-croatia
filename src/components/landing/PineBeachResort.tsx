@@ -27,7 +27,7 @@ const RICH_SHADOW =
 const ARROW_SHADOW = "shadow-[0_8px_20px_-10px_rgba(69,43,112,0.45)]";
 
 // A feature has either a one-line `body` or a list of `lines` (the bungalow card; it
-// spans two columns on sm+ so the row stays full).
+// spans the full row below lg and both rows of the left column on lg+).
 const FEATURES: {
   icon: typeof Trees;
   title: string;
@@ -229,13 +229,13 @@ export function PineBeachResort() {
           />
         </div>
 
-        {/* Fact cards — full-width row; cards in the same row are equal height */}
-        <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Fact cards: bungalow card full width above two cards (sm–lg), left column spanning the two stacked cards on the right (lg+) */}
+        <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)] lg:grid-rows-2">
           {FEATURES.map(({ icon: Icon, title, body, lines }) => (
             <div
               key={title}
               className={`flex h-full gap-3 rounded-2xl border border-[#452B70]/15 bg-card p-4 ${
-                lines ? "sm:col-span-2" : ""
+                lines ? "sm:col-span-2 lg:col-span-1 lg:row-span-2" : ""
               } ${RICH_SHADOW}`}
             >
               <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#452B70]" aria-hidden />
@@ -243,7 +243,7 @@ export function PineBeachResort() {
                 <dt className="font-semibold text-[#452B70]">{title}</dt>
                 {lines ? (
                   <dd className="mt-1">
-                    <ul className="list-disc space-y-1 pl-4 text-sm text-[#452B70]/75 marker:text-[#452B70]/40">
+                    <ul className="list-disc space-y-1.5 pl-4 text-sm text-[#452B70]/75 marker:text-[#452B70]/40">
                       {lines.map((line) => (
                         <li key={line}>{line}</li>
                       ))}
