@@ -8,7 +8,7 @@
 - Build output: `dist/client`.
 - Firebase: target `croatia` → site `pointcamp-croatia-2026` · domain `croatia.pointcamp.com.ua`.
 - Future path: `pointcamp.com.ua/croatia/` (pilot of the subfolder migration). Not done in-repo yet.
-- Lead form currently posts directly to the Telegram Bot API via `src/lib/sendToTelegram.ts` using `VITE_TELEGRAM_BOT_TOKEN` / `VITE_TELEGRAM_CHAT_ID`. S1 replaces this (see Pending).
+- Lead form posts JSON to the Make webhook via `src/lib/submitLead.ts` (S1 is implemented: honeypot `website`, `idle/sending/sent/error` states, `lead_submit` pushed only after a confirmed 2xx). No `VITE_*` env vars are used.
 
 ## Standard v1 rules (S1–S5, concise)
 - **S1 Lead submission.** Target end-state: `src/lib/submitLead.ts` posting JSON to the Make webhook `https://hook.eu1.make.com/29wyg57rzqxtajir3fw537ce1vrs2ev2`. Payload keys exactly: `landing, name, phone, email, participant, page_url, utm_source, utm_medium, utm_campaign, utm_content, utm_term, submitted_at, test`. Retry once after 1500 ms on network/non-2xx failure. Push `{ event: "lead_submit" }` to `window.dataLayer` **only after a confirmed 2xx** (SSR-guarded). Form via `FormData`, names `name/phone/email/participant`, visually-hidden honeypot `website`. No `VITE_*` tokens and no browser calls to third-party APIs (e.g. `api.telegram.org`) in client code.
@@ -39,7 +39,7 @@
 - Flag outdated years/dates, template or Lovable leftovers, lorem, `{{placeholders}}`, or mentions belonging to another landing.
 
 ## Pending
-- **S1 lead submission — blocked until the Make router is ready.** Keep `sendToTelegram.ts` and the current form until then; the switch to `submitLead.ts` + honeypot + `idle/sending/sent/error` states removes `VITE_TELEGRAM_*` from `.env`/`.env.example`.
+- **Telegram confirm link** — the success screen button "Підтвердити в Telegram" in `ApplicationForm.tsx` still points to the literal placeholder `{{TG_CONFIRM_LINK}}` (`TG_CONFIRM_LINK` constant); replace it with the real link.
 - **og:image 1200×630 swap** — current `og-image.jpg` is 1920×1280; replace the file and update the declared `og:image:width/height` in `src/routes/index.tsx` once the 1200×630 asset is supplied.
 - **Subfolder migration to `pointcamp.com.ua/croatia/`** — set Vite `base: "/croatia/"` + `createRouter({ basepath: import.meta.env.BASE_URL })` and re-verify. Not done this session.
 - **Unused Lovable scaffolding** — `src/lib/lovable-error-reporting.ts`, `src/lib/error-capture.ts`, `src/lib/error-page.ts`, `src/lib/config.server.ts`: verify they are truly dead and remove later.

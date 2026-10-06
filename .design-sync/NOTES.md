@@ -6,7 +6,6 @@ This is a landing-page SPA (TanStack Start + React 19 + Tailwind), not a publish
 ## Build quirks
 - No `npm run build` needed before sync — converter synthesizes the entry from src/
 - `--entry ./dist/index.es.js` is passed intentionally as a non-existent path to (a) anchor PKG_DIR at the repo root and (b) trigger synth-entry mode in source-kit.mjs
-- `import.meta.env` warnings from `src/lib/sendToTelegram.ts` are non-blocking (VITE env vars are undefined in the bundle; the form still renders)
 
 ## Font issues (non-blocking)
 - `KyivTypeSans-VarGX.woff2` is self-hosted with an absolute URL (`/fonts/KyivTypeSans-VarGX.woff2`) in the @font-face rule in `src/styles.css`. The font file is copied to `fonts/` in the bundle but the absolute URL won't resolve in the DS preview context. DS renders with system-font fallback.

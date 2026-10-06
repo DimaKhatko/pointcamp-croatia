@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { sendToTelegram } from "@/lib/sendToTelegram";
+import { submitLead } from "@/lib/submitLead";
 
 const schema = z.object({
   name: z
@@ -29,7 +29,7 @@ const schema = z.object({
     .min(7, { message: "Вкажіть номер телефону" })
     .max(25)
     .regex(/^[+\d\s()\-]+$/, { message: "Лише цифри, +, пробіли і дужки" }),
-  details: z
+  participant: z
     .string()
     .trim()
     .min(1, { message: "Будь ласка, заповніть це поле." })
@@ -38,43 +38,50 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-async function submitApplication(data: FormValues) {
-  return sendToTelegram(data);
-}
+type Status = "idle" | "sending" | "sent" | "error";
+
+const TG_CONFIRM_LINK = "{{TG_CONFIRM_LINK}}";
+const TG_CHAT_LINK = "https://t.me/point_camp";
 
 export function ApplicationForm() {
-  const [success, setSuccess] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { name: "", email: "", phone: "", details: "" },
+    defaultValues: { name: "", email: "", phone: "", participant: "" },
     mode: "onTouched",
   });
 
-  const onSubmit = async (values: FormValues) => {
-    try {
-      const res = await submitApplication(values);
-      if (res.ok) {
-        // GTM conversion event — fires ONLY on real success.
-        // TODO: GTM-side trigger + Google Ads conversion import is configured separately in GTM UI.
-        if (typeof window !== "undefined") {
-          window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push({
-            event: "lead_submit",
-            form: "croatia_application",
-          });
-        }
-        setSuccess(true);
-        toast.success("Заявку прийнято!", {
-          description: "Зв'яжемося впродовж робочого дня.",
-        });
-        form.reset();
-      }
-    } catch {
-      toast.error("Не вдалося надіслати заявку", {
-        description: "Спробуйте ще раз або напишіть нам на contact@pointcamp.com.ua",
+  // Values are read from the DOM via FormData; react-hook-form only validates and shows errors.
+  const send = async (formData: FormData) => {
+    const field = (key: string) => String(formData.get(key) ?? "").trim();
+    setStatus("sending");
+    const result = await submitLead({
+      name: field("name"),
+      phone: field("phone"),
+      email: field("email"),
+      participant: field("participant"),
+    });
+    if (result.ok) {
+      setStatus("sent");
+      toast.success("Заявку прийнято!", {
+        description: "Зв'яжемося впродовж робочого дня.",
       });
+      form.reset();
+    } else {
+      setStatus("error");
     }
+  };
+
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    // Honeypot: a bot filled the hidden field, so pretend success without calling the webhook.
+    if (String(formData.get("website") ?? "") !== "") {
+      setStatus("sent");
+      return;
+    }
+    void form.handleSubmit(() => send(formData))(event);
   };
 
   return (
@@ -100,7 +107,7 @@ export function ApplicationForm() {
           </p>
         </div>
 
-        {success ? (
+        {status === "sent" ? (
           <div
             role="status"
             aria-live="polite"
@@ -111,22 +118,55 @@ export function ApplicationForm() {
               Готово! Заявку отримали.
             </h3>
             <p className="mt-3 text-base text-foreground/80">
+              Отримайте підтвердження й деталі бронювання в Telegram.
+            </p>
+            <Button asChild className="mt-5">
+              <a href={TG_CONFIRM_LINK} target="_blank" rel="noopener noreferrer">
+                Підтвердити в Telegram
+              </a>
+            </Button>
+            <p className="mt-3 text-base text-foreground/80">
               Зв'яжемося з вами впродовж робочого дня, щоб уточнити деталі.
             </p>
             <Button
               variant="outline"
               className="mt-6"
-              onClick={() => setSuccess(false)}
+              onClick={() => setStatus("idle")}
             >
               Залишити ще одну заявку
             </Button>
           </div>
+        ) : status === "error" ? (
+          <div
+            role="alert"
+            className="mt-12 rounded-3xl border border-destructive/40 bg-card p-10 text-center"
+          >
+            <h3 className="text-2xl font-bold text-foreground">Не вдалося надіслати заявку</h3>
+            <p className="mt-3 text-base text-foreground/80">
+              Спробуйте ще раз або напишіть нам у Telegram — відповімо швидко.
+            </p>
+            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button asChild>
+                <a href={TG_CHAT_LINK} target="_blank" rel="noopener noreferrer">
+                  Написати в Telegram
+                </a>
+              </Button>
+              <Button variant="outline" onClick={() => setStatus("idle")}>
+                Спробувати ще раз
+              </Button>
+            </div>
+          </div>
         ) : (
           <form
             noValidate
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={onSubmit}
             className="mt-12 grid gap-5 rounded-3xl border border-border bg-card p-6 shadow-sm md:p-10"
           >
+            {/* Honeypot: visually hidden, not reachable by keyboard; humans never fill it. */}
+            <div aria-hidden className="sr-only">
+              <input type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" />
+            </div>
+
             <div className="grid gap-5 md:grid-cols-2">
               <Field
                 id="name"
@@ -177,16 +217,16 @@ export function ApplicationForm() {
             </Field>
 
             <Field
-              id="details"
+              id="participant"
               label="Інформація про учасника"
               required
-              error={form.formState.errors.details?.message}
+              error={form.formState.errors.participant?.message}
             >
               <Textarea
-                id="details"
+                id="participant"
                 rows={4}
                 placeholder="Ім'я та вік дитини, рівень англійської, особливі побажання"
-                {...form.register("details")}
+                {...form.register("participant")}
               />
             </Field>
 
@@ -194,9 +234,9 @@ export function ApplicationForm() {
               type="submit"
               size="lg"
               className="h-12 text-base"
-              disabled={form.formState.isSubmitting}
+              disabled={status === "sending"}
             >
-              {form.formState.isSubmitting ? "Надсилаємо…" : "🏖️ Забронювати"}
+              {status === "sending" ? "Надсилаємо…" : "🏖️ Забронювати"}
             </Button>
 
             <p className="text-center text-xs text-muted-foreground">
