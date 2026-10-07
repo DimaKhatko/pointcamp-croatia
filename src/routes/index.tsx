@@ -45,11 +45,12 @@ export const Route = createFileRoute("/")({
       { property: "og:site_name", content: "Point Camp" },
       { property: "og:url", content: SITE_URL },
       { property: "og:image", content: OG_IMAGE },
-      { property: "og:image:width", content: "1920" },
-      { property: "og:image:height", content: "1280" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       {
         property: "og:image:alt",
-        content: "Адріатичне узбережжя Хорватії — місце літнього кемпу Point Camp",
+        content:
+          "Група підлітків у помаранчевих рятувальних жилетах із веслами на березі Адріатики — літній кемп Point Camp у Хорватії",
       },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
