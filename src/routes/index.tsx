@@ -79,7 +79,7 @@ export const Route = createFileRoute("/")({
           },
           event: {
             "@type": "Event",
-            name: "Point Camp Хорватія — Flagship заїзд 2027",
+            name: "Point Camp Хорватія — літній кемп 2027",
             description:
               "Англомовний літній кемп на Адріатиці для дітей 8–17 років. 10 днів: море, жива англійська щодня, безпека 24/7. 31.07–09.08.2027, Pine Beach Resort, Pakoštane.",
             image: OG_IMAGE,
@@ -108,6 +108,7 @@ export const Route = createFileRoute("/")({
               url: `${SITE_URL}#apply`,
             },
             organizer: { "@type": "Organization", name: "Point Camp", url: SITE_URL },
+            performer: { "@type": "Organization", name: "Point Camp", url: "https://pointcamp.com.ua/" },
           },
         }),
       },
