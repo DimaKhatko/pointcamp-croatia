@@ -215,8 +215,13 @@ export function ForWhom() {
         </div>
 
         <TakeawayCallout label="Головне" className="mt-14">
-          Самостійність, сміливість, уміння домовлятися й друзі на роки — те, що дає фору в дорослому
-          житті.
+          Самостійність, сміливість, уміння домовлятися й друзі на роки — те, що дає{" "}
+          {/* Same look as «спокій» in Reviews (white text, soft bar); the bar is a text
+              underline here because this phrase is long and may wrap on narrow screens. */}
+          <span className="text-white underline decoration-[#FFE8C7]/60 decoration-4 underline-offset-[6px] [text-decoration-skip-ink:none]">
+            фору в дорослому житті
+          </span>
+          .
         </TakeawayCallout>
       </div>
     </section>
