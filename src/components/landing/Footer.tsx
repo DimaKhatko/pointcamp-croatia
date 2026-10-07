@@ -112,7 +112,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <a
-                  href="https://drive.google.com/file/d/1OFvq9GX9-4brPLVxUoqpcWETbJV-_555/preview"
+                  href="https://docs.google.com/document/d/13lEa7g0Lf6Rs6e8C4CJ_l-q6S_82_bxXiwP9sBN7R5s/preview"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary"
