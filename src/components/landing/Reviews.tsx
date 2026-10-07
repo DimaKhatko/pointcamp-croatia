@@ -19,7 +19,7 @@ const REVIEWS = [
     label: "повністю задоволені",
     quote: "Стан абсолютного щастя від відпочинку у таборі — дуже сподобалось!",
     name: "Любов",
-    rotate: "md:-rotate-2",
+    rotate: "lg:-rotate-2",
   },
   {
     question: "Чи порекомендували б Ви PointCamp друзям?",
@@ -27,7 +27,7 @@ const REVIEWS = [
     label: "так, порадили б",
     quote: "Дитина повернулася справді відпочинутою і спокійною.",
     name: "Наталія",
-    rotate: "md:rotate-1",
+    rotate: "lg:rotate-1",
   },
   {
     question: "Скільки родин повертаються до нас знову?",
@@ -35,7 +35,7 @@ const REVIEWS = [
     label: "родин повертаються",
     quote: "Перший раз хвилювалась до поїздки, але вже обидва наступні рази лише чекали з нетерпінням.",
     name: "Юлія",
-    rotate: "md:-rotate-1",
+    rotate: "lg:-rotate-1",
   },
 ];
 
@@ -45,41 +45,52 @@ const QUOTES = [
     quote:
       "Чудовий формат саме для підлітків: їм дають достатньо свободи, можливість бути самостійними й приймати власні рішення, але водночас вони під ненав'язливим і турботливим контролем дорослих.",
     name: "Катерина",
-    rotate: "md:rotate-[1.5deg]",
+    rotate: "lg:rotate-[1.5deg]",
   },
   {
     quote:
       "Програма продумана до дрібниць: зранку зарядка, потім заняття, спорт, творчі майстерні. Діти постійно зайняті, телефони — мінімально. Безпека на вищому рівні, смачна їжа, фотозвіти щодня.",
     name: "Ірина",
-    rotate: "md:-rotate-[1.5deg]",
+    rotate: "lg:-rotate-[1.5deg]",
   },
   {
     quote:
       "На початку ми з татом хвилювалися — син уперше їхав у такий табір без нас. Але вже під час табору, бачачи його задоволеним, я заспокоїлася. Найбільше він згадує друзів і щоденне купання в морі, а ще — що програма була настільки насиченою, що на телефон майже не залишалося часу.",
     name: "Олена",
-    rotate: "md:rotate-1",
+    rotate: "lg:rotate-1",
   },
 ];
 
 const SOFT_SHADOW = "shadow-[0_14px_32px_-20px_rgba(69,43,112,0.45)]";
 
-/** Below md every card is a slide (85% wide, so the next one peeks ~15%); from md they are grid cells. */
-const SLIDE = "basis-[85%] shrink-0 grow-0 snap-start md:basis-auto md:shrink";
+/** Below lg every card is a slide (85% wide on phones, so the next one peeks ~15%; narrower on tablets); from lg they are grid cells. */
+const SLIDE =
+  "basis-[85%] shrink-0 grow-0 snap-start sm:basis-[60%] md:basis-[44%] lg:basis-auto lg:shrink";
 const CARD_COUNT = REVIEWS.length + QUOTES.length;
-/** Matches the strip's `px-4` / `scroll-px-4` (1rem). */
-const STRIP_PAD = 16;
+/** The strip's start padding (it bleeds to the screen edge: 1rem on phones, 1.5rem from md). */
+const stripPad = (el: HTMLElement) => parseFloat(getComputedStyle(el).paddingLeft) || 0;
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /**
- * Six reviews: a 3×2 grid from md; below md one horizontal scroll-snap strip with
+ * Six reviews: a 3×2 grid from lg; below lg one horizontal scroll-snap strip with
  * dots below it (same pattern as the resort carousel).
  */
 function ReviewCards() {
   const stripRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  // Below lg the container scrolls, so it is a labelled, focusable region; on the lg+ grid it is not.
+  const [scrolls, setScrolls] = useState(true);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const update = () => setScrolls(!mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   // Track the slide at the start edge of the strip to drive the dots.
   useEffect(() => {
@@ -97,7 +108,7 @@ function ReviewCards() {
         let best = 0;
         let bestDist = Infinity;
         slides.forEach((slide, i) => {
-          const dist = Math.abs(slide.offsetLeft - STRIP_PAD - el.scrollLeft);
+          const dist = Math.abs(slide.offsetLeft - stripPad(el) - el.scrollLeft);
           if (dist < bestDist) {
             bestDist = dist;
             best = i;
@@ -118,7 +129,7 @@ function ReviewCards() {
     const slide = el?.children[i] as HTMLElement | undefined;
     if (!el || !slide) return;
     el.scrollTo({
-      left: slide.offsetLeft - STRIP_PAD,
+      left: slide.offsetLeft - stripPad(el),
       behavior: prefersReducedMotion() ? "auto" : "smooth",
     });
   };
@@ -127,16 +138,16 @@ function ReviewCards() {
     <div className="mt-12">
       <div
         ref={stripRef}
-        role="region"
-        aria-label="Відгуки батьків"
-        tabIndex={0}
-        className="relative -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto px-4 pb-6 pt-1 [-ms-overflow-style:none] [scrollbar-width:none] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#452B70] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFE8C7] md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0 md:pt-0 [&::-webkit-scrollbar]:hidden"
+        role={scrolls ? "region" : undefined}
+        aria-label={scrolls ? "Відгуки батьків" : undefined}
+        tabIndex={scrolls ? 0 : undefined}
+        className="relative -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto px-4 pb-6 pt-1 md:-mx-6 md:scroll-px-6 md:px-6 [-ms-overflow-style:none] [scrollbar-width:none] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#452B70] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFE8C7] lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0 lg:pt-0 [&::-webkit-scrollbar]:hidden"
       >
         {/* Research-report polaroid cards */}
         {REVIEWS.map((r) => (
           <figure
             key={r.name}
-            className={`flex min-h-[19rem] flex-col md:h-full rounded-2xl border border-[#452B70]/15 bg-card p-6 text-left transition-transform duration-300 hover:-translate-y-0.5 ${SLIDE} ${r.rotate} md:hover:rotate-0 ${SOFT_SHADOW}`}
+            className={`flex min-h-[19rem] flex-col lg:h-full rounded-2xl border border-[#452B70]/15 bg-card p-6 text-left transition-transform duration-300 hover:-translate-y-0.5 ${SLIDE} ${r.rotate} lg:hover:rotate-0 ${SOFT_SHADOW}`}
           >
             {/* Survey question — the research-report anchor */}
             <p className="text-xs font-medium uppercase tracking-wide text-[#452B70]/60">
@@ -165,7 +176,7 @@ function ReviewCards() {
         {QUOTES.map((q) => (
           <figure
             key={q.name}
-            className={`flex min-h-[19rem] flex-col md:h-full rounded-2xl border border-[#452B70]/15 bg-card p-6 text-left transition-transform duration-300 hover:-translate-y-0.5 ${SLIDE} ${q.rotate} md:hover:rotate-0 ${SOFT_SHADOW}`}
+            className={`flex min-h-[19rem] flex-col lg:h-full rounded-2xl border border-[#452B70]/15 bg-card p-6 text-left transition-transform duration-300 hover:-translate-y-0.5 ${SLIDE} ${q.rotate} lg:hover:rotate-0 ${SOFT_SHADOW}`}
           >
             <span
               aria-hidden
@@ -184,7 +195,7 @@ function ReviewCards() {
       </div>
 
       {/* Dots (mobile strip only) */}
-      <div className="mt-1 flex justify-center gap-1 md:hidden">
+      <div className="mt-1 flex justify-center gap-1 lg:hidden">
         {Array.from({ length: CARD_COUNT }, (_, i) => (
           <button
             key={i}
