@@ -33,5 +33,10 @@ export const MOMENTS_VIDEOS: VideoItem[] = [
     src: "/video/moments-test.mp4",
     poster: "/video/moments-test.webp",
   },
-  { id: "moments-duck", title: "Де сьогодні качка?", src: "", poster: "" },
+  {
+    id: "croatia-gallery",
+    title: "Відео з табору",
+    src: "/video/croatia-gallery.mp4",
+    poster: "/video/croatia-gallery-poster.jpg",
+  },
 ];
