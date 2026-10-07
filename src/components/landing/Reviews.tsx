@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import dotsAmber from "@/assets/Group-1.svg";
+import { TakeawayCallout } from "./TakeawayCallout";
 
 /** Rating chips (aggregate scores). */
 const RATING_CHIPS = [
@@ -121,24 +122,16 @@ export function Reviews() {
         </div>
 
         {/* Closing takeaway — the section's key insight */}
-        <div className="mt-12 rounded-2xl bg-[#452B70] px-6 py-10 text-center md:px-10 md:py-12">
-          <p className="text-xs font-medium uppercase tracking-widest text-[#FFE8C7]/70">
-            Головний висновок
-          </p>
-          <p className="mx-auto mt-4 max-w-3xl text-balance text-2xl font-extrabold leading-snug text-[#FFE8C7] md:text-4xl">
-            Поки дитина в кемпі, батьки найчастіше описують свій стан одним словом —{" "}
-            <span className="relative whitespace-nowrap text-white">
-              «спокій»
-              <span
-                aria-hidden
-                className="absolute inset-x-0 -bottom-1 h-1 rounded-full bg-[#FFE8C7]/60"
-              />
-            </span>
-          </p>
-          <p className="mx-auto mt-4 max-w-xl text-base text-[#FFE8C7]/85 md:text-lg">
-            Спокійно, впевнено, без хвилювань.
-          </p>
-        </div>
+        <TakeawayCallout label="Головний висновок" note="Спокійно, впевнено, без хвилювань.">
+          Поки дитина в кемпі, батьки найчастіше описують свій стан одним словом —{" "}
+          <span className="relative whitespace-nowrap text-white">
+            «спокій»
+            <span
+              aria-hidden
+              className="absolute inset-x-0 -bottom-1 h-1 rounded-full bg-[#FFE8C7]/60"
+            />
+          </span>
+        </TakeawayCallout>
       </div>
     </section>
   );

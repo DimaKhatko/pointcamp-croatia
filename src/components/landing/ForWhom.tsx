@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import type { CSSProperties, KeyboardEvent } from "react";
 import { PhotoSlot } from "./PhotoSlot";
+import { TakeawayCallout } from "./TakeawayCallout";
 import dotsAmber from "@/assets/Group-1.svg";
 import ropeBridge from "@/assets/photos/activity-rope-bridge.webp";
 import mentorTable from "@/assets/photos/team-mentor-table.webp";
@@ -213,11 +214,11 @@ export function ForWhom() {
           </div>
         </div>
 
-        <p className="mx-auto mt-8 max-w-2xl text-center text-base leading-relaxed text-[#452B70]/70 md:text-lg">
+        <TakeawayCallout label="Головне" className="mt-14">
           Тому наш кемп працює для кожного віку. Тут діти набувають того, що дає
           фору в дорослому житті: самостійності, сміливості, живої англійської та
           знайомств, що залишаються на роки.
-        </p>
+        </TakeawayCallout>
       </div>
     </section>
   );
