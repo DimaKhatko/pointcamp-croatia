@@ -93,8 +93,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Англомовний кемп на Адріатиці 31.07–09.08.2027. Англійська щодня, безпека 24/7, 15 років досвіду. Діти щасливі, батьки спокійні. Лише 55 місць." },
       { property: "og:description", content: "Англомовний кемп на Адріатиці 31.07–09.08.2027. Англійська щодня, безпека 24/7, 15 років досвіду. Діти щасливі, батьки спокійні. Лише 55 місць." },
       { name: "twitter:description", content: "Англомовний кемп на Адріатиці 31.07–09.08.2027. Англійська щодня, безпека 24/7, 15 років досвіду. Діти щасливі, батьки спокійні. Лише 55 місць." },
-      { property: "og:image", content: "https://croatia.pointcamp.com.ua/og-image.jpg" },
-      { name: "twitter:image", content: "https://croatia.pointcamp.com.ua/og-image.jpg" },
+      { property: "og:image", content: "https://croatia.pointcamp.com.ua/og-image-v2.jpg" },
+      { name: "twitter:image", content: "https://croatia.pointcamp.com.ua/og-image-v2.jpg" },
     ],
     links: [
       // The page renders client-side, so without this the browser only discovers the

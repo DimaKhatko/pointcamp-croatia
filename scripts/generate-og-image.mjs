@@ -1,5 +1,5 @@
 /**
- * Generates public/og-image.jpg (1200×630): a real camp photo cropped to fill, with a
+ * Generates public/og-image-v2.jpg (1200×630): a real camp photo cropped to fill, with a
  * brand-purple band at the bottom carrying the logo and the camp tagline.
  *
  * Dev-only and NOT wired into the build. Run it by hand when the photo or the copy changes:
@@ -79,6 +79,6 @@ await page.evaluate(() => document.fonts.ready);
 const jpeg = await page.screenshot({ type: "jpeg", quality: QUALITY });
 await browser.close();
 
-const out = path.join(root, "public/og-image.jpg");
+const out = path.join(root, "public/og-image-v2.jpg");
 writeFileSync(out, jpeg);
 console.log(`${out}: ${WIDTH}×${HEIGHT}, ${(statSync(out).size / 1024).toFixed(0)} KB`);

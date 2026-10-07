@@ -21,7 +21,7 @@ import { FAQS } from "@/components/landing/data";
 import { getKyivDateString, getPublicOffer } from "@/lib/pricing";
 
 const SITE_URL = "https://croatia.pointcamp.com.ua/";
-const OG_IMAGE = "https://croatia.pointcamp.com.ua/og-image.jpg";
+const OG_IMAGE = "https://croatia.pointcamp.com.ua/og-image-v2.jpg";
 const TITLE = "Англомовний літній кемп у Хорватії для дітей 8–17 | Point Camp";
 const DESCRIPTION =
   "Англомовний кемп на Адріатиці 31.07–09.08.2027. Англійська щодня, безпека 24/7, 15 років досвіду. Діти щасливі, батьки спокійні. Лише 55 місць.";
