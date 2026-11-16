@@ -1,9 +1,40 @@
+# Search engines
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
+# AI search and assistants (answers with links back to this page)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# AI model training crawlers (allowed on purpose: the brand should be known to models)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Link previews
 User-agent: Twitterbot
 Allow: /
 

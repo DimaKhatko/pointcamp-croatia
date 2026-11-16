@@ -34,6 +34,10 @@ export function VideoCard({ item, block, active }: VideoCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const firedRef = useRef(false);
   const [visible, setVisible] = useState(false);
+  // The <video> (and with it the poster request) is only mounted once the card is
+  // within ~1.5 screens of the viewport; until then the box is an empty dark tile of
+  // the same size, so nothing shifts. Once mounted it stays mounted.
+  const [near, setNear] = useState(false);
   const [canAutoplay] = useState(computeCanAutoplay);
 
   const playing = isPlaying(item.id);
@@ -50,6 +54,26 @@ export function VideoCard({ item, block, active }: VideoCardProps) {
         setVisible(entry.isIntersecting && entry.intersectionRatio >= 0.6);
       },
       { threshold: [0, 0.6, 1] },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setNear(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "150% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -73,7 +97,7 @@ export function VideoCard({ item, block, active }: VideoCardProps) {
     } else {
       v.pause();
     }
-  }, [playing, unmuted]);
+  }, [playing, unmuted, near]);
 
   // First play of each video => one analytics event.
   useEffect(() => {
@@ -99,7 +123,7 @@ export function VideoCard({ item, block, active }: VideoCardProps) {
 
   return (
     <div ref={rootRef} className="relative h-full w-full bg-foreground">
-      {src ? (
+      {src && !near ? null : src ? (
         <video
           ref={videoRef}
           className="h-full w-full object-cover"

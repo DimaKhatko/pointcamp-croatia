@@ -1,17 +1,33 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
-  createRootRouteWithContext,
+  createRootRoute,
   useRouter,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
-import { Toaster } from "@/components/ui/sonner";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
+
+// The toaster is only needed after a form submit, so its code (sonner) is a
+// separate chunk that never blocks the first render.
+const Toaster = lazy(() =>
+  import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })),
+);
+
+const GTM_ID = "GTM-PGJNFD95";
+
+/**
+ * Deferred Google Tag Manager. `window.dataLayer` is declared in <head> right away
+ * (so `lead_submit` / `video_play` pushes are never lost); gtm.js itself is
+ * injected 3 s after `load` or on the first pointerdown / scroll / keydown /
+ * touchstart, whichever comes first. GTM then processes everything already queued
+ * in dataLayer, including the `gtm.js` event pushed here (the same event the
+ * standard snippet pushes), so Page View / GA4 / Meta Pixel tags fire as before.
+ */
+const GTM_LOADER = `(function(w,d){var done=0,ev=['pointerdown','scroll','keydown','touchstart'];function load(){if(done)return;done=1;ev.forEach(function(e){w.removeEventListener(e,load)});w.dataLayer=w.dataLayer||[];w.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});var j=d.createElement('script');j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id=${GTM_ID}';d.head.appendChild(j)}ev.forEach(function(e){w.addEventListener(e,load,{passive:true})});function later(){setTimeout(load,3000)}if(d.readyState==='complete')later();else w.addEventListener('load',later)})(window,document);`;
 
 import appCss from "../styles.css?url";
-import kyivTypeSansUrl from "../assets/fonts/KyivTypeSans-VarGX.woff2?url";
+import kyivTypeSansUrl from "../assets/fonts/KyivTypeSans-Sub.woff2?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -74,7 +90,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -94,13 +110,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Англомовний кемп на Адріатиці 31.07–09.08.2027. Англійська щодня, безпека 24/7, 15 років досвіду. Діти щасливі, батьки спокійні. Лише 55 місць." },
       { name: "twitter:description", content: "Англомовний кемп на Адріатиці 31.07–09.08.2027. Англійська щодня, безпека 24/7, 15 років досвіду. Діти щасливі, батьки спокійні. Лише 55 місць." },
       { property: "og:image", content: "https://croatia.pointcamp.com.ua/og-image-v2.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:image", content: "https://croatia.pointcamp.com.ua/og-image-v2.jpg" },
     ],
     links: [
-      // The page renders client-side, so without this the browser only discovers the
-      // display font after React lays out text — it then swaps in late and re-wraps
-      // the H1, shifting everything below (CLS). Preloading starts the download with
-      // the HTML. The URL comes from the same import the CSS @font-face resolves to
+      // Without this the browser only discovers the display font after parsing the
+      // CSS — it then swaps in late and re-wraps the H1, shifting everything below
+      // (CLS). Preloading starts the download with the HTML. The URL comes from the same import the CSS @font-face resolves to
       // (one hashed file, fetched once). `crossOrigin` is required for font preloads.
       {
         rel: "preload",
@@ -124,9 +141,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "apple-touch-icon", href: `${import.meta.env.BASE_URL}apple-touch-icon.png` },
     ],
     scripts: [
-      {
-        children: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PGJNFD95');`,
-      },
+      // Declared before anything else runs; gtm.js itself is deferred (GTM_LOADER).
+      { children: "window.dataLayer=window.dataLayer||[];" },
     ],
   }),
   shellComponent: RootShell,
@@ -145,13 +161,14 @@ function RootShell({ children }: { children: ReactNode }) {
         {/* Google Tag Manager (noscript) — MUST be in body, never head */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-PGJNFD95"
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
             title="gtm"
           />
         </noscript>
+        <script dangerouslySetInnerHTML={{ __html: GTM_LOADER }} />
         {children}
         <Scripts />
       </body>
@@ -160,13 +177,13 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
-
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-      <Toaster richColors position="top-center" />
-    </QueryClientProvider>
+      <Suspense fallback={null}>
+        <Toaster richColors position="top-center" />
+      </Suspense>
+    </>
   );
 }
