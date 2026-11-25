@@ -158,6 +158,8 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: TITLE },
       { name: "description", content: DESCRIPTION },
+      // Bing Webmaster Tools site verification: keep permanently (removing it unverifies the site).
+      { name: "msvalidate.01", content: "BF4250F50D78E77F8D1A4C8F71BA2B54" },
       { name: "robots", content: "index, follow" },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
